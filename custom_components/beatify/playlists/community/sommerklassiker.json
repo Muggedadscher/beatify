@@ -1,6 +1,6 @@
 {
   "name": "Sommerklassiker ☀️",
-  "version": "0.7",
+  "version": "0.8",
   "tags": [
     "summer",
     "pop",
@@ -40,7 +40,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=CTFtOOh47oo",
       "uri_tidal": "tidal://track/76158441",
-      "uri_deezer": "382428781",
+      "uri_deezer": "deezer://track/382428781",
       "awards_nl": []
     },
     {
@@ -70,7 +70,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=ebXbLfLACGM",
       "uri_tidal": "tidal://track/26831498",
-      "uri_deezer": "88936747",
+      "uri_deezer": "deezer://track/88936747",
       "awards_nl": []
     },
     {
@@ -100,7 +100,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=OPf0YbXqDm0",
       "uri_tidal": "tidal://track/39249713",
-      "uri_deezer": "92734438",
+      "uri_deezer": "deezer://track/92734438",
       "awards_nl": []
     },
     {
@@ -130,7 +130,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=E07s5ZYygMg",
       "uri_tidal": "tidal://track/125310819",
-      "uri_deezer": "830336922",
+      "uri_deezer": "deezer://track/830336922",
       "awards_nl": []
     },
     {
@@ -160,7 +160,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=PIh2xe4jnpk",
       "uri_tidal": "tidal://track/23046116",
-      "uri_deezer": "79845486",
+      "uri_deezer": "deezer://track/79845486",
       "awards_nl": []
     },
     {
@@ -190,7 +190,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=vWaRiD5ym74",
       "uri_tidal": "tidal://track/67050714",
-      "uri_deezer": "136341758",
+      "uri_deezer": "deezer://track/136341758",
       "awards_nl": []
     },
     {
@@ -220,7 +220,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=KEI4qSrkPAs",
       "uri_tidal": "tidal://track/77704207",
-      "uri_deezer": "106506516",
+      "uri_deezer": "deezer://track/106506516",
       "awards_nl": []
     },
     {
@@ -250,7 +250,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=EkHTsc9PU2A",
       "uri_tidal": "tidal://track/1618338",
-      "uri_deezer": "2686140",
+      "uri_deezer": "deezer://track/2686140",
       "awards_nl": []
     },
     {
@@ -280,7 +280,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=SgM3r8xKfGE",
       "uri_tidal": "tidal://track/5002049",
-      "uri_deezer": "6489970",
+      "uri_deezer": "deezer://track/6489970",
       "awards_nl": []
     },
     {
@@ -310,7 +310,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=8_QY5gFQUTg",
       "uri_tidal": "tidal://track/11354176",
-      "uri_deezer": "64848628",
+      "uri_deezer": "deezer://track/64848628",
       "awards_nl": []
     },
     {
@@ -340,7 +340,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=iEPTlhBmwRg",
       "uri_tidal": "tidal://track/91242773",
-      "uri_deezer": "12724819",
+      "uri_deezer": "deezer://track/12724819",
       "awards_nl": []
     },
     {
@@ -370,7 +370,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=ozv4q2ov3Mk",
       "uri_tidal": "tidal://track/75172589",
-      "uri_deezer": "374051471",
+      "uri_deezer": "deezer://track/374051471",
       "awards_nl": []
     },
     {
@@ -400,7 +400,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=rs6Y4kZ8qtw",
       "uri_tidal": "tidal://track/43419928",
-      "uri_deezer": "71608366",
+      "uri_deezer": "deezer://track/71608366",
       "awards_nl": []
     },
     {
@@ -430,7 +430,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=5NV6Rdv1a3I",
       "uri_tidal": "tidal://track/19823990",
-      "uri_deezer": "66609426",
+      "uri_deezer": "deezer://track/66609426",
       "awards_nl": []
     },
     {
@@ -460,7 +460,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=uJ_1HMAGb4k",
       "uri_tidal": "tidal://track/303106814",
-      "uri_deezer": "83841464",
+      "uri_deezer": "deezer://track/83841464",
       "awards_nl": []
     },
     {
@@ -490,7 +490,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=bvC_0foemLY",
       "uri_tidal": "tidal://track/48537288",
-      "uri_deezer": "107471416",
+      "uri_deezer": "deezer://track/107471416",
       "awards_nl": []
     },
     {
@@ -520,7 +520,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=aatr_2MstrI",
       "uri_tidal": "tidal://track/71016752",
-      "uri_deezer": "144393668",
+      "uri_deezer": "deezer://track/144393668",
       "awards_nl": []
     },
     {
@@ -550,7 +550,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=bg1sT4ILG0w",
       "uri_tidal": "tidal://track/25281212",
-      "uri_deezer": "74126483",
+      "uri_deezer": "deezer://track/74126483",
       "awards_nl": []
     },
     {
@@ -580,7 +580,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=xTlNMmZKwpA",
       "uri_tidal": "tidal://track/86900556",
-      "uri_deezer": "482986842",
+      "uri_deezer": "deezer://track/482986842",
       "awards_nl": []
     },
     {
@@ -610,7 +610,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=DiItGE3eAyQ",
       "uri_tidal": "tidal://track/102570097",
-      "uri_deezer": "619949882",
+      "uri_deezer": "deezer://track/619949882",
       "awards_nl": []
     },
     {
@@ -640,7 +640,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=DkeiKbqa02g",
       "uri_tidal": "tidal://track/86980532",
-      "uri_deezer": "482990352",
+      "uri_deezer": "deezer://track/482990352",
       "awards_nl": []
     },
     {
@@ -670,7 +670,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=cSnkWzZ7ZAA",
       "uri_tidal": "tidal://track/15187637",
-      "uri_deezer": "18232117",
+      "uri_deezer": "deezer://track/18232117",
       "awards_nl": []
     },
     {
@@ -700,7 +700,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=jULlUasuxQk",
       "uri_tidal": "tidal://track/109864180",
-      "uri_deezer": "14948701",
+      "uri_deezer": "deezer://track/14948701",
       "awards_nl": []
     },
     {
@@ -730,7 +730,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=2Y6Nne8RvaA",
       "uri_tidal": "tidal://track/66538696",
-      "uri_deezer": "135373112",
+      "uri_deezer": "deezer://track/135373112",
       "awards_nl": []
     },
     {
@@ -760,7 +760,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=M3mJkSqZbX4",
       "uri_tidal": "tidal://track/83528394",
-      "uri_deezer": "451254022",
+      "uri_deezer": "deezer://track/451254022",
       "awards_nl": []
     },
     {
@@ -790,7 +790,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=naW6-WxmMiU",
       "uri_tidal": "tidal://track/74512913",
-      "uri_deezer": "367550531",
+      "uri_deezer": "deezer://track/367550531",
       "awards_nl": []
     },
     {
@@ -820,7 +820,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=uo35R9zQsAI",
       "uri_tidal": "tidal://track/44096511",
-      "uri_deezer": "97786984",
+      "uri_deezer": "deezer://track/97786984",
       "awards_nl": []
     },
     {
@@ -850,7 +850,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=n8F55puGHIs",
       "uri_tidal": "tidal://track/11337274",
-      "uri_deezer": "13704591",
+      "uri_deezer": "deezer://track/13704591",
       "awards_nl": []
     },
     {
@@ -880,7 +880,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=ru0K8uYEZWw",
       "uri_tidal": "tidal://track/60137937",
-      "uri_deezer": "124237488",
+      "uri_deezer": "deezer://track/124237488",
       "awards_nl": []
     },
     {
@@ -910,7 +910,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=Pkh8UtuejGw",
       "uri_tidal": "tidal://track/111610009",
-      "uri_deezer": "698905582",
+      "uri_deezer": "deezer://track/698905582",
       "awards_nl": []
     },
     {
@@ -940,7 +940,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=5gga8E43clk",
       "uri_tidal": "tidal://track/89457165",
-      "uri_deezer": "505204262",
+      "uri_deezer": "deezer://track/505204262",
       "awards_nl": []
     },
     {
@@ -970,7 +970,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=9bZkp7q19f0",
       "uri_tidal": "tidal://track/17060775",
-      "uri_deezer": "60726278",
+      "uri_deezer": "deezer://track/60726278",
       "awards_nl": []
     },
     {
@@ -1000,7 +1000,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=aSkFygPCTwE",
       "uri_tidal": "tidal://track/4468234",
-      "uri_deezer": "4087608",
+      "uri_deezer": "deezer://track/4087608",
       "awards_nl": []
     },
     {
@@ -1030,7 +1030,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=ixkoVwKQaJg",
       "uri_tidal": "tidal://track/113664205",
-      "uri_deezer": "716383912",
+      "uri_deezer": "deezer://track/716383912",
       "awards_nl": []
     },
     {
@@ -1060,7 +1060,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=F57P9C4SAW4",
       "uri_tidal": "tidal://track/14165833",
-      "uri_deezer": "17135110",
+      "uri_deezer": "deezer://track/17135110",
       "awards_nl": []
     },
     {
@@ -1090,7 +1090,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=VUjdiDeJ0xg",
       "uri_tidal": "tidal://track/4282590",
-      "uri_deezer": "7063920",
+      "uri_deezer": "deezer://track/7063920",
       "awards_nl": []
     },
     {
@@ -1120,7 +1120,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=TyHvyGVs42U",
       "uri_tidal": "tidal://track/81154607",
-      "uri_deezer": "427935102",
+      "uri_deezer": "deezer://track/427935102",
       "awards_nl": []
     },
     {
@@ -1150,7 +1150,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=m-M1AtrxztU",
       "uri_tidal": "tidal://track/25467268",
-      "uri_deezer": "73982869",
+      "uri_deezer": "deezer://track/73982869",
       "awards_nl": []
     },
     {
@@ -1180,7 +1180,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=zNl00mOSnJI",
       "uri_tidal": "tidal://track/113664204",
-      "uri_deezer": "716383902",
+      "uri_deezer": "deezer://track/716383902",
       "awards_nl": []
     },
     {
@@ -1210,7 +1210,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=nPLV7lGbmT4",
       "uri_tidal": "tidal://track/23181621",
-      "uri_deezer": "82241406",
+      "uri_deezer": "deezer://track/82241406",
       "awards_nl": []
     },
     {
@@ -1240,7 +1240,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=0Gjx-ZQuQ_Y",
       "uri_tidal": "tidal://track/10905053",
-      "uri_deezer": "3819653",
+      "uri_deezer": "deezer://track/3819653",
       "awards_nl": []
     },
     {
@@ -1270,7 +1270,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=72UO0v5ESUo",
       "uri_tidal": "tidal://track/85666489",
-      "uri_deezer": "623698182",
+      "uri_deezer": "deezer://track/623698182",
       "awards_nl": []
     },
     {
@@ -1300,7 +1300,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=Nn1IeHL5DHY",
       "uri_tidal": "tidal://track/91676",
-      "uri_deezer": "636405",
+      "uri_deezer": "deezer://track/636405",
       "awards_nl": []
     },
     {
@@ -1330,7 +1330,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=jIoEaTN7GGo",
       "uri_tidal": "tidal://track/125328807",
-      "uri_deezer": "831917182",
+      "uri_deezer": "deezer://track/831917182",
       "awards_nl": []
     },
     {
@@ -1360,7 +1360,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=rClUOdS5Zyw",
       "uri_tidal": "tidal://track/45404354",
-      "uri_deezer": "100598482",
+      "uri_deezer": "deezer://track/100598482",
       "awards_nl": []
     },
     {
@@ -1390,7 +1390,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=qaZ0oAh4evU",
       "uri_tidal": "tidal://track/186296962",
-      "uri_deezer": "1096588622",
+      "uri_deezer": "deezer://track/1096588622",
       "awards_nl": []
     },
     {
@@ -1420,7 +1420,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=Jvcv8trEuao",
       "uri_tidal": "tidal://track/144618536",
-      "uri_deezer": "986939372",
+      "uri_deezer": "deezer://track/986939372",
       "awards_nl": []
     },
     {
@@ -1450,7 +1450,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=nskaoVf8PPM",
       "uri_tidal": "tidal://track/11017522",
-      "uri_deezer": "14235829",
+      "uri_deezer": "deezer://track/14235829",
       "awards_nl": []
     },
     {
@@ -1480,7 +1480,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=9sg-A-eS6Ig",
       "uri_tidal": "tidal://track/197646315",
-      "uri_deezer": "142748736",
+      "uri_deezer": "deezer://track/142748736",
       "awards_nl": []
     },
     {
@@ -1510,7 +1510,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=31crA53Dgu0",
       "uri_tidal": "tidal://track/56290502",
-      "uri_deezer": "118986142",
+      "uri_deezer": "deezer://track/118986142",
       "awards_nl": []
     },
     {
@@ -1540,7 +1540,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=NKR2n-G-wdM",
       "uri_tidal": "tidal://track/1287452",
-      "uri_deezer": "565312",
+      "uri_deezer": "deezer://track/565312",
       "awards_nl": []
     },
     {
@@ -1570,7 +1570,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=3l9a1uvoIp0",
       "uri_tidal": "tidal://track/293052226",
-      "uri_deezer": "2269454607",
+      "uri_deezer": "deezer://track/2269454607",
       "awards_nl": []
     },
     {
@@ -1600,7 +1600,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=lzkKzZmRZk8",
       "uri_tidal": "tidal://track/113846918",
-      "uri_deezer": "717723342",
+      "uri_deezer": "deezer://track/717723342",
       "awards_nl": []
     },
     {
@@ -1630,7 +1630,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=R82XGJV_nkU",
       "uri_tidal": "tidal://track/2067495",
-      "uri_deezer": "3528853",
+      "uri_deezer": "deezer://track/3528853",
       "awards_nl": []
     },
     {
@@ -1660,7 +1660,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=fiore9Z5iUg",
       "uri_tidal": "tidal://track/29600745",
-      "uri_deezer": "84908527",
+      "uri_deezer": "deezer://track/84908527",
       "awards_nl": []
     },
     {
@@ -1690,7 +1690,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=Eg4LUvUjUWI",
       "uri_tidal": "tidal://track/108784828",
-      "uri_deezer": "675340022",
+      "uri_deezer": "deezer://track/675340022",
       "awards_nl": []
     },
     {
@@ -1720,7 +1720,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=4fQeaM62mOY",
       "uri_tidal": "tidal://track/60184069",
-      "uri_deezer": "124262674",
+      "uri_deezer": "deezer://track/124262674",
       "awards_nl": []
     },
     {
@@ -1750,7 +1750,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=vs2PWPgdetc",
       "uri_tidal": "tidal://track/112067941",
-      "uri_deezer": "702996922",
+      "uri_deezer": "deezer://track/702996922",
       "awards_nl": []
     },
     {
@@ -1780,7 +1780,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=WYX0sjP6Za8",
       "uri_tidal": "tidal://track/38762",
-      "uri_deezer": "1073437",
+      "uri_deezer": "deezer://track/1073437",
       "awards_nl": []
     },
     {
@@ -1810,7 +1810,7 @@
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=HMqgVXSvwGo",
       "uri_tidal": "tidal://track/32570155",
-      "uri_deezer": "81768004",
+      "uri_deezer": "deezer://track/81768004",
       "awards_nl": []
     }
   ]
