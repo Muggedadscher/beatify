@@ -60,11 +60,27 @@ from .server.views import (
     SetSuddenDeathView,
     SongStatsView,
     StartGameplayView,
+    UpdateLobbyView,
     StartGameView,
     StatsView,
     StatusView,
     SetupView,
     UsageView,
+)
+from .server.library_views import (
+    LibraryPoolStatusView,
+    LibraryPoolBuildView,
+    LibraryPoolExportView,
+    LibraryPoolRefreshView,
+    LibraryPoolBackupView,
+    LibraryRecentSongsView,
+    LibrarySongCorrectView,
+    LibrarySongLookupView,
+    LibraryPoolRestoreView,
+    LibrarySettingsView,
+    LibraryPoolPreviewView,
+    LibraryPlaylistResolveView,
+    LibraryPlaylistGenerateView,
 )
 from .server.websocket import BeatifyWebSocketHandler
 from .server.ws_handlers.admin import _finalize_and_end
@@ -252,6 +268,21 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.http.register_view(TtsTestView(hass))
         hass.http.register_view(StartGameView(hass))
         hass.http.register_view(StartGameplayView(hass))
+        hass.http.register_view(UpdateLobbyView(hass))
+        # Crate Digger endpoints
+        hass.http.register_view(LibraryPoolStatusView(hass))
+        hass.http.register_view(LibraryPoolBuildView(hass))
+        hass.http.register_view(LibraryPoolExportView(hass))
+        hass.http.register_view(LibraryPoolRefreshView(hass))
+        hass.http.register_view(LibraryPoolBackupView(hass))
+        hass.http.register_view(LibraryRecentSongsView(hass))
+        hass.http.register_view(LibrarySongLookupView(hass))
+        hass.http.register_view(LibrarySongCorrectView(hass))
+        hass.http.register_view(LibraryPoolRestoreView(hass))
+        hass.http.register_view(LibrarySettingsView(hass))
+        hass.http.register_view(LibraryPoolPreviewView(hass))
+        hass.http.register_view(LibraryPlaylistResolveView(hass))
+        hass.http.register_view(LibraryPlaylistGenerateView(hass))
         hass.http.register_view(SetSuddenDeathView(hass))  # Issue #827
         hass.http.register_view(EndGameView(hass))
         hass.http.register_view(

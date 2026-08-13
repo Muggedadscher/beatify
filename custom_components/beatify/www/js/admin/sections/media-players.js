@@ -263,6 +263,17 @@ export function handleMediaPlayerSelect(radio, skipSave = false) {
         supportsAmazonMusic,
     };
 
+    // Apply the device to an EXISTING lobby immediately (server no-ops when
+    // no lobby-phase game exists). Without this, rooms keep the device they
+    // were created with and a switch only took effect one game later.
+    try {
+        window.BeatifyAuth?.fetch('/beatify/api/game/update-lobby', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ media_player: entityId }),
+        });
+    } catch (e) { /* fire-and-forget */ }
+
     // Update visual selection
     document.querySelectorAll('.media-player-item').forEach(item => {
         item.classList.remove('is-selected');

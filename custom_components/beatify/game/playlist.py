@@ -18,11 +18,13 @@ from custom_components.beatify.const import (
     PROVIDER_APPLE_MUSIC,
     PROVIDER_DEFAULT,
     PROVIDER_DEEZER,
+    PROVIDER_MA_LIBRARY,
     PROVIDER_SPOTIFY,
     PROVIDER_TIDAL,
     PROVIDER_YOUTUBE_MUSIC,
     URI_PATTERN_APPLE_MUSIC,
     URI_PATTERN_DEEZER,
+    URI_PATTERN_MA_LIBRARY,
     URI_PATTERN_SPOTIFY,
     URI_PATTERN_TIDAL,
     URI_PATTERN_YOUTUBE_MUSIC,
@@ -44,6 +46,10 @@ _URI_FIELDS = [
     ),
     ("uri_tidal", URI_PATTERN_TIDAL, "tidal://track/{id}"),
     ("uri_deezer", URI_PATTERN_DEEZER, "deezer://track/{id}"),
+    # Crate Digger: Music Assistant library URIs. Permissive by
+    # design — the provider prefix varies per MA instance/provider
+    # (library://track/123, plex--<id>://track/<key>, jellyfin--…).
+    ("uri_ma_library", URI_PATTERN_MA_LIBRARY, "library://track/{id}"),
 ]
 
 
@@ -790,6 +796,13 @@ def get_song_uri(
     if provider == PROVIDER_DEEZER:
         # For Deezer, only use uri_deezer
         return song.get("uri_deezer") or None
+    if provider == PROVIDER_MA_LIBRARY:
+        # Crate Digger: the URI comes from the user's own Music
+        # Assistant library, resolved during the library scan. Playback falls
+        # back to an artist+title lookup in MA when a stored URI no longer
+        # resolves (library rebuilds change item ids), so a missing URI here
+        # is not fatal — see services/media_player.py.
+        return song.get("uri_ma_library") or None
     if provider == PROVIDER_AMAZON_MUSIC:
         # Amazon Music uses Alexa text search — there is no real per-track URI.
         # We still must return a *distinct* identity per song, because the

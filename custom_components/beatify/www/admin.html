@@ -57,6 +57,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;900&display=swap" rel="stylesheet">
     <!-- Story 18.4: Use minified CSS in production -->
     <link rel="stylesheet" href="/beatify/static/css/styles.min.css?v={{ASSET_VER}}">
+    <link rel="stylesheet" href="/beatify/static/css/library.min.css?v={{ASSET_VER}}">
 </head>
 <body class="theme-dark home-mode">
     <!-- First-run wizard takeover (see DESIGN.md ## Patterns → First-run wizard) -->
@@ -98,6 +99,15 @@
 
         <!-- Frame 3: playlist (v3.3: Playlist Hub replaces flat list) -->
         <section class="wiz-frame wiz-frame-playlist" data-frame="3" hidden>
+            <!-- Crate Digger: when the library provider is chosen in step 2,
+                 wizard.js hides the playlist hub and mounts the library panel
+                 here instead (mountLibraryPanel, mode: 'wizard'). -->
+            <div id="wiz-library-wrap" class="wiz-body hidden">
+                <div class="wiz-eyebrow" data-i18n="wizard.step3lib.eyebrow">Step 3 · Your library</div>
+                <h2 class="wiz-title" data-i18n="wizard.step3lib.title">Tune your library game</h2>
+                <p class="wiz-sub" data-i18n="wizard.step3lib.sub">The scan runs in the background — you can finish setup while it works.</p>
+                <div id="wiz-library-root"></div>
+            </div>
             <div id="playlist-hub-root" class="playlist-hub-host"></div>
             <!-- Legacy request button stays mounted but invisible — hub triggers it via click().
                  Inline display:none so the .btn class can't override the HTML hidden attr. -->
@@ -340,9 +350,19 @@
                     </svg>
                     Amazon Music
                 </button>
+                <button type="button" class="chip" aria-pressed="false" data-provider="ma_library">
+                    <svg class="provider-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-6h6v6"/><circle cx="12" cy="11" r="1.6"/><path d="M13.6 11V8.6l2.4-.6"/>
+                    </svg>
+                    <span data-i18n="admin.providerMyLibrary">Crate Digger</span>
+                </button>
             </div>
             <p id="provider-hint" class="hint-text hidden"></p>
             <div id="provider-warning" class="warning-box hidden"></div>
+            <!-- Crate Digger (ma_library) settings — shown only when the
+                 provider chip is selected. Backed by the
+                 /beatify/api/library-pool endpoints. -->
+            <div id="library-settings" class="hidden" aria-live="polite"></div>
         </section>
 
         <!-- Playlists Section - Always expanded -->

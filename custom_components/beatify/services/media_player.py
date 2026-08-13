@@ -30,6 +30,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORM_CAPABILITIES: dict[str, dict[str, Any]] = {
     "music_assistant": {
         "supported": True,
+        "ma_library": True,
         "spotify": True,
         "apple_music": True,
         "youtube_music": True,
@@ -220,6 +221,8 @@ _PROVIDER_URI_FIELDS: dict[str, tuple[str, ...]] = {
     "youtube_music": ("uri_youtube_music",),
     "tidal": ("uri_tidal",),
     "deezer": ("uri_deezer",),
+    # Crate Digger: URIs come from the user's own MA library.
+    "ma_library": ("uri_ma_library",),
     # Amazon Music uses Alexa text search — no URI fields; playback via
     # _play_via_alexa() with content_type="AMAZON_MUSIC".
     "amazon_music": (),
@@ -490,7 +493,7 @@ class MediaPlayerService:
             )
             self._record_error("PLAYBACK_TIMEOUT", f"Timed out playing: {uri}")
             return False
-        except (HomeAssistantError, ServiceNotFound, ConnectionError, OSError) as err:  # noqa: BLE001
+        except (HomeAssistantError, ServiceNotFound, ConnectionError, OSError) as err:
             _LOGGER.error("Playback failed for %s: %s", uri, err)  # noqa: TRY400
             self._record_error("PLAYBACK_FAILURE", f"Failed to play {uri}: {err}")
             return False
@@ -754,6 +757,25 @@ class MediaPlayerService:
                 self.last_failure_reason = None
                 return True
 
+        # Library provider: the stored URI is normally exact, but the item may
+        # have moved/changed since the pool was built. Before giving up, let MA
+        # resolve by name+artist -- the confirmation machinery in _try_ma_play
+        # (expected-title matching) still guards against a wrong-track match.
+        if self._provider == "ma_library" and expected_title and expected_artist:
+            _LOGGER.info(
+                "MA library fallback: resolving by name -- %s - %s",
+                expected_artist,
+                expected_title,
+            )
+            if await self._try_ma_play(
+                expected_title,
+                expected_title,
+                expected_artist,
+                artist_filter=expected_artist,
+            ):
+                self.last_failure_reason = None
+                return True
+
         _LOGGER.error(
             "MA playback: all %d URI candidate(s) failed for %s - %s (#768)",
             len(candidates),
@@ -765,7 +787,11 @@ class MediaPlayerService:
         return False
 
     async def _try_ma_play(
-        self, uri: str, expected_title: str, expected_artist: str = ""
+        self,
+        uri: str,
+        expected_title: str,
+        expected_artist: str = "",
+        artist_filter: str | None = None,
     ) -> bool:
         """
         Attempt a single MA `play_media` call and wait for playback confirmation.
@@ -807,10 +833,24 @@ class MediaPlayerService:
             position_updated_before = None
 
         # Fire-and-forget the service call — blocking=True hangs on MA+YTMusic
+        # enqueue=replace: each round's track REPLACES the queue. Without it
+        # MA keeps prior rounds queued, and after a TTS announcement the queue
+        # resume can advance into stale entries — observed as the player
+        # returning to PREVIOUS rounds' songs, sometimes mid-round.
+        service_data: dict[str, Any] = {
+            "media_id": uri,
+            "media_type": "track",
+            "enqueue": "replace",
+        }
+        # Crate Digger name fallback: when a stored library URI no longer
+        # resolves (library rebuilds change item ids), media_id carries the
+        # track NAME and the artist disambiguates it inside MA's resolver.
+        if artist_filter:
+            service_data["artist"] = artist_filter
         await self._hass.services.async_call(
             "music_assistant",
             "play_media",
-            {"media_id": uri, "media_type": "track"},
+            service_data,
             target={"entity_id": self._entity_id},
             blocking=False,
         )
@@ -1417,8 +1457,8 @@ class MediaPlayerService:
                 "media_stop",
                 {"entity_id": self._entity_id},
             )
-            return True  # noqa: TRY300
-        except (HomeAssistantError, ServiceNotFound) as err:  # noqa: BLE001
+            return True
+        except (HomeAssistantError, ServiceNotFound) as err:
             _LOGGER.error("Failed to stop playback: %s", err)  # noqa: TRY400
             self._record_error("MEDIA_PLAYER_ERROR", f"Failed to stop: {err}")
             return False
@@ -1437,8 +1477,8 @@ class MediaPlayerService:
                 "media_play",
                 {"entity_id": self._entity_id},
             )
-            return True  # noqa: TRY300
-        except (HomeAssistantError, ServiceNotFound) as err:  # noqa: BLE001
+            return True
+        except (HomeAssistantError, ServiceNotFound) as err:
             _LOGGER.error("Failed to resume playback: %s", err)  # noqa: TRY400
             self._record_error("MEDIA_PLAYER_ERROR", f"Failed to resume: {err}")
             return False
@@ -1479,8 +1519,8 @@ class MediaPlayerService:
                     "volume_level": max(0.0, min(1.0, level)),
                 },
             )
-            return True  # noqa: TRY300
-        except (HomeAssistantError, ServiceNotFound) as err:  # noqa: BLE001
+            return True
+        except (HomeAssistantError, ServiceNotFound) as err:
             _LOGGER.error("Failed to set volume: %s", err)  # noqa: TRY400
             self._record_error("MEDIA_PLAYER_ERROR", f"Failed to set volume: {err}")
             return False
@@ -1513,7 +1553,7 @@ class MediaPlayerService:
                     "seek_position": new_pos,
                 },
             )
-            return True  # noqa: TRY300
+            return True
         except (HomeAssistantError, ServiceNotFound, ValueError, TypeError) as err:  # noqa: BLE001
             _LOGGER.error("Failed to seek media: %s", err)  # noqa: TRY400
             self._record_error("MEDIA_PLAYER_ERROR", f"Failed to seek: {err}")
@@ -1613,7 +1653,7 @@ class MediaPlayerService:
                 msg,
             )
             return False, msg
-        except (HomeAssistantError, ServiceNotFound, ConnectionError, OSError) as err:  # noqa: BLE001
+        except (HomeAssistantError, ServiceNotFound, ConnectionError, OSError) as err:
             msg = str(err)
             _LOGGER.warning("Media player %s not responsive: %s", self._entity_id, msg)
             return False, msg
@@ -1723,7 +1763,7 @@ def _build_media_player_list(
     """
     # Late import mirrors the callers: entity_registry isn't importable in the
     # unit-test env without a full HA setup. (noqa: PLC0415)
-    from homeassistant.helpers import entity_registry as er  # noqa: PLC0415
+    from homeassistant.helpers import entity_registry as er
 
     ent_reg = er.async_get(hass)
 
@@ -1785,6 +1825,10 @@ def _build_media_player_list(
                 "supports_youtube_music": capabilities.get("youtube_music", False),
                 "supports_tidal": capabilities.get("tidal", False),
                 "supports_deezer": capabilities.get("deezer", False),
+                # Crate Digger plays from the host's own Music Assistant
+                # library, so only MA-backed players can serve it. The wizard
+                # greys the provider out for speakers that can't.
+                "supports_ma_library": capabilities.get("ma_library", False),
                 "playback_method": capabilities.get("method", "uri"),
                 "warning": capabilities.get("warning"),
                 "caveat": capabilities.get("caveat"),
@@ -1817,7 +1861,7 @@ async def async_get_media_players(hass: HomeAssistant) -> list[dict[str, Any]]:
     # Late import: homeassistant.helpers.entity_registry is not available in
     # the test environment without a full HA setup, so we import it here to
     # avoid ImportError during unit tests.  (noqa: PLC0415)
-    from homeassistant.helpers import entity_registry as er  # noqa: PLC0415
+    from homeassistant.helpers import entity_registry as er
 
     # Get entity registry to check which platform created each entity
     ent_reg = er.async_get(hass)
@@ -1845,7 +1889,7 @@ async def async_get_media_players_with_remap(
     registry walk. Behaviour of the two returned values is identical to calling
     those functions individually.
     """
-    from homeassistant.helpers import entity_registry as er  # noqa: PLC0415
+    from homeassistant.helpers import entity_registry as er
 
     ent_reg = er.async_get(hass)
     ma_by_unique_id, native_twin_remap = _collect_ma_twin_maps(ent_reg)
@@ -1873,7 +1917,7 @@ async def async_get_native_twin_remap(hass: HomeAssistant) -> dict[str, str]:
     """
     # Late import: mirrors async_get_media_players — entity_registry is not
     # importable in the unit-test env without a full HA setup. (noqa: PLC0415)
-    from homeassistant.helpers import entity_registry as er  # noqa: PLC0415
+    from homeassistant.helpers import entity_registry as er
 
     ent_reg = er.async_get(hass)
 

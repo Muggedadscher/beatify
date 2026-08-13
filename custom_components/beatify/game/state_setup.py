@@ -165,7 +165,7 @@ class GameSetupMixin:
             ValueError: If round_duration is outside valid range (10-60)
 
         """
-        from .state import GamePhase  # noqa: PLC0415
+        from .state import GamePhase
 
         # Validate round duration (Story 13.1)
         if not (ROUND_DURATION_MIN <= round_duration <= ROUND_DURATION_MAX):
@@ -229,6 +229,13 @@ class GameSetupMixin:
         # provider until HA itself restarts. rematch_game() intentionally preserves
         # these values, so this reset stays scoped to create_game.
         self._media_player_service = None
+        # Same recycling mechanism as the media service above, same fix.
+        # configure_tts / configure_party_lights are only called when a config
+        # is supplied, so with TTS or lights DISABLED nothing cleared the
+        # previous game's service: a new game announced on the PREVIOUS game's
+        # speaker and drove the previous game's lights (hardware-confirmed).
+        self._tts_service = None
+        self._party_lights = None
         self.join_url = f"{base_url}/beatify/play?game={self.game_id}"
         self.players = {}
 
@@ -390,7 +397,7 @@ class GameSetupMixin:
 
     async def end_game(self) -> None:
         """End the current game and reset state."""
-        from .state import GamePhase  # noqa: PLC0415
+        from .state import GamePhase
 
         _LOGGER.info("Game ended: %s", self.game_id)
         self.cancel_timer()
@@ -440,7 +447,7 @@ class GameSetupMixin:
 
     def rematch_game(self) -> None:
         """Reset game for rematch, preserving connected players (Issue #108)."""
-        from .state import GamePhase  # noqa: PLC0415
+        from .state import GamePhase
 
         _LOGGER.info("Rematch initiated from game: %s", self.game_id)
         self.cancel_timer()
@@ -526,6 +533,43 @@ class GameSetupMixin:
             self.total_rounds,
             self.game_id,
         )
+
+    def replace_songs(self, songs: list[dict[str, Any]]) -> bool:
+        """Swap the game's song list while still in LOBBY (Crate Digger).
+
+        A room freezes its songs at creation, but the lobby's reset button
+        creates the next room immediately — so a popularity/genre change made
+        afterwards missed its own game and only took effect one game later.
+        The library provider therefore regenerates songs from the CURRENT
+        settings in a pre-start hook and installs them here.
+
+        Rebuilds the manager through ``_build_playlist_manager`` so ramp-up
+        ordering (#1726) and storefront detection behave exactly as they do at
+        create/rematch, and re-derives ``total_rounds`` from the filtered
+        playable pool (#1377) rather than the raw list. Returns False (leaving
+        the existing songs untouched) if the new set yields nothing playable.
+        """
+        from .state import GamePhase
+
+        if self.phase != GamePhase.LOBBY or not songs:
+            return False
+        manager = self._build_playlist_manager(
+            songs,
+            self.provider,
+            self.storefront,
+            bool(getattr(self, "rampup_order_enabled", False)),
+        )
+        if manager.get_total_count() <= 0:
+            _LOGGER.warning(
+                "replace_songs: %d song(s) yielded no playable tracks — "
+                "keeping the existing playlist",
+                len(songs),
+            )
+            return False
+        self.songs = songs
+        self._playlist_manager = manager
+        self.total_rounds = manager.get_total_count()
+        return True
 
     def _build_playlist_manager(
         self,

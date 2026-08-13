@@ -49,7 +49,7 @@ const BUNDLES = [
 // .min.css, never the readable one, so anything missing here does not reach a
 // screen. Sourcemaps are emitted alongside because the committed tree has them
 // and dropping them would take away the only way to debug the shipped CSS.
-const CSS = ["styles", "analytics", "dashboard"];
+const CSS = ["styles", "analytics", "dashboard", "library"];
 
 /** Build one target and return { path, contents } without touching disk. */
 async function compile(target) {

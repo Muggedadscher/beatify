@@ -10,6 +10,7 @@
  * Pure helpers are also imported by custom_components/beatify/www/js/__tests__/wizard.test.js.
  */
 
+import { mountLibraryPanel } from './admin/sections/library.js';
 import {
     mount as plhMount,
     setSelection as plhSetSelection,
@@ -389,6 +390,39 @@ function _setProgress(step) {
     });
 }
 
+let _wizLibraryInst = null;
+
+function _isLibraryProvider() {
+    return chosenProvider === 'ma_library';
+}
+
+/**
+ * Step 3 has two faces: the Playlist Hub for streaming providers, or the
+ * Crate Digger panel (settings + background scan) for ma_library — which
+ * GENERATES its playlist, so picking curated ones makes no sense there.
+ */
+function _syncStep3Mode() {
+    const hub = document.getElementById('playlist-hub-root');
+    const wrap = document.getElementById('wiz-library-wrap');
+    if (!hub || !wrap) return;
+    const isLib = _isLibraryProvider();
+    hub.classList.toggle('hidden', isLib);
+    wrap.classList.toggle('hidden', !isLib);
+    // Upstream hides the wizard's CTA band on frame 3 because the Playlist
+    // Hub brings its own Back/Continue. Crate Digger has no hub, so without
+    // this flag step 3 has no navigation at all. library.css restores the
+    // band for `body.wiz-lib-step`.
+    document.body.classList.toggle('wiz-lib-step', isLib);
+    if (isLib) {
+        const root = document.getElementById('wiz-library-root');
+        if (root && !_wizLibraryInst) {
+            _wizLibraryInst = mountLibraryPanel(root, { mode: 'wizard', onChanged: _persistGameSettings });
+        } else if (_wizLibraryInst) {
+            _wizLibraryInst.refresh();
+        }
+    }
+}
+
 function _showFrame(n) {
     document.querySelectorAll('.wiz-frame').forEach((frame) => {
         const frameNum = parseInt(frame.dataset.frame, 10);
@@ -396,6 +430,11 @@ function _showFrame(n) {
         else frame.setAttribute('hidden', '');
     });
     currentStep = n;
+    if (n === 3) {
+        _syncStep3Mode();
+    } else {
+        document.body.classList.remove('wiz-lib-step');
+    }
     _setProgress(Math.min(n, TOTAL_STEPS));
     _updateCta();
     // Persist wizard state so refresh / revisit resumes at the right step.
@@ -414,7 +453,7 @@ function _updateCta() {
     // Step 3 hands the entire CTA to the Playlist Hub — hide the legacy
     // wiz-next AND wiz-back so we don't stack chrome. Hub renders its
     // own Back + Continue in a single row.
-    if (currentStep === 3) {
+    if (currentStep === 3 && !_isLibraryProvider()) {
         nextBtn.style.display = 'none';
         backBtn.style.display = 'none';
     } else {
@@ -430,6 +469,11 @@ function _updateCta() {
         // Block Continue unless the picked provider is supported on the picked
         // speaker — prevents #772-style silent failures at playback time.
         nextBtn.disabled = !chosenProvider || !_providerSupported(chosenProvider);
+    } else if (currentStep === 3 && _isLibraryProvider()) {
+        // Crate Digger generates its own playlist — nothing to select, so
+        // Continue is always available.
+        nextBtn.textContent = _t('wizard.continue', 'Continue');
+        nextBtn.disabled = false;
     } else if (currentStep === 3) {
         // Not shown — hub's Continue takes over. Keep the disabled/text
         // logic so if CSS ever un-hides it the behavior is correct.
@@ -557,6 +601,12 @@ const PROVIDERS = [
     { id: 'tidal', label: 'Tidal' },
     { id: 'deezer', label: 'Deezer' },
     { id: 'amazon_music', label: 'Amazon Music' },
+    {
+        id: 'ma_library',
+        label: 'Crate Digger',
+        sub: 'Your personal Music Assistant library',
+        subKey: 'wizard.providerLibrarySub',
+    },
 ];
 
 // Lock icon SVG for dimmed provider chips (#772 UX).
@@ -643,7 +693,16 @@ function _renderProviders() {
         // (these are native <button>s, so role + Enter/Space activation are native).
         const pressed = active && supported ? 'true' : 'false';
         const aria = supported ? `aria-pressed="${pressed}"` : 'aria-pressed="false" aria-disabled="true"';
-        return `<button type="button" class="${classes.join(' ')}" data-provider="${p.id}" ${aria}><span>${p.label}</span>${lock}</button>`;
+        // An optional second line explains a provider whose name alone
+        // doesn't say what it plays — Crate Digger draws from the host's own
+        // Music Assistant library, which new players can't guess.
+        const sub = p.sub
+            ? `<span class="wiz-provider-sub">${_t(p.subKey || '', p.sub)}</span>`
+            : '';
+        const labelHtml = sub
+            ? `<span class="wiz-provider-label"><span>${p.label}</span>${sub}</span>`
+            : `<span>${p.label}</span>`;
+        return `<button type="button" class="${classes.join(' ')}${sub ? ' wiz-provider-chip--stacked' : ''}" data-provider="${p.id}" ${aria}>${labelHtml}${lock}</button>`;
     }).join('');
     list.querySelectorAll('[data-provider]').forEach((btn) => {
         btn.addEventListener('click', () => {
