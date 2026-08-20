@@ -199,7 +199,7 @@ export function updateRevealView(data) {
         renderDuel(currentPlayer, song.year);
         renderChipRow(currentPlayer, data);
     }
-    renderScoreRow(currentPlayer);
+    renderScoreRow(currentPlayer, data);
 
     // Cache context for bottom-sheet renderers that run on demand.
     state.lastRevealContext = {
@@ -1125,7 +1125,7 @@ function computeTotalPoints(player) {
 /**
  * Populate the big score row: "You earned · 1 year off · +120".
  */
-function renderScoreRow(player) {
+function renderScoreRow(player, data) {
     var ptsEl = document.getElementById('reveal-total-pts');
     var subEl = document.getElementById('score-row-subtitle');
     if (!ptsEl) return;
@@ -1136,14 +1136,52 @@ function renderScoreRow(player) {
     if (subEl) {
         if (!player || player.missed_round) {
             subEl.textContent = utils.t('reveal.noSubmission') || 'No guess submitted';
+        } else if (player.years_off == null) {
+            // Title & Artist mode has no year distance (years_off is null), so the
+            // year-off label would always read "exact" (Volltreffer!) — even on a
+            // 0-point round. Use the real per-field title/artist verdict instead.
+            subEl.textContent = _taScoreVerdict(player, data);
         } else {
-            var yo = player.years_off != null ? player.years_off : 0;
+            var yo = player.years_off;
             var key = yo === 0 ? 'reveal.exact'
                     : yo === 1 ? 'reveal.yearOff'
                     : 'reveal.yearsOff';
             subEl.textContent = utils.t(key, { years: yo }) || (yo + ' years off');
         }
     }
+}
+
+/**
+ * Title & Artist score-row verdict: "won both / got one / not this time" from
+ * the player's actual per-field result. Handles both the single-shot mode
+ * (own entry in title_artist_challenge.results) and the Race variant (the
+ * per-field winners in title_artist_challenge.race).
+ * @param {Object} player - current player
+ * @param {Object} data - REVEAL state payload
+ * @returns {string} localized verdict text
+ */
+function _taScoreVerdict(player, data) {
+    var ta = data && data.title_artist_challenge;
+    var me = player && player.name;
+    var titleGot = false;
+    var artistGot = false;
+    if (ta && ta.race) {
+        titleGot = ta.race.title_winner === me;
+        artistGot = ta.race.artist_winner === me;
+    } else if (ta && Array.isArray(ta.results)) {
+        var own = null;
+        for (var i = 0; i < ta.results.length; i++) {
+            if (ta.results[i].player === me) { own = ta.results[i]; break; }
+        }
+        if (own) {
+            var GOT = { exact: 1, fuzzy: 1, near_miss_accepted: 1 };
+            titleGot = !!GOT[own.title_status];
+            artistGot = !!GOT[own.artist_status];
+        }
+    }
+    if (titleGot && artistGot) return utils.t('titleArtist.verdictWin') || 'Nailed it!';
+    if (titleGot || artistGot) return utils.t('titleArtist.verdictPartial') || 'Got one!';
+    return utils.t('titleArtist.verdictMiss') || 'Not this time';
 }
 
 // ---------- Reveal standings (Round-Delta Ledger, design-shotgun A) ----------

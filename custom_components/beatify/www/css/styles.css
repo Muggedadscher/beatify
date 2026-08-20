@@ -15689,6 +15689,14 @@ body.theme-dark .your-result-stats .stat-value {
 .ta-race-feed-item.is-correct { background: rgba(0, 255, 128, 0.1); }
 .ta-race-feed-item.is-correct .ta-race-feed-guess { color: var(--color-success-neon); }
 
+/* TV dashboard race panel (PLAYING) — reuses .ta-race-* chips/feed items */
+.dashboard-race-panel { margin-bottom: 16px; }
+.dashboard-race-panel.hidden { display: none; }
+.dashboard-race-status { justify-content: flex-start; margin-bottom: 8px; }
+.dashboard-race-status .ta-race-chip { font-size: 15px; padding: 6px 14px; }
+.dashboard-race-feed { max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; }
+.dashboard-race-feed .ta-race-feed-item { font-size: 15px; }
+
 /* Wizard: Race variant sub-toggle under the Title & Artist core-mode card */
 .wiz-subtoggle {
     display: flex;
