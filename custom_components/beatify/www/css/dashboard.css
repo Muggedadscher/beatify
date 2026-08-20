@@ -2311,7 +2311,7 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 22px;
+    gap: 16px;
     padding: 0;
 }
 #dashboard-reveal .reveal-broadcast .reveal-stage {
@@ -2321,7 +2321,7 @@
     grid-template-columns: 1.45fr 0.9fr;
     grid-template-rows: auto 1fr;
     grid-template-areas: "now standings" "results standings";
-    gap: 24px;
+    gap: 18px;
 }
 #dashboard-reveal .reveal-nowcard { grid-area: now; }
 #dashboard-reveal .reveal-results { grid-area: results; min-height: 0; }
@@ -2331,15 +2331,19 @@
 #dashboard-reveal .reveal-nowcard {
     display: flex;
     align-items: center;
-    gap: 28px;
+    gap: clamp(18px, 2.6vw, 28px);
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 24px;
-    padding: 24px 28px;
+    /* Responsive so the now-card shrinks on shorter displays (or a browser
+       chrome / HA frame that steals vertical room), freeing space for the
+       results + fun fact below instead of clipping them. Full-size on a real
+       1080p TV. */
+    padding: clamp(16px, 2.4vh, 24px) 28px;
 }
 #dashboard-reveal .reveal-broadcast .dashboard-album-container--reveal {
-    width: 200px;
-    height: 200px;
+    width: clamp(140px, 17vh, 200px);
+    height: clamp(140px, 17vh, 200px);
     flex-shrink: 0;
     border-radius: 18px;
     overflow: hidden;
@@ -2358,11 +2362,11 @@
 }
 #dashboard-reveal .reveal-broadcast .reveal-title {
     font-family: var(--font-display, 'Outfit'), sans-serif;
-    font-weight: 900; font-size: 52px; line-height: 1.02; color: #fff;
+    font-weight: 900; font-size: clamp(40px, 5vh, 52px); line-height: 1.02; color: #fff;
     letter-spacing: -0.01em;
 }
 #dashboard-reveal .reveal-broadcast .reveal-artist {
-    font-size: 30px; font-weight: 600; color: var(--color-text-neon-muted, #b3b3c2); margin-top: 4px;
+    font-size: clamp(24px, 2.8vh, 30px); font-weight: 600; color: var(--color-text-neon-muted, #b3b3c2); margin-top: 4px;
 }
 /* Year-mode artist-challenge chip */
 #dashboard-reveal .reveal-artist-challenge {
@@ -2447,7 +2451,12 @@
 #dashboard-reveal .reveal-standings-card #reveal-leaderboard .leaderboard-entry {
     flex: 1 1 0;
     min-height: 0;
-    max-height: 64px;
+    /* Rows grow to fill the card (capped), so with a typical party of a few
+       players each row gets taller and the cqh-scaled text reads far bigger on
+       a TV. Many players (>~11) shrink below the cap and scroll, as before. The
+       cap rose from 64px once the lower-third band's footprint was reduced
+       below, freeing the vertical room this needs. */
+    max-height: 88px;
     container-type: size;
 }
 /* Groessen in cqh loesen gegen die eigene (geflexte) Zeilenhoehe auf. */
@@ -2476,6 +2485,11 @@
     border-radius: 24px;
     padding: 18px 22px;
     display: flex; flex-direction: column;
+    /* Clip within the grid cell. Without this, a long fun fact overflowed the
+       cell and painted OVER the lower-third answer band below (the "vermurkst"
+       reveal). Now it stays inside its card and the band is never covered. */
+    min-height: 0;
+    overflow: hidden;
 }
 #dashboard-reveal .reveal-results .top-guesses-title {
     font-family: var(--font-display, 'Outfit'), sans-serif;
@@ -2495,7 +2509,13 @@
 #dashboard-reveal .reveal-results .top-guess-name { font-weight: 700; color: #fff; }
 #dashboard-reveal .reveal-results .top-guess-year { color: var(--color-text-neon-muted, #b3b3c2); font-weight: 500; margin-left: 6px; font-variant-numeric: tabular-nums; }
 #dashboard-reveal .reveal-results .top-guess-points { color: var(--color-success-neon, #39ff14); font-weight: 800; font-variant-numeric: tabular-nums; }
-#dashboard-reveal .reveal-results .dashboard-fun-fact { margin-top: 14px; font-size: 18px; color: var(--color-text-neon-muted, #b3b3c2); display: flex; gap: 8px; }
+#dashboard-reveal .reveal-results .dashboard-fun-fact { margin-top: 14px; font-size: clamp(16px, 1.9vh, 20px); line-height: 1.4; color: var(--color-text-neon-muted, #b3b3c2); display: flex; gap: 8px; overflow: hidden; }
+/* If the display is too short to show the whole fact, clamp to whole lines with
+   an ellipsis rather than a mid-word hard cut. The fact text is the second span. */
+#dashboard-reveal .reveal-results .dashboard-fun-fact .fun-fact-text {
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 6;
+    overflow: hidden;
+}
 #dashboard-reveal .reveal-results .dashboard-fun-fact.hidden { display: none; }
 
 /* --- Lower-third announce band ---
@@ -2508,14 +2528,18 @@
 #dashboard-reveal .reveal-lowerthird {
     flex-shrink: 0;
     border-radius: 24px;
-    padding: 18px 36px;
+    padding: 16px 34px;
     background:
         linear-gradient(90deg, rgba(255, 45, 106, 0.14), rgba(0, 245, 255, 0.14)),
         rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.14);
     display: flex; align-items: center; justify-content: center;
-    min-height: 180px;
-    max-height: 42vh;
+    /* Trimmed from 180px/42vh so the band keeps a tight footprint at the bottom
+       and never gets clipped off-screen on shorter displays; the answer text
+       below is clamped to the viewport height so it scales instead of
+       overflowing the band. */
+    min-height: 120px;
+    max-height: 34vh;
     position: relative;
     overflow: hidden;
 }
@@ -2567,12 +2591,13 @@
 #dashboard-reveal .reveal-lowerthird .dashboard-ta-live.hidden,
 #dashboard-reveal .reveal-lowerthird .dashboard-ta-outcomes.hidden { display: none; }
 #dashboard-reveal .reveal-lowerthird .dashboard-ta-title {
-    font-family: var(--font-display, 'Outfit'), sans-serif; font-weight: 900; font-size: 72px; line-height: 1;
+    font-family: var(--font-display, 'Outfit'), sans-serif; font-weight: 900;
+    font-size: clamp(34px, 6.4vh, 72px); line-height: 1.02;
     background: linear-gradient(90deg, #ff2d6a, #00f5ff);
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
 }
-#dashboard-reveal .reveal-lowerthird .dashboard-ta-sep { font-size: 40px; color: var(--color-text-neon-muted, #b3b3c2); }
-#dashboard-reveal .reveal-lowerthird .dashboard-ta-artist { font-size: 40px; font-weight: 700; color: #fff; }
+#dashboard-reveal .reveal-lowerthird .dashboard-ta-sep { font-size: clamp(20px, 3vh, 40px); color: var(--color-text-neon-muted, #b3b3c2); }
+#dashboard-reveal .reveal-lowerthird .dashboard-ta-artist { font-size: clamp(22px, 3.6vh, 40px); font-weight: 700; color: #fff; }
 
 /* ==========================================================================
    #1712 / #1713 / #1717 — TV legibility for the long-lived non-game states
