@@ -794,6 +794,124 @@ async def handle_title_artist_guess(
     )
 
 
+async def handle_title_artist_race_guess(
+    handler: BeatifyWebSocketHandler,
+    ws: web.WebSocketResponse,
+    data: dict,
+    game_state: GameState,
+) -> None:
+    """Handle one Race-mode title/artist attempt (live, first-correct-wins).
+
+    Unlike handle_title_artist_guess this allows UNLIMITED attempts: the player
+    is never marked ``submitted`` and there is no per-player one-shot lock. Each
+    attempt is classified, pushed to the live feed broadcast to everyone, and the
+    first correct guess of each field claims its points. The round ends (early
+    reveal) once both fields are solved.
+    """
+    if game_state.phase != GamePhase.PLAYING:
+        await ws.send_json(
+            {
+                "type": "error",
+                "code": ERR_INVALID_ACTION,
+                "message": "Can only guess during PLAYING phase",
+            }
+        )
+        return
+
+    # #1662: reject late guesses in the window between deadline expiry and the
+    # end_round phase flip.
+    if game_state.is_deadline_passed():
+        await ws.send_json(
+            {
+                "type": "error",
+                "code": ERR_ROUND_EXPIRED,
+                "message": "Time's up!",
+            }
+        )
+        return
+
+    player = game_state.get_player_by_ws(ws)
+    if not player:
+        await ws.send_json(
+            {
+                "type": "error",
+                "code": ERR_NOT_IN_GAME,
+                "message": "Not in game",
+            }
+        )
+        return
+
+    # #1748: reject guesses from a Sudden Death eliminated player.
+    if player.eliminated:
+        await ws.send_json(
+            {
+                "type": "error",
+                "code": ERR_ELIMINATED,
+                "message": "You have been eliminated",
+            }
+        )
+        return
+
+    if not game_state.title_artist_challenge or not game_state.title_artist_race_mode:
+        await ws.send_json(
+            {
+                "type": "error",
+                "code": ERR_NO_TITLE_ARTIST_CHALLENGE,
+                "message": "No title & artist race this round",
+            }
+        )
+        return
+
+    title = data.get("title", "")
+    artist = data.get("artist", "")
+    if not isinstance(title, str):
+        title = ""
+    if not isinstance(artist, str):
+        artist = ""
+    if not title.strip() and not artist.strip():
+        await ws.send_json(
+            {
+                "type": "error",
+                "code": ERR_INVALID_ACTION,
+                "message": "Guess cannot be empty",
+            }
+        )
+        return
+
+    guess_time = game_state.current_time()
+    result = game_state.submit_race_guess(player.name, title, artist, guess_time)
+
+    await ws.send_json(
+        {
+            "type": "title_artist_race_guess_ack",
+            "title_status": result["title_status"],
+            "artist_status": result["artist_status"],
+            "won_title": result["won_title"],
+            "won_artist": result["won_artist"],
+        }
+    )
+
+    # Broadcast the live feed / solved state to the whole room. Skip the extra
+    # frame when this guess completes the round — trigger_early_reveal_if_complete
+    # broadcasts via the round-end callback (mirrors handle_title_artist_guess).
+    if not game_state.check_all_guesses_complete():
+        # #1763: in-round progress → debounce (coalesces bursts).
+        await handler.debounced_broadcast_state()
+
+    await game_state.trigger_early_reveal_if_complete()
+
+    _LOGGER.debug(
+        "Race guess from %s: title=%r (%s, won=%s), artist=%r (%s, won=%s)",
+        player.name,
+        title,
+        result["title_status"],
+        result["won_title"],
+        artist,
+        result["artist_status"],
+        result["won_artist"],
+    )
+
+
 async def handle_title_artist_vote(
     handler: BeatifyWebSocketHandler,
     ws: web.WebSocketResponse,

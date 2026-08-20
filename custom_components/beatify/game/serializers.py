@@ -84,6 +84,9 @@ class GameStateSerializer:
             "finale_tiebreaker_enabled": gs.finale_tiebreaker_enabled,
             # #1180: Title & Artist guessing mode (player UI renders inputs)
             "title_artist_mode": gs.title_artist_mode,
+            # Race variant: live buzzer, first-correct-wins (player UI renders the
+            # live feed + repeated-guess input instead of the single-shot form).
+            "title_artist_race_mode": gs.title_artist_race_mode,
             "is_intro_round": gs.is_intro_round,
             "intro_stopped": gs.intro_stopped,
             "intro_splash_pending": gs.intro_splash_pending,

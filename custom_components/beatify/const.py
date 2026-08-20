@@ -58,6 +58,17 @@ CHALLENGE_BONUS_POINTS = 5
 # Full-credit points for an exact or fuzzy match per field.
 TITLE_POINTS = 10
 ARTIST_POINTS = 5
+
+# Title & Artist RACE mode (live buzzer variant): unlimited attempts, every
+# guess is broadcast live to the whole room, and the FIRST player to land each
+# field (title, artist — independently, possibly different players) banks the
+# points. The round ends the moment both fields are solved, or when the timer
+# runs out. Title and artist are worth the same so racing for either pays off.
+TITLE_RACE_POINTS = 10
+ARTIST_RACE_POINTS = 10
+# Cap the live guess feed carried in the broadcast state so a spammer cannot
+# grow the state frame without bound — only the most recent entries are kept.
+RACE_FEED_MAX = 40
 # Partial-credit points for a vote-accepted near-miss per field.
 TITLE_PARTIAL_POINTS = 5
 ARTIST_PARTIAL_POINTS = 3
