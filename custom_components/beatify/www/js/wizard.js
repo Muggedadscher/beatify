@@ -889,6 +889,8 @@ const DIFFICULTY_HINTS = {
 const DURATIONS = [15, 30, 45, 60]; // seconds per round
 const AUTO_ADVANCE_OPTIONS = [
     { id: 0, labelKey: 'wizard.step4.autoAdvanceOff', labelFallback: 'Off' },
+    { id: 10, label: '10s' },
+    { id: 15, label: '15s' },
     { id: 30, label: '30s' },
     { id: 60, label: '60s' },
     { id: 90, label: '90s' },

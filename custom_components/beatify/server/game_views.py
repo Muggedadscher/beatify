@@ -182,12 +182,14 @@ class StartGameView(RateLimitMixin, HomeAssistantView):
         tts_config = body.get("tts")  # Issue #447
 
         # #1012: REVEAL auto-advance — 0 (off, manual + song-end advance)
-        # or 30/60/90 seconds. Default 0: host stays in control.
+        # or 10/15/30/60/90 seconds. Default 0: host stays in control.
+        # 10/15 give a quick "everyone tipped → short recap → next round"
+        # cadence for hosts who don't want to click "Next round" every time.
         try:
             reveal_auto_advance = int(reveal_auto_advance)
         except (ValueError, TypeError):
             reveal_auto_advance = 0
-        if reveal_auto_advance not in (0, 30, 60, 90):
+        if reveal_auto_advance not in (0, 10, 15, 30, 60, 90):
             reveal_auto_advance = 0
 
         # Validate difficulty (Story 14.1)
