@@ -66,6 +66,7 @@ export const adminState = {
     introModeEnabled: false,            // Issue #23
     closestWinsModeEnabled: false,      // Issue #442
     titleArtistModeEnabled: false,      // #1180
+    titleArtistRaceModeEnabled: false,  // Race variant (live buzzer)
     rampupOrderEnabled: false,          // Issue #1726
     finaleDoubleEnabled: false,         // Issue #1725
     finaleTiebreakerEnabled: false,     // Issue #1725

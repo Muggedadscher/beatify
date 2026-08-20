@@ -771,7 +771,9 @@
     },
     "providerMyLibrary": "Crate Digger",
     "ttsPreRoundDelay": "Délai du minuteur (s)",
-    "ttsPreRoundDelayHelp": "Secondes ajoutées au minuteur de la manche pour compenser la durée des annonces."
+    "ttsPreRoundDelayHelp": "Secondes ajoutées au minuteur de la manche pour compenser la durée des annonces.",
+    "titleArtistRaceMode": "Course en direct (buzzer)",
+    "titleArtistRaceModeHint": "Essais illimités, tout le monde voit les réponses en direct, et le premier à nommer le titre ou l'artiste gagne les points. La manche se termine quand les deux sont trouvés ou que le temps est écoulé."
   },
   "analyticsDashboard": {
     "title": "Statistiques Beatify",
@@ -967,7 +969,17 @@
     "verdictWin": "Dans le mille !",
     "verdictPartial": "Une bonne !",
     "verdictMiss": "Pas cette fois",
-    "verdictPending": "En attente du verdict…"
+    "verdictPending": "En attente du verdict…",
+    "raceGuess": "Deviner",
+    "raceTitleLabel": "Titre",
+    "raceArtistLabel": "Artiste",
+    "raceOpen": "ouvert",
+    "raceNobody": "Personne",
+    "raceWonBoth": "Tu as trouvé les deux ! 🏆",
+    "raceWonTitle": "Tu as trouvé le titre ! 🏆",
+    "raceWonArtist": "Tu as trouvé l'artiste ! 🏆",
+    "raceTooLate": "Correct — mais quelqu'un t'a devancé !",
+    "raceKeepTrying": "Pas tout à fait — continue !"
   },
   "earlyReveal": {
     "message": "Tout le monde a répondu !"

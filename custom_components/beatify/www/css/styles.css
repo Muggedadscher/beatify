@@ -15636,6 +15636,102 @@ body.theme-dark .your-result-stats .stat-value {
 }
 .ta-input-ack.hidden { display: none; }
 
+/* --------------------------------------------------------------------------
+   Title & Artist RACE mode — live solved status + guess feed (player)
+   -------------------------------------------------------------------------- */
+.ta-race-status {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+.ta-race-status.hidden,
+.ta-race-feed.hidden { display: none; }
+.ta-race-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    border: 1px solid var(--color-border, rgba(255,255,255,0.15));
+    color: var(--color-text-secondary, #cfcfe0);
+    background: rgba(255,255,255,0.04);
+}
+.ta-race-chip.is-solved {
+    border-color: var(--color-success-neon);
+    color: var(--color-success-neon);
+    background: rgba(0, 255, 128, 0.08);
+}
+.ta-race-feed {
+    margin-top: 10px;
+    max-height: 168px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.ta-race-feed-item {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    background: rgba(255,255,255,0.03);
+}
+.ta-race-feed-item .ta-race-feed-player { font-weight: 700; color: var(--color-text, #fff); }
+.ta-race-feed-item .ta-race-feed-guess { color: var(--color-text-secondary, #cfcfe0); }
+.ta-race-feed-item.is-correct { background: rgba(0, 255, 128, 0.1); }
+.ta-race-feed-item.is-correct .ta-race-feed-guess { color: var(--color-success-neon); }
+
+/* Wizard: Race variant sub-toggle under the Title & Artist core-mode card */
+.wiz-subtoggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--color-border, rgba(255,255,255,0.15));
+    background: rgba(255,255,255,0.03);
+    cursor: pointer;
+}
+.wiz-subtoggle-title { font-weight: 700; display: block; }
+.wiz-subtoggle-hint {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    color: var(--color-text-secondary, #cfcfe0);
+}
+.wiz-subtoggle-switch {
+    flex: 0 0 auto;
+    width: 42px;
+    height: 24px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.18);
+    position: relative;
+    transition: background 0.15s ease;
+}
+.wiz-subtoggle-switch::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.15s ease;
+}
+.wiz-subtoggle-switch.on { background: var(--color-success-neon, #00ff80); }
+.wiz-subtoggle-switch.on::after { transform: translateX(18px); }
+
 /* ==========================================================================
    Spotlight Stage — player reveal skin
    --------------------------------------------------------------------------

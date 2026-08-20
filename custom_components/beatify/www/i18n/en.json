@@ -771,7 +771,9 @@
     },
     "providerMyLibrary": "Crate Digger",
     "ttsPreRoundDelay": "Timer delay (s)",
-    "ttsPreRoundDelayHelp": "Seconds added to the round timer to compensate for announcement overhead."
+    "ttsPreRoundDelayHelp": "Seconds added to the round timer to compensate for announcement overhead.",
+    "titleArtistRaceMode": "Live Race (buzzer)",
+    "titleArtistRaceModeHint": "Unlimited guesses, everyone sees the guesses live, and the first to name the title or artist wins those points. The round ends when both are solved or time runs out."
   },
   "analyticsDashboard": {
     "title": "Beatify Analytics",
@@ -967,7 +969,17 @@
     "verdictWin": "Nailed it!",
     "verdictPartial": "Got one!",
     "verdictMiss": "Not this time",
-    "verdictPending": "Awaiting the room’s verdict…"
+    "verdictPending": "Awaiting the room’s verdict…",
+    "raceGuess": "Guess",
+    "raceTitleLabel": "Title",
+    "raceArtistLabel": "Artist",
+    "raceOpen": "open",
+    "raceNobody": "Nobody",
+    "raceWonBoth": "You got both! 🏆",
+    "raceWonTitle": "You got the title! 🏆",
+    "raceWonArtist": "You got the artist! 🏆",
+    "raceTooLate": "Correct — but someone beat you to it!",
+    "raceKeepTrying": "Not quite — keep guessing!"
   },
   "earlyReveal": {
     "message": "All guesses in!"

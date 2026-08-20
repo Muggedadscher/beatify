@@ -1812,6 +1812,42 @@ function _taOutcomeCard(o, fieldLabel) {
  * @param {Object|null} ta - data.title_artist_challenge (REVEAL shape) or null
  * @param {Object|null} currentPlayer - resolved current player object
  */
+/**
+ * Render the Race-mode reveal: the correct title/artist and who won each field.
+ * Reuses the ta-reveal-truth + ta-reveal-own slots and hides the voting UI.
+ * @param {Object} ta - REVEAL title_artist_challenge dict (carries .race)
+ */
+function _renderTitleArtistRaceReveal(ta) {
+    _stopTaVoteCountdown();
+    var votingWrap = document.getElementById('ta-voting');
+    if (votingWrap) votingWrap.classList.add('hidden');
+
+    var truthEl = document.getElementById('ta-reveal-truth');
+    if (truthEl) {
+        truthEl.innerHTML =
+            '<span class="ta-truth-title">' + escapeHtml(ta.correct_title) + '</span>' +
+            '<span class="ta-truth-sep" aria-hidden="true">—</span>' +
+            '<span class="ta-truth-artist">' + escapeHtml(ta.correct_artist || '') + '</span>';
+    }
+
+    var ownEl = document.getElementById('ta-reveal-own');
+    if (ownEl) {
+        var race = ta.race || {};
+        var nobody = utils.t('titleArtist.raceNobody') || 'Nobody';
+        var titleLbl = utils.t('titleArtist.raceTitleLabel') || 'Title';
+        var artistLbl = utils.t('titleArtist.raceArtistLabel') || 'Artist';
+        ownEl.innerHTML =
+            '<div class="ta-own-row">' +
+                '<span class="ta-own-label">🏆 ' + escapeHtml(titleLbl) + '</span>' +
+                '<span class="ta-own-guess">' + escapeHtml(race.title_winner || nobody) + '</span>' +
+            '</div>' +
+            '<div class="ta-own-row">' +
+                '<span class="ta-own-label">🏆 ' + escapeHtml(artistLbl) + '</span>' +
+                '<span class="ta-own-guess">' + escapeHtml(race.artist_winner || nobody) + '</span>' +
+            '</div>';
+    }
+}
+
 export function renderTitleArtistReveal(ta, currentPlayer) {
     var section = document.getElementById('ta-reveal-section');
     if (!section) return;
@@ -1822,6 +1858,13 @@ export function renderTitleArtistReveal(ta, currentPlayer) {
         return;
     }
     section.classList.remove('hidden');
+
+    // Race mode reveal: no per-player near-miss / voting — just the truth and
+    // who won each field. Render that and stop before the single-shot flow.
+    if (ta.race) {
+        _renderTitleArtistRaceReveal(ta);
+        return;
+    }
 
     // Remember this player's own 👍/👎 per near-miss so the "voted" state
     // survives the innerHTML rebuild on every state broadcast. The server only

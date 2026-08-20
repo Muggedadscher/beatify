@@ -256,6 +256,7 @@ let chosenIntroMode = false;
 let chosenClosestWins = false;
 let chosenSuddenDeath = true; // Issue #827 — default ON (unlike the other bonuses); gated to >=3 players
 let chosenTitleArtistMode = false; // #1180
+let chosenTitleArtistRaceMode = false; // Race variant (live buzzer)
 const chosenLevelUps = { lights: false, tts: false };
 // Details the user sets when a level-up is toggled on
 let cachedLights = null; // HA lights from /api/lights
@@ -963,6 +964,9 @@ function _setGameModeToggle(key, value) {
     chosenIntroMode = next.introMode;
     chosenClosestWins = next.closestWinsMode;
     chosenTitleArtistMode = next.titleArtistMode;
+    // The race variant only exists under Title & Artist mode — drop it whenever
+    // TA mode goes off.
+    if (!chosenTitleArtistMode) chosenTitleArtistRaceMode = false;
 }
 
 const GAME_MODES = [
@@ -1080,6 +1084,30 @@ function _renderCoreMode() {
             </div>
         </div>`;
     }).join('');
+    // Race variant sub-toggle — only under Title & Artist mode.
+    if (chosenTitleArtistMode) {
+        const raceOn = chosenTitleArtistRaceMode;
+        el.insertAdjacentHTML('beforeend',
+            `<label class="wiz-subtoggle" data-race-toggle role="switch" aria-checked="${raceOn}" tabindex="0">
+                <span class="wiz-subtoggle-body">
+                    <span class="wiz-subtoggle-title">⚡ ${_t('admin.titleArtistRaceMode', 'Live Race (buzzer)')}</span>
+                    <span class="wiz-subtoggle-hint">${_t('admin.titleArtistRaceModeHint', 'Unlimited guesses, everyone sees the guesses live, first to name the title or artist wins.')}</span>
+                </span>
+                <span class="wiz-subtoggle-switch ${raceOn ? 'on' : ''}" aria-hidden="true"></span>
+            </label>`);
+        const toggle = el.querySelector('[data-race-toggle]');
+        if (toggle) {
+            const flip = () => {
+                chosenTitleArtistRaceMode = !chosenTitleArtistRaceMode;
+                _renderCoreMode();
+            };
+            toggle.addEventListener('click', flip);
+            toggle.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
+            });
+        }
+    }
+
     el.querySelectorAll('[data-coremode]').forEach((card) => {
         card.addEventListener('click', () => {
             const m = CORE_MODES.find((x) => x.key === card.dataset.coremode);
@@ -1731,6 +1759,7 @@ function _persistGameSettings() {
             closestWinsMode: chosenClosestWins,
             suddenDeathMode: chosenSuddenDeath,  // Issue #827
             titleArtistMode: chosenTitleArtistMode,  // #1180
+            titleArtistRaceMode: chosenTitleArtistRaceMode,  // race variant
         };
         if (chosenPlaylists.size > 0) {
             // admin.js stores selectedPlaylists as [{ path, songCount }]; include minimally.
@@ -1807,6 +1836,7 @@ export async function show(stepOverride) {
             if (typeof s.closestWinsMode === 'boolean') chosenClosestWins = s.closestWinsMode;
             if (typeof s.suddenDeathMode === 'boolean') chosenSuddenDeath = s.suddenDeathMode;  // Issue #827
             if (typeof s.titleArtistMode === 'boolean') chosenTitleArtistMode = s.titleArtistMode;
+            if (typeof s.titleArtistRaceMode === 'boolean') chosenTitleArtistRaceMode = s.titleArtistRaceMode;
             if (Array.isArray(s.selectedPlaylists)) {
                 s.selectedPlaylists.forEach((entry) => {
                     const path = typeof entry === 'string' ? entry : entry && entry.path;

@@ -771,7 +771,9 @@
     },
     "providerMyLibrary": "Crate Digger",
     "ttsPreRoundDelay": "Ritardo del tempo (s)",
-    "ttsPreRoundDelayHelp": "Secondi aggiunti al tempo del turno per compensare la durata degli annunci."
+    "ttsPreRoundDelayHelp": "Secondi aggiunti al tempo del turno per compensare la durata degli annunci.",
+    "titleArtistRaceMode": "Gara dal vivo (buzzer)",
+    "titleArtistRaceModeHint": "Tentativi illimitati, tutti vedono le risposte in diretta e il primo a indovinare titolo o artista vince i punti. Il round finisce quando entrambi sono indovinati o scade il tempo."
   },
   "analyticsDashboard": {
     "title": "Statistiche Beatify",
@@ -967,7 +969,17 @@
     "verdictWin": "Centrata!",
     "verdictPartial": "Una l'hai presa!",
     "verdictMiss": "Non stavolta",
-    "verdictPending": "In attesa del verdetto della sala…"
+    "verdictPending": "In attesa del verdetto della sala…",
+    "raceGuess": "Indovina",
+    "raceTitleLabel": "Titolo",
+    "raceArtistLabel": "Artista",
+    "raceOpen": "aperto",
+    "raceNobody": "Nessuno",
+    "raceWonBoth": "Hai preso entrambi! 🏆",
+    "raceWonTitle": "Hai preso il titolo! 🏆",
+    "raceWonArtist": "Hai preso l'artista! 🏆",
+    "raceTooLate": "Giusto — ma qualcuno ti ha battuto sul tempo!",
+    "raceKeepTrying": "Quasi… continua a provare!"
   },
   "earlyReveal": {
     "message": "Hanno risposto tutti!"

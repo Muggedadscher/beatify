@@ -12,7 +12,7 @@ import {
     initLeaderboardObserver, renderLazyLeaderboardRange,
     renderLeaderboardEntry, calculateInitialVisibleRange,
     setupLeaderboardResizeHandler, setEnergyLevel,
-    triggerConfetti, stopConfetti, isTitleArtistMode,
+    triggerConfetti, stopConfetti, isTitleArtistMode, isTitleArtistRaceMode,
     createModalFocusTrap
 } from './player-utils.js';
 
@@ -793,6 +793,8 @@ var sabotageForcedBet = false;
 
 // Title & Artist Mode state (#1180)
 var titleArtistMode = false;
+// Race variant (live buzzer): players guess repeatedly, first-correct-wins.
+var titleArtistRaceMode = false;
 var taInputWired = false;
 
 // #854: initYearSelector is called from player-core.js on every PLAYING-phase
@@ -1153,6 +1155,7 @@ export function resetSubmissionState() {
 export function renderTitleArtistInput(data) {
     var on = isTitleArtistMode(data);
     titleArtistMode = on;
+    titleArtistRaceMode = isTitleArtistRaceMode(data);
 
     var taContainer = document.getElementById('title-artist-container');
     var yearWrap = document.getElementById('year-selector-container');
@@ -1178,14 +1181,97 @@ export function renderTitleArtistInput(data) {
     if (yearXxl) yearXxl.classList.toggle('hidden', on);
     if (betToggle) betToggle.classList.toggle('hidden', on);  // no betting in v1 TA mode
 
-    if (!on) return;
+    var raceStatus = document.getElementById('ta-race-status');
+    var raceFeed = document.getElementById('ta-race-feed');
+    if (!on) {
+        if (raceStatus) raceStatus.classList.add('hidden');
+        if (raceFeed) raceFeed.classList.add('hidden');
+        return;
+    }
 
     // Relabel the submit button (still id=submit-btn, reused). Only while not
     // already submitted/locked, so we don't stomp the "Waiting for others" copy.
     var submitBtn = document.getElementById('submit-btn');
-    if (submitBtn && !hasSubmitted) {
-        submitBtn.textContent = utils.t('titleArtist.submitGuess') || 'Submit';
+    if (submitBtn && (titleArtistRaceMode || !hasSubmitted)) {
+        submitBtn.textContent = titleArtistRaceMode
+            ? (utils.t('titleArtist.raceGuess') || 'Guess')
+            : (utils.t('titleArtist.submitGuess') || 'Submit');
     }
+
+    if (titleArtistRaceMode) {
+        // Race mode never locks the inputs — players keep guessing until the
+        // round ends. Re-enable anything a stale ack may have disabled.
+        var tInput = document.getElementById('ta-title-input');
+        var aInput = document.getElementById('ta-artist-input');
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.classList.remove('is-loading'); }
+        renderRaceStatusAndFeed(data, tInput, aInput);
+    } else {
+        if (raceStatus) raceStatus.classList.add('hidden');
+        if (raceFeed) raceFeed.classList.add('hidden');
+    }
+}
+
+/**
+ * Render the live Race status chips (who solved title / artist) and the rolling
+ * guess feed. In race mode a solved field's input is disabled (that field is
+ * won and can't be re-raced) while the unsolved one stays open.
+ * @param {Object} data - server state payload
+ * @param {HTMLElement} titleInput
+ * @param {HTMLElement} artistInput
+ */
+function renderRaceStatusAndFeed(data, titleInput, artistInput) {
+    var race = (data && data.title_artist_challenge && data.title_artist_challenge.race) || null;
+    var statusEl = document.getElementById('ta-race-status');
+    var feedEl = document.getElementById('ta-race-feed');
+    if (!race || !statusEl || !feedEl) return;
+
+    // Update the per-field point labels from the server (race: title & artist
+    // are worth the same). The two .ta-input-points spans are title then artist.
+    var pointSpans = document.querySelectorAll('#title-artist-container .ta-input-points');
+    if (race.points && pointSpans.length >= 2) {
+        pointSpans[0].textContent = '+' + race.points.title;
+        pointSpans[1].textContent = '+' + race.points.artist;
+    }
+
+    // Solved-status chips.
+    var titleTxt = utils.t('titleArtist.raceTitleLabel') || 'Title';
+    var artistTxt = utils.t('titleArtist.raceArtistLabel') || 'Artist';
+    var openTxt = utils.t('titleArtist.raceOpen') || 'open';
+    statusEl.innerHTML =
+        _raceChip(titleTxt, race.title_solved, race.title_winner, openTxt) +
+        _raceChip(artistTxt, race.artist_solved, race.artist_winner, openTxt);
+    statusEl.classList.remove('hidden');
+
+    // Lock a field's input once it is solved (it can no longer be raced).
+    if (titleInput) titleInput.disabled = !!race.title_solved;
+    if (artistInput) artistInput.disabled = !!race.artist_solved;
+
+    // Live guess feed — newest first, correct guesses highlighted.
+    var feed = Array.isArray(race.feed) ? race.feed.slice() : [];
+    feed.reverse();
+    if (!feed.length) {
+        feedEl.classList.add('hidden');
+        feedEl.innerHTML = '';
+        return;
+    }
+    feedEl.innerHTML = feed.map(function(f) {
+        var mark = f.correct ? '✅' : '·';
+        return '<div class="ta-race-feed-item' + (f.correct ? ' is-correct' : '') + '">' +
+            '<span aria-hidden="true">' + mark + '</span>' +
+            '<span class="ta-race-feed-player">' + escapeHtml(f.player) + '</span>' +
+            '<span class="ta-race-feed-guess">' + escapeHtml(f.guess) + '</span>' +
+            '</div>';
+    }).join('');
+    feedEl.classList.remove('hidden');
+}
+
+/** Build one solved-status chip for a race field. */
+function _raceChip(label, solved, winner, openTxt) {
+    var right = solved ? escapeHtml(winner || '✓') : escapeHtml(openTxt);
+    return '<span class="ta-race-chip' + (solved ? ' is-solved' : '') + '">' +
+        '<span>' + escapeHtml(label) + '</span>' +
+        '<span>' + (solved ? '🏆 ' : '') + right + '</span>' +
+        '</span>';
 }
 
 /**
@@ -1193,8 +1279,9 @@ export function renderTitleArtistInput(data) {
  * allowed (scores 0 for that field server-side, status "skipped").
  */
 export function handleTitleArtistSubmit() {
-    if (hasSubmitted) return;
     if (meEliminated) return;  // Issue #827: eliminated players can't submit
+    // Single-shot mode locks after one submit; race mode allows unlimited tries.
+    if (!titleArtistRaceMode && hasSubmitted) return;
 
     var titleInput = document.getElementById('ta-title-input');
     var artistInput = document.getElementById('ta-artist-input');
@@ -1204,12 +1291,14 @@ export function handleTitleArtistSubmit() {
     var title = (titleInput.value || '').trim();
     var artist = (artistInput.value || '').trim();
 
+    if (titleArtistRaceMode && !title && !artist) return;  // nothing to send
+
     submitBtn.disabled = true;
     submitBtn.classList.add('is-loading');
 
     if (state.ws && state.ws.readyState === WebSocket.OPEN) {
         state.ws.send(JSON.stringify({
-            type: 'title_artist_guess',
+            type: titleArtistRaceMode ? 'title_artist_race_guess' : 'title_artist_guess',
             title: title,
             artist: artist
         }));
@@ -1242,6 +1331,49 @@ export function handleTitleArtistGuessAck(data) {
 }
 
 /**
+ * Handle the server's title_artist_race_guess_ack. Race mode never locks, so
+ * re-enable the button and surface quick per-field feedback. A won field's copy
+ * (won_title/won_artist) is celebrated; a solved field is cleared + disabled by
+ * the next state render.
+ * @param {Object} data - { title_status, artist_status, won_title, won_artist }
+ */
+export function handleTitleArtistRaceGuessAck(data) {
+    var submitBtn = document.getElementById('submit-btn');
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.classList.remove('is-loading'); }
+
+    var ackEl = document.getElementById('ta-input-ack');
+    if (!ackEl) return;
+
+    var msg;
+    if (data.won_title && data.won_artist) {
+        msg = utils.t('titleArtist.raceWonBoth') || 'You got both! 🏆';
+    } else if (data.won_title) {
+        msg = utils.t('titleArtist.raceWonTitle') || 'You got the title! 🏆';
+    } else if (data.won_artist) {
+        msg = utils.t('titleArtist.raceWonArtist') || 'You got the artist! 🏆';
+    } else {
+        var anyCorrect = data.title_status === 'exact' || data.title_status === 'fuzzy'
+            || data.artist_status === 'exact' || data.artist_status === 'fuzzy';
+        // "Correct but not first" if the field was right yet not claimed.
+        msg = anyCorrect
+            ? (utils.t('titleArtist.raceTooLate') || 'Correct — but someone beat you to it!')
+            : (utils.t('titleArtist.raceKeepTrying') || 'Not quite — keep guessing!');
+    }
+    ackEl.textContent = msg;
+    ackEl.classList.remove('hidden');
+
+    // Clear a won field's input so the player can focus the remaining one.
+    if (data.won_title) {
+        var t = document.getElementById('ta-title-input');
+        if (t) t.value = '';
+    }
+    if (data.won_artist) {
+        var a = document.getElementById('ta-artist-input');
+        if (a) a.value = '';
+    }
+}
+
+/**
  * Reset Title & Artist input state for a new round.
  */
 function resetTitleArtistState() {
@@ -1252,6 +1384,12 @@ function resetTitleArtistState() {
     if (titleInput) { titleInput.value = ''; titleInput.disabled = false; }
     if (artistInput) { artistInput.value = ''; artistInput.disabled = false; }
     if (ackEl) { ackEl.textContent = ''; ackEl.classList.add('hidden'); }
+
+    // Race mode: clear the live status chips + guess feed for the new round.
+    var raceStatus = document.getElementById('ta-race-status');
+    var raceFeed = document.getElementById('ta-race-feed');
+    if (raceStatus) { raceStatus.innerHTML = ''; raceStatus.classList.add('hidden'); }
+    if (raceFeed) { raceFeed.innerHTML = ''; raceFeed.classList.add('hidden'); }
 }
 
 // ============================================
