@@ -771,7 +771,9 @@
     },
     "providerMyLibrary": "Crate Digger",
     "ttsPreRoundDelay": "Timer-Verzögerung (s)",
-    "ttsPreRoundDelayHelp": "Sekunden, die dem Rundentimer hinzugefügt werden, um die Dauer der Ansagen auszugleichen."
+    "ttsPreRoundDelayHelp": "Sekunden, die dem Rundentimer hinzugefügt werden, um die Dauer der Ansagen auszugleichen.",
+    "titleArtistRaceMode": "Live-Buzzer (Race)",
+    "titleArtistRaceModeHint": "Unbegrenzte Versuche, alle sehen die Tipps live, und wer Titel oder Interpret zuerst nennt, bekommt die Punkte. Die Runde endet, wenn beides erraten ist oder die Zeit abläuft."
   },
   "analyticsDashboard": {
     "title": "Beatify Statistik",
@@ -967,7 +969,17 @@
     "verdictWin": "Volltreffer!",
     "verdictPartial": "Eins erwischt!",
     "verdictMiss": "Diesmal nicht",
-    "verdictPending": "Das Publikum entscheidet…"
+    "verdictPending": "Das Publikum entscheidet…",
+    "raceGuess": "Raten",
+    "raceTitleLabel": "Titel",
+    "raceArtistLabel": "Interpret",
+    "raceOpen": "offen",
+    "raceNobody": "Niemand",
+    "raceWonBoth": "Du hast beides! 🏆",
+    "raceWonTitle": "Du hast den Titel! 🏆",
+    "raceWonArtist": "Du hast den Interpreten! 🏆",
+    "raceTooLate": "Richtig – aber jemand war schneller!",
+    "raceKeepTrying": "Nicht ganz – weiter raten!"
   },
   "earlyReveal": {
     "message": "Alle haben geraten!"

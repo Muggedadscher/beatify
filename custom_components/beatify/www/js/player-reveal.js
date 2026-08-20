@@ -199,7 +199,7 @@ export function updateRevealView(data) {
         renderDuel(currentPlayer, song.year);
         renderChipRow(currentPlayer, data);
     }
-    renderScoreRow(currentPlayer);
+    renderScoreRow(currentPlayer, data);
 
     // Cache context for bottom-sheet renderers that run on demand.
     state.lastRevealContext = {
@@ -1125,7 +1125,7 @@ function computeTotalPoints(player) {
 /**
  * Populate the big score row: "You earned · 1 year off · +120".
  */
-function renderScoreRow(player) {
+function renderScoreRow(player, data) {
     var ptsEl = document.getElementById('reveal-total-pts');
     var subEl = document.getElementById('score-row-subtitle');
     if (!ptsEl) return;
@@ -1136,14 +1136,52 @@ function renderScoreRow(player) {
     if (subEl) {
         if (!player || player.missed_round) {
             subEl.textContent = utils.t('reveal.noSubmission') || 'No guess submitted';
+        } else if (player.years_off == null) {
+            // Title & Artist mode has no year distance (years_off is null), so the
+            // year-off label would always read "exact" (Volltreffer!) — even on a
+            // 0-point round. Use the real per-field title/artist verdict instead.
+            subEl.textContent = _taScoreVerdict(player, data);
         } else {
-            var yo = player.years_off != null ? player.years_off : 0;
+            var yo = player.years_off;
             var key = yo === 0 ? 'reveal.exact'
                     : yo === 1 ? 'reveal.yearOff'
                     : 'reveal.yearsOff';
             subEl.textContent = utils.t(key, { years: yo }) || (yo + ' years off');
         }
     }
+}
+
+/**
+ * Title & Artist score-row verdict: "won both / got one / not this time" from
+ * the player's actual per-field result. Handles both the single-shot mode
+ * (own entry in title_artist_challenge.results) and the Race variant (the
+ * per-field winners in title_artist_challenge.race).
+ * @param {Object} player - current player
+ * @param {Object} data - REVEAL state payload
+ * @returns {string} localized verdict text
+ */
+function _taScoreVerdict(player, data) {
+    var ta = data && data.title_artist_challenge;
+    var me = player && player.name;
+    var titleGot = false;
+    var artistGot = false;
+    if (ta && ta.race) {
+        titleGot = ta.race.title_winner === me;
+        artistGot = ta.race.artist_winner === me;
+    } else if (ta && Array.isArray(ta.results)) {
+        var own = null;
+        for (var i = 0; i < ta.results.length; i++) {
+            if (ta.results[i].player === me) { own = ta.results[i]; break; }
+        }
+        if (own) {
+            var GOT = { exact: 1, fuzzy: 1, near_miss_accepted: 1 };
+            titleGot = !!GOT[own.title_status];
+            artistGot = !!GOT[own.artist_status];
+        }
+    }
+    if (titleGot && artistGot) return utils.t('titleArtist.verdictWin') || 'Nailed it!';
+    if (titleGot || artistGot) return utils.t('titleArtist.verdictPartial') || 'Got one!';
+    return utils.t('titleArtist.verdictMiss') || 'Not this time';
 }
 
 // ---------- Reveal standings (Round-Delta Ledger, design-shotgun A) ----------
@@ -1812,6 +1850,42 @@ function _taOutcomeCard(o, fieldLabel) {
  * @param {Object|null} ta - data.title_artist_challenge (REVEAL shape) or null
  * @param {Object|null} currentPlayer - resolved current player object
  */
+/**
+ * Render the Race-mode reveal: the correct title/artist and who won each field.
+ * Reuses the ta-reveal-truth + ta-reveal-own slots and hides the voting UI.
+ * @param {Object} ta - REVEAL title_artist_challenge dict (carries .race)
+ */
+function _renderTitleArtistRaceReveal(ta) {
+    _stopTaVoteCountdown();
+    var votingWrap = document.getElementById('ta-voting');
+    if (votingWrap) votingWrap.classList.add('hidden');
+
+    var truthEl = document.getElementById('ta-reveal-truth');
+    if (truthEl) {
+        truthEl.innerHTML =
+            '<span class="ta-truth-title">' + escapeHtml(ta.correct_title) + '</span>' +
+            '<span class="ta-truth-sep" aria-hidden="true">—</span>' +
+            '<span class="ta-truth-artist">' + escapeHtml(ta.correct_artist || '') + '</span>';
+    }
+
+    var ownEl = document.getElementById('ta-reveal-own');
+    if (ownEl) {
+        var race = ta.race || {};
+        var nobody = utils.t('titleArtist.raceNobody') || 'Nobody';
+        var titleLbl = utils.t('titleArtist.raceTitleLabel') || 'Title';
+        var artistLbl = utils.t('titleArtist.raceArtistLabel') || 'Artist';
+        ownEl.innerHTML =
+            '<div class="ta-own-row">' +
+                '<span class="ta-own-label">🏆 ' + escapeHtml(titleLbl) + '</span>' +
+                '<span class="ta-own-guess">' + escapeHtml(race.title_winner || nobody) + '</span>' +
+            '</div>' +
+            '<div class="ta-own-row">' +
+                '<span class="ta-own-label">🏆 ' + escapeHtml(artistLbl) + '</span>' +
+                '<span class="ta-own-guess">' + escapeHtml(race.artist_winner || nobody) + '</span>' +
+            '</div>';
+    }
+}
+
 export function renderTitleArtistReveal(ta, currentPlayer) {
     var section = document.getElementById('ta-reveal-section');
     if (!section) return;
@@ -1822,6 +1896,13 @@ export function renderTitleArtistReveal(ta, currentPlayer) {
         return;
     }
     section.classList.remove('hidden');
+
+    // Race mode reveal: no per-player near-miss / voting — just the truth and
+    // who won each field. Render that and stop before the single-shot flow.
+    if (ta.race) {
+        _renderTitleArtistRaceReveal(ta);
+        return;
+    }
 
     // Remember this player's own 👍/👎 per near-miss so the "voted" state
     // survives the innerHTML rebuild on every state broadcast. The server only

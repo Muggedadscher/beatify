@@ -118,6 +118,7 @@ class GameSetupMixin:
         closest_wins_mode: bool = False,
         sudden_death_mode: bool = False,
         title_artist_mode: bool = False,
+        title_artist_race_mode: bool = False,
         reveal_auto_advance: int = 0,
         rampup_order_enabled: bool = False,
         finale_double_enabled: bool = False,
@@ -315,6 +316,7 @@ class GameSetupMixin:
             artist_challenge_enabled=artist_challenge_enabled,
             movie_quiz_enabled=movie_quiz_enabled,
             title_artist_mode=title_artist_mode,
+            title_artist_race_mode=title_artist_race_mode,
         )
 
         # Issue #23: Set intro mode configuration
@@ -484,6 +486,7 @@ class GameSetupMixin:
             "closest_wins_mode": self.closest_wins_mode,
             "sudden_death_mode": self.sudden_death_mode,
             "title_artist_mode": self.title_artist_mode,
+            "title_artist_race_mode": self.title_artist_race_mode,
             "rampup_order_enabled": self.rampup_order_enabled,  # #1726
             "finale_double_enabled": self.finale_double_enabled,  # #1725
             "finale_tiebreaker_enabled": self.finale_tiebreaker_enabled,  # #1725

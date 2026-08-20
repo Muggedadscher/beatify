@@ -174,7 +174,21 @@ export function setupGameSettings() {
     // Title & Artist Mode toggle (#1180)
     document.getElementById('title-artist-mode-toggle')?.addEventListener('change', function() {
         adminState.titleArtistModeEnabled = this.checked;
+        // Turning TA mode off also drops the race variant (it only exists as a
+        // sub-mode of TA mode).
+        if (!this.checked) {
+            adminState.titleArtistRaceModeEnabled = false;
+            var raceToggle = document.getElementById('title-artist-race-toggle');
+            if (raceToggle) raceToggle.checked = false;
+        }
         syncTitleArtistModeUI();
+        updateGameSettingsSummary();
+        saveGameSettings();
+    });
+
+    // Title & Artist RACE mode sub-toggle (live buzzer variant)
+    document.getElementById('title-artist-race-toggle')?.addEventListener('change', function() {
+        adminState.titleArtistRaceModeEnabled = this.checked;
         updateGameSettingsSummary();
         saveGameSettings();
     });
@@ -330,6 +344,12 @@ export async function loadSavedSettings() {
                 const taToggle = document.getElementById('title-artist-mode-toggle');
                 if (taToggle) taToggle.checked = settings.titleArtistMode;
             }
+            // Apply Title & Artist RACE variant (live buzzer)
+            if (typeof settings.titleArtistRaceMode === 'boolean') {
+                adminState.titleArtistRaceModeEnabled = settings.titleArtistRaceMode;
+                const raceToggle = document.getElementById('title-artist-race-toggle');
+                if (raceToggle) raceToggle.checked = settings.titleArtistRaceMode;
+            }
             syncTitleArtistModeUI();
 
             // Apply provider
@@ -375,6 +395,7 @@ export function saveGameSettings() {
             introMode: adminState.introModeEnabled,  // Issue #23
             closestWinsMode: adminState.closestWinsModeEnabled,  // Issue #442
             titleArtistMode: adminState.titleArtistModeEnabled,  // #1180
+            titleArtistRaceMode: adminState.titleArtistRaceModeEnabled,  // race variant
             rampupOrder: adminState.rampupOrderEnabled,  // Issue #1726
             finaleDouble: adminState.finaleDoubleEnabled,  // Issue #1725
             finaleTiebreaker: adminState.finaleTiebreakerEnabled,  // Issue #1725
@@ -461,4 +482,9 @@ export function syncTitleArtistModeUI() {
     if (diffHint) diffHint.classList.toggle('hidden', adminState.titleArtistModeEnabled);
     var taSummary = document.getElementById('admin-difficulty-ta-summary');
     if (taSummary) taSummary.classList.toggle('hidden', !adminState.titleArtistModeEnabled);
+    // The race sub-toggle + its hint only make sense while TA mode is on.
+    var raceGroup = document.getElementById('title-artist-race-group');
+    if (raceGroup) raceGroup.classList.toggle('hidden', !adminState.titleArtistModeEnabled);
+    var raceHint = document.getElementById('title-artist-race-hint');
+    if (raceHint) raceHint.classList.toggle('hidden', !adminState.titleArtistModeEnabled);
 }

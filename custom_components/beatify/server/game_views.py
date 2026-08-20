@@ -153,6 +153,9 @@ class StartGameView(RateLimitMixin, HomeAssistantView):
         closest_wins_mode = body.get("closest_wins_mode", False)  # Issue #442
         sudden_death_mode = bool(body.get("sudden_death_mode", False))  # Issue #827
         title_artist_mode = body.get("title_artist_mode", False)  # #1180
+        # Race variant of title/artist mode: live buzzer, first-correct-wins.
+        # Implies title_artist_mode server-side (ChallengeManager.configure).
+        title_artist_race_mode = bool(body.get("title_artist_race_mode", False))
         rampup_order_enabled = bool(
             body.get("rampup_order_enabled", False)
         )  # Issue #1726
@@ -444,6 +447,7 @@ class StartGameView(RateLimitMixin, HomeAssistantView):
             "closest_wins_mode": closest_wins_mode,  # Issue #442
             "sudden_death_mode": sudden_death_mode,  # Issue #827
             "title_artist_mode": title_artist_mode,  # #1180
+            "title_artist_race_mode": title_artist_race_mode,
             "rampup_order_enabled": rampup_order_enabled,  # Issue #1726
             "finale_double_enabled": finale_double_enabled,  # Issue #1725
             "finale_tiebreaker_enabled": finale_tiebreaker_enabled,  # Issue #1725

@@ -496,6 +496,18 @@
                         </label>
                     </div>
                     <p class="setting-hint" data-i18n="admin.titleArtistModeHint">Players type the song title and artist instead of guessing the year. Replaces the year round, so the per-round bonuses below are turned off.</p>
+                    <!-- Race variant sub-toggle — only shown when Title & Artist mode is on -->
+                    <div class="setting-row setting-row--nested hidden" id="title-artist-race-group" style="margin-top:0.75rem;">
+                        <span class="setting-label">
+                            <span class="setting-icon" aria-hidden="true">⚡</span>
+                            <span data-i18n="admin.titleArtistRaceMode">Live Race (buzzer)</span>
+                        </span>
+                        <label class="toggle-compact">
+                            <input type="checkbox" id="title-artist-race-toggle">
+                            <span class="toggle-switch-compact"></span>
+                        </label>
+                    </div>
+                    <p class="setting-hint hidden" id="title-artist-race-hint" data-i18n="admin.titleArtistRaceModeHint">Unlimited guesses, everyone sees the guesses live, and the first to name the title or artist wins those points. The round ends when both are solved or time runs out.</p>
                 </div>
 
                 <!-- Artist Challenge - Inline toggle -->

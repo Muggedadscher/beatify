@@ -900,6 +900,66 @@
 
         // Issue #827: Sudden-Death FINAL banner (2 players left).
         renderSuddenDeathFinalBanner(data, 'sd-final-banner-playing');
+
+        // Title & Artist Race: live guess feed + solved status on the TV.
+        renderDashboardRacePanel(data);
+    }
+
+    /**
+     * Render the Title & Artist Race live panel on the TV during PLAYING: who has
+     * solved the title / artist so far, plus the rolling guess feed the whole
+     * room can watch. Hidden outside race mode. The correct answer is never shown
+     * here (only at REVEAL) — the server omits it from the PLAYING race payload.
+     * @param {Object} data - PLAYING state payload
+     */
+    function renderDashboardRacePanel(data) {
+        var panel = document.getElementById('dashboard-race-panel');
+        if (!panel) return;
+        var race = (data && data.title_artist_race_mode && data.title_artist_challenge
+            && data.title_artist_challenge.race) || null;
+        if (!race) {
+            panel.classList.add('hidden');
+            return;
+        }
+        panel.classList.remove('hidden');
+
+        var statusEl = document.getElementById('dashboard-race-status');
+        var feedEl = document.getElementById('dashboard-race-feed');
+        var titleTxt = utils.t('titleArtist.raceTitleLabel') || 'Title';
+        var artistTxt = utils.t('titleArtist.raceArtistLabel') || 'Artist';
+        var openTxt = utils.t('titleArtist.raceOpen') || 'open';
+
+        if (statusEl) {
+            statusEl.innerHTML =
+                _dashRaceChip(titleTxt, race.title_solved, race.title_winner, openTxt) +
+                _dashRaceChip(artistTxt, race.artist_solved, race.artist_winner, openTxt);
+        }
+
+        if (feedEl) {
+            var feed = Array.isArray(race.feed) ? race.feed.slice() : [];
+            feed.reverse();
+            if (!feed.length) {
+                feedEl.innerHTML = '';
+            } else {
+                feedEl.innerHTML = feed.map(function(f) {
+                    var mark = f.correct ? '✅' : '·';
+                    return '<div class="ta-race-feed-item' + (f.correct ? ' is-correct' : '') + '">' +
+                        '<span aria-hidden="true">' + mark + '</span>' +
+                        '<span class="ta-race-feed-player">' + utils.escapeHtml(f.player) + '</span>' +
+                        '<span class="ta-race-feed-guess">' + utils.escapeHtml(f.guess) + '</span>' +
+                        '</div>';
+                }).join('');
+            }
+        }
+    }
+
+    /** Build one solved-status chip for the TV race panel. */
+    function _dashRaceChip(label, solved, winner, openTxt) {
+        var right = solved ? utils.escapeHtml(winner || '✓') : utils.escapeHtml(openTxt);
+        return '<span class="ta-race-chip' + (solved ? ' is-solved' : '') + '">' +
+            '<span>' + utils.escapeHtml(label) + '</span>' +
+            '<span>' + (solved ? '🏆 ' : '') + right + '</span>' +
+            '</span>';
     }
 
     /**
@@ -1211,6 +1271,29 @@
         var artistEl = document.getElementById('dashboard-ta-artist');
         if (titleEl) titleEl.textContent = ta.correct_title || '';
         if (artistEl) artistEl.textContent = ta.correct_artist || '';
+
+        // Race mode: no near-miss voting — show who won each field beneath the
+        // truth banner and stop (the truth is already set above).
+        if (ta.race) {
+            _stopTaLiveCountdown();
+            var raceLiveEl = document.getElementById('dashboard-ta-live');
+            var raceVotingEl = document.getElementById('dashboard-ta-voting');
+            var raceOutcomesEl = document.getElementById('dashboard-ta-outcomes');
+            if (raceLiveEl) { raceLiveEl.innerHTML = ''; raceLiveEl.classList.add('hidden'); }
+            if (raceVotingEl) raceVotingEl.classList.add('hidden');
+            if (raceOutcomesEl) {
+                var nobody = utils.t('titleArtist.raceNobody') || 'Nobody';
+                var tLbl = utils.t('titleArtist.raceTitleLabel') || 'Title';
+                var aLbl = utils.t('titleArtist.raceArtistLabel') || 'Artist';
+                raceOutcomesEl.innerHTML =
+                    '<div class="dashboard-ta-decided">' +
+                        _dashRaceChip(tLbl, !!ta.race.title_winner, ta.race.title_winner || nobody, '') +
+                        _dashRaceChip(aLbl, !!ta.race.artist_winner, ta.race.artist_winner || nobody, '') +
+                    '</div>';
+                raceOutcomesEl.classList.remove('hidden');
+            }
+            return;
+        }
 
         var votingOpen = !!ta.voting_open;
         var nearMisses = ta.near_misses || [];

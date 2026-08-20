@@ -1299,6 +1299,8 @@ async function startGame() {
                 closest_wins_mode: bonusFlags.closest_wins_mode,  // Issue #442 (#1180: suppressed in TA mode)
                 sudden_death_mode: suddenDeathMode,  // Issue #827
                 title_artist_mode: adminState.titleArtistModeEnabled,  // #1180
+                // Race variant — server forces title_artist_mode on when set.
+                title_artist_race_mode: adminState.titleArtistModeEnabled && adminState.titleArtistRaceModeEnabled,
                 rampup_order_enabled: adminState.rampupOrderEnabled,  // Issue #1726
                 finale_double_enabled: adminState.finaleDoubleEnabled,  // Issue #1725
                 finale_tiebreaker_enabled: adminState.finaleTiebreakerEnabled,  // Issue #1725

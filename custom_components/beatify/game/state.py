@@ -1198,7 +1198,9 @@ class GameState(
         # immediately and falls through to the normal auto-advance when there
         # are none. When the window is open it already owns _auto_advance_task,
         # so skip the song-end auto-advance scheduling entirely.
-        if self.title_artist_mode:
+        # Race mode has no near-miss Crowd Court — the answer was raced live, so
+        # there is nothing to vote on. Skip straight to the auto-advance.
+        if self.title_artist_mode and not self.title_artist_race_mode:
             self._schedule_title_artist_vote_window()
         if not self._title_artist_voting_open:
             self._schedule_song_end_auto_advance()
@@ -1213,7 +1215,13 @@ class GameState(
         window owns the ``_auto_advance_task`` slot. Reused by
         ``resume_game`` (#1371) to re-arm a REVEAL that was paused mid-dwell.
         """
-        if any(p.submitted for p in self.players.values()):
+        # Race mode never marks players ``submitted`` (unlimited attempts), so
+        # "did the party engage?" is read off the live guess feed instead —
+        # otherwise a fully-raced round would wrongly idle-halt.
+        engaged = any(p.submitted for p in self.players.values())
+        if self.title_artist_race_mode and self.title_artist_challenge:
+            engaged = bool(self.title_artist_challenge.feed)
+        if engaged:
             self._auto_advance_task = asyncio.create_task(
                 self._reveal_auto_advance(self.reveal_auto_advance)
             )

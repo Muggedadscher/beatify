@@ -274,6 +274,18 @@ export function isTitleArtistMode(data) {
     return !!(data && data.title_artist_mode);
 }
 
+/**
+ * Race variant of Title & Artist mode: live buzzer, first-correct-wins. Ships as
+ * the top-level `title_artist_race_mode` flag alongside `title_artist_mode` on
+ * every serialized payload. Race mode always implies title/artist mode.
+ *
+ * @param {Object} data - server state payload
+ * @returns {boolean} True when the Title & Artist Race variant is active
+ */
+export function isTitleArtistRaceMode(data) {
+    return !!(data && data.title_artist_race_mode);
+}
+
 // ============================================
 // Score Animation Utilities (Story 13.2)
 // ============================================

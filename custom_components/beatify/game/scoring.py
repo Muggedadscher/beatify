@@ -951,7 +951,11 @@ class ScoringService:
         flat 3x applies on every difficulty (unchanged).
         """
         if title_artist_manager is not None:
-            if player.submitted:
+            # Race mode never marks players ``submitted`` (unlimited attempts),
+            # so every player is scored through the title/artist path: the field
+            # winners bank points via title_artist_points, everyone else gets 0.
+            race_mode = getattr(title_artist_manager, "title_artist_race_mode", False)
+            if player.submitted or race_mode:
                 _score_title_artist_round(
                     player, title_artist_manager, streak_achievements
                 )
