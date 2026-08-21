@@ -1,6 +1,6 @@
 {
   "name": "Schweizer Hits 🇨🇭",
-  "version": "0.12",
+  "version": "0.15",
   "tags": [
     "swiss",
     "mundart",
@@ -105,7 +105,7 @@
       }
     },
     {
-      "year": 1991,
+      "year": 1996,
       "uri": "spotify:track:67hvPNax9b1T4sRbeaUCzC",
       "artist": "Patent Ochsner",
       "alt_artists": [],
@@ -1455,7 +1455,7 @@
       }
     },
     {
-      "year": 2022,
+      "year": 1991,
       "uri": "spotify:track:2jdKgpF2blCAMdSyS6FXPZ",
       "artist": "Patent Ochsner",
       "alt_artists": [],
@@ -1785,7 +1785,7 @@
       }
     },
     {
-      "year": 2022,
+      "year": 2003,
       "uri": "spotify:track:6YZU9qdssTVIfGwUXiexbn",
       "artist": "Patent Ochsner",
       "alt_artists": [],
@@ -2235,7 +2235,7 @@
       }
     },
     {
-      "year": 1977,
+      "year": 1999,
       "uri": "spotify:track:1myONPDiNfP95dKi85J8Tp",
       "artist": "Stephan Eicher",
       "alt_artists": [],
