@@ -902,7 +902,13 @@ export function initYearSelector() {
             titleInput.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
-                    if (artistInput) artistInput.focus();
+                    // Race mode: Enter submits straight from the title field.
+                    // Single-shot mode keeps the "tab to artist" convenience.
+                    if (titleArtistRaceMode) {
+                        handleTitleArtistSubmit();
+                    } else if (artistInput) {
+                        artistInput.focus();
+                    }
                 }
             });
         }
@@ -1302,6 +1308,15 @@ export function handleTitleArtistSubmit() {
             title: title,
             artist: artist
         }));
+        // Race mode: clear the inputs once the guess is on its way so the player
+        // can type their next attempt from a clean field. A field already solved
+        // (locked) stays as the render left it. Single-shot mode keeps the text.
+        if (titleArtistRaceMode) {
+            if (!titleInput.disabled) titleInput.value = '';
+            if (!artistInput.disabled) artistInput.value = '';
+            if (!titleInput.disabled) titleInput.focus();
+            else if (!artistInput.disabled) artistInput.focus();
+        }
     } else {
         showSubmitError(utils.t('errors.connectionLost'));
         submitBtn.disabled = false;
