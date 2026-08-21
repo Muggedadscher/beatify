@@ -206,7 +206,7 @@ export function updateGameView(data) {
     // Arcade no-bonus filler — shown when neither challenge is active
     syncNoBonusFiller(data);
 
-    renderSubmissionTracker(data.players);
+    renderSubmissionTracker(data.players, isTitleArtistRaceMode(data));
 
     if (data.leaderboard) {
         // #1663 item 2: remember standings so the steal modal can show rank+score.
@@ -448,12 +448,24 @@ function applySuddenDeathState(data) {
     }
 }
 
-function renderSubmissionTracker(players) {
+function renderSubmissionTracker(players, raceMode) {
     var tracker = document.getElementById('submission-tracker');
     var container = document.getElementById('submitted-players');
     var countEl = document.getElementById('arc-submission-count');
 
     if (!tracker || !container) return;
+
+    // Race mode has no "submitted" concept — players race with unlimited
+    // attempts and are never marked submitted, so a submission strip would be
+    // stuck at "0/N submitted" all round (the live race status chips + feed own
+    // the progress display instead). Hide the whole strip. #1180 race variant.
+    if (raceMode) {
+        tracker.classList.add('hidden');
+        container.innerHTML = '';
+        if (countEl) countEl.textContent = '';
+        return;
+    }
+    tracker.classList.remove('hidden');
 
     var playerList = players || [];
     // Issue #827: Sudden Death — eliminated players are out of the round and
