@@ -35,6 +35,11 @@ new playlists and 1,162 more songs. Everything in 4.2.1-rc1 through rc3 is inclu
 - **The Apple backfill hears a second opinion before rejecting on year (#2116).** Track duration within two seconds overrules the year gate.
 - **Dead reveal CSS removed (#2132).**
 
+### Fixed
+- **Race mode no longer claims "nobody played" after a round everyone raced.** The REVEAL idle-halt banner ("Spielpause — in dieser Runde hat niemand mitgespielt") is gated on whether any player is marked *submitted*, but Race mode never marks a player submitted — attempts are unlimited, so engagement lives on the live guess feed. The auto-advance branch already read the feed; the serializer flag did not, so the banner fired every Race round. Both now share one `round_had_engagement()` source of truth.
+- **The same player no longer appears several times on the dashboard leaderboard.** Two compounding causes. Server-side: a name resubmitted in a different Unicode normalization form — iOS can send "Joäni" as NFC one join and NFD the next — was byte-distinct under `name.lower()`, so the reconnect lookup missed and a *second* session was created for the same visible name. Names are now folded to NFC before they become an index key or are stored for display, so a rejoin resolves to the existing player. Client-side: once a duplicate key reached the dashboard's keyed row reconciler, its keyed removal pass could never prune the orphan (the key stayed "desired"), so the extra row persisted and accumulated across rounds; the reconciler now dedupes keys and removes by node identity, and self-heals a display that was already doubled.
+- **The "0/2 submitted" strip is hidden in Race mode.** With no "submitted" concept in a race, the arcade submission tracker sat frozen at `0/N` all round even as answers were being solved. The live race status chips and guess feed already show progress, so the strip is now hidden in Race mode.
+
 ## [4.2.1-rc3] - 2026-08-20
 
 ### Added
