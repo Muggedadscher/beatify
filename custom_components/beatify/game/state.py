@@ -1205,23 +1205,31 @@ class GameState(
         if not self._title_artist_voting_open:
             self._schedule_song_end_auto_advance()
 
+    def round_had_engagement(self) -> bool:
+        """Whether anyone actually played this round (drives idle-halt).
+
+        Normally "did the party engage?" is "did anyone submit a guess?".
+        Race mode never marks players ``submitted`` (unlimited attempts), so
+        engagement is read off the live guess feed instead — otherwise a
+        fully-raced round would wrongly look idle. Single source of truth for
+        both the idle-halt auto-advance branch (:meth:`_schedule_song_end_auto_advance`)
+        and the ``idle_halt`` state flag surfaced to the REVEAL screen.
+        """
+        if self.title_artist_race_mode and self.title_artist_challenge:
+            return bool(self.title_artist_challenge.feed)
+        return any(p.submitted for p in self.players.values())
+
     def _schedule_song_end_auto_advance(self) -> None:
         """Spawn the song-end auto-advance / idle-halt task (#1012).
 
         The non-vote-window tail of :meth:`_schedule_reveal_advance`: if anyone
-        submitted a guess, arm the song-end auto-advance; otherwise the party is
+        engaged this round, arm the song-end auto-advance; otherwise the party is
         idle, so arm the idle-halt (let the song finish, stop, hold on REVEAL).
         Assumes the caller already cancelled any prior task and that no vote
         window owns the ``_auto_advance_task`` slot. Reused by
         ``resume_game`` (#1371) to re-arm a REVEAL that was paused mid-dwell.
         """
-        # Race mode never marks players ``submitted`` (unlimited attempts), so
-        # "did the party engage?" is read off the live guess feed instead —
-        # otherwise a fully-raced round would wrongly idle-halt.
-        engaged = any(p.submitted for p in self.players.values())
-        if self.title_artist_race_mode and self.title_artist_challenge:
-            engaged = bool(self.title_artist_challenge.feed)
-        if engaged:
+        if self.round_had_engagement():
             self._auto_advance_task = asyncio.create_task(
                 self._reveal_auto_advance(self.reveal_auto_advance)
             )

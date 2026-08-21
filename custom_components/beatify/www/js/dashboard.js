@@ -136,6 +136,19 @@
     // re-triggered CSS animation), changed rows are swapped in place, stale rows
     // are removed, and the child order is synced to `rows`.
     function _reconcileRows(container, rows) {
+        // Dedupe by key (keep first occurrence). Player names are unique, so a
+        // repeated key means an upstream glitch shipped the same player twice
+        // (e.g. a duplicate session). Without this guard two rows share one
+        // data-row-key: the removal pass below is keyed, so once both are in the
+        // DOM neither can ever be pruned (the key stays "desired"), and the
+        // duplicate persists and accumulates across rounds. Collapsing to the
+        // first occurrence keeps the reconciler self-healing.
+        var seenKeys = {};
+        rows = (rows || []).filter(function(row) {
+            if (seenKeys[row.key]) return false;
+            seenKeys[row.key] = true;
+            return true;
+        });
         var existing = {};
         var child = container.firstElementChild;
         while (child) {
@@ -156,14 +169,16 @@
             }
             if (el) { newSig[row.key] = row.html; desired.push(el); }
         });
-        // Remove nodes that are no longer desired.
-        var desiredKeys = {};
-        desired.forEach(function(n) { desiredKeys[n.getAttribute('data-row-key')] = true; });
+        // Remove every child that is not one of the desired NODES. Match by node
+        // identity, not by key: a keyed test would keep a stale orphan whose key
+        // still appears in `desired` (the duplicate-row wedge above), so it could
+        // never be pruned. Identity removal also self-heals a dashboard that was
+        // already showing duplicates before this fix shipped.
+        var desiredSet = new Set(desired);
         child = container.firstElementChild;
         while (child) {
             var next = child.nextElementSibling;
-            var ck = child.getAttribute('data-row-key');
-            if (ck == null || !desiredKeys[ck]) container.removeChild(child);
+            if (!desiredSet.has(child)) container.removeChild(child);
             child = next;
         }
         // Sync order / insert new nodes.

@@ -275,7 +275,7 @@ class GameStateSerializer:
         # REVEAL with playback stopped instead of auto-advancing. Surface this
         # so the REVEAL screen can show a clear "Game idle — tap Next round"
         # banner instead of looking generically stuck.
-        if not any(p.submitted for p in gs.players.values()):
+        if not gs.round_had_engagement():
             state["idle_halt"] = True
         # #1048: surface the auto-advance config + REVEAL entry timestamp so
         # the admin sticky-menu Next button can render a 1-Hz countdown
