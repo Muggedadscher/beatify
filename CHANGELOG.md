@@ -4,6 +4,34 @@ All notable changes to Beatify are documented here. For detailed release notes, 
 
 ## [Unreleased]
 
+## [4.4.1] - 2026-08-22
+
+Syncs 15 upstream commits from `mholzi/beatify` main onto the fork's 4.4.0 line
+(Race mode + auto-advance). Mostly catalogue corrections, with a handful of
+server- and tooling-side fixes; no changes to the fork's own Race mode.
+
+### Added
+- **Distinct error codes for the three actionable start failures (#2309).** The
+  start path now returns a specific code per recoverable failure instead of one
+  generic error, so the UI can point at what to fix.
+- **Every error response gets a log line (#2298).** Server error responses are
+  logged, so a failed start or mix leaves a trace to diagnose.
+
+### Fixed
+- **A failed mix keeps the server's reason (#2302).** The client surfaces the
+  actual server-side cause instead of a generic "mix failed".
+- **Backfill `--youtube-first` skips ground the cursor already covered (#2310)**
+  and **no longer spends the whole quota window on a free lookup (#2317).**
+
+### Data
+- Apple / YouTube / Deezer backfills and year/ISRC corrections across
+  `80er-hits`, `top-100-power-ballads`, `tomorrowland-top-1000`,
+  `musica-italiana` and others (#2299, #2300, #2312, #2313, #2315, #2316, #2318).
+
+### Docs
+- README rewrites — lead with the room over the stack, and drop the
+  subscription-required framing (#2303, #2305, #2307).
+
 ## [4.3.0] - 2026-08-21
 
 Released as **4.3.0** rather than 4.2.1: the work shipped as the `v4.2.1-rc1`…`rc3` release
