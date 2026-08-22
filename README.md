@@ -4,10 +4,13 @@
 
 <img src="images/beatify-gameplay.gif" alt="Beatify gameplay: scan a QR code to join, guess the song, and climb the final ranking" width="800">
 
-### **Multiplayer Music Trivia Quiz Game for Home Assistant**
+### **The Music Party Game for the Speakers You Already Own**
 
-Turn any gathering into an unforgettable music trivia experience.
-Guests scan, songs play, everyone competes. It's that simple.
+A song starts. Everyone shouts a year at the speakers. Someone is
+gloriously, confidently wrong — and the room lets them know.
+
+Guests join from their phones by scanning a QR code. No app, no accounts.
+Runs on your own Home Assistant.
 
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2025.1+-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://www.home-assistant.io/)
 [![Version](https://img.shields.io/github/v/release/mholzi/beatify?style=for-the-badge&color=ff00ff&label=Version)](https://github.com/mholzi/beatify/releases)
@@ -27,7 +30,7 @@ Three things decide it — check them before you install.
 
 - **Home Assistant 2025.1 or newer**
 - **A supported speaker** — Music Assistant (any speaker it drives), Sonos, or Alexa. Chromecast, Nest and HomePod work only through Music Assistant. See [Supported Speakers](#supported-speakers).
-- **A paid music plan** — Spotify, Apple Music, YouTube Music, Tidal, Deezer or Amazon Music. Free tiers can't play a chosen track on demand, so Spotify Free won't work.
+- **A music source** — either a **paid streaming plan** (Spotify, Apple Music, YouTube Music, Tidal, Deezer or Amazon Music; free tiers can't play a chosen track on demand, so Spotify Free won't work) **or your own music library** through Music Assistant — Plex, Jellyfin or local files, with no subscription at all.
 
 Beatify itself is free and runs entirely on your own Home Assistant.
 
@@ -37,11 +40,22 @@ Beatify itself is free and runs entirely on your own Home Assistant.
 
 ## What Is Beatify?
 
-**Beatify is an open-source music quiz game for Home Assistant** — a multiplayer music trivia party game that turns your smart speakers into a game show.
+**Beatify is a music party game.** Eight people in a living room, a song on the speakers, and a
+scramble to name the year before anyone else does.
 
-A song plays through your Sonos, Alexa, or Music Assistant speakers. Everyone races to guess the release year — or, in the new **Title & Artist** mode, to name the song and who sings it. Points fly. Streaks build. Champions emerge.
+The music plays through your Sonos, Alexa, or Music Assistant speakers — at party volume, not out of
+a phone on the table. Everyone races to guess the release year, or, in the **Title & Artist** mode, to
+name the song and who sings it. Points fly. Streaks build. Champions emerge, then lose it all on a
+song from 1994 that nobody can place.
+
+Underneath, it is an open-source Home Assistant integration that runs entirely on your own hardware.
 
 No apps to download. No accounts to create. Just scan a QR code and play.
+
+If you have played **Hitster** or a similar card-based music party game, the core is familiar: a song
+starts, and you place its release year. Beatify does that without the cards, on the speakers already
+in the house — see [How Beatify compares](#how-beatify-compares) for what it does differently, and
+what it does not do at all.
 
 ---
 
@@ -629,12 +643,41 @@ That's it. No mDNS, no broadcast, no additional ports.
 
 <br>
 
+## How Beatify Compares
+
+People usually find Beatify while looking for a **Hitster alternative**, so here is the honest
+comparison — including where the card game wins.
+
+| | Card-based music party game | Beatify |
+|---|---|---|
+| **What you buy** | A box, and a new box or expansion for more music | Nothing. 55 playlists ship with it, ~6,000 songs |
+| **Where the music comes from** | A fixed printed deck | Spotify, Apple Music, YouTube Music, Tidal, Deezer, Amazon Music — **or your own Plex / Jellyfin / local library** |
+| **Subscription** | None | None required since v4.3.0 (streaming is one option, your own library is another) |
+| **Playback** | A phone speaker on the table | The Sonos, Alexa or Music Assistant speakers you already own |
+| **How you answer** | Physically place a card on your timeline | Guess the year — or name the title and artist in a second mode |
+| **Timeline placement** | ✅ The core mechanic | ❌ **Not implemented.** Rounds score a year guess instead |
+| **Setup** | Open the box | Home Assistant 2025.1+, a supported speaker, HACS install |
+| **Players** | Limited by the components | 20+ on their own phones, no app |
+
+Two rows deserve more than a checkmark. Beatify has **no timeline-placement mechanic** — the most
+requested difference, and not a small feature. And it needs a **running Home Assistant**: a board game
+needs a table, this needs a server. If you do not have one, the box wins.
+
+> *Hitster is a trademark of its respective owner. Beatify is an independent open-source project,
+> not affiliated with or endorsed by it; the name appears here only to describe the kind of game.*
+
+---
+
+<br>
+
 ## Technical Details
 
 ### Requirements
 - **Home Assistant** 2025.1+ (matches the `homeassistant` floor declared in `hacs.json`)
 - **Supported media player** (see [Supported Speakers](#supported-speakers) above)
-- **A music service** — Spotify, Apple Music, YouTube Music, Tidal, Deezer or Amazon Music, each of which needs a **paid plan** (on-demand single-track playback; free/ad-supported tiers don't allow it — Spotify Free is blocked, and Music Assistant's YouTube Music provider [requires Premium too](https://www.music-assistant.io/music-providers/youtube-music/)). Amazon Music playback is Alexa-only (text search — see [Supported Speakers](#supported-speakers)).
+- **A music source**, either of:
+  - **A streaming service** — Spotify, Apple Music, YouTube Music, Tidal, Deezer or Amazon Music, each of which needs a **paid plan** (on-demand single-track playback; free/ad-supported tiers don't allow it — Spotify Free is blocked, and Music Assistant's YouTube Music provider [requires Premium too](https://www.music-assistant.io/music-providers/youtube-music/)). Amazon Music playback is Alexa-only (text search — see [Supported Speakers](#supported-speakers)).
+  - **Your own library** — Plex, Jellyfin, local files, or anything else Music Assistant exposes as a library provider. No subscription required. Beatify builds a playable pool from it and verifies release years against MusicBrainz first, because a year-guessing game is only fair if the year is right (v4.3.0).
 - **HACS** (recommended) or manual installation
 
 ### How It Works
@@ -708,7 +751,9 @@ Spotify, Apple Music, YouTube Music, Tidal, Deezer, and Amazon Music. Support de
 <details>
 <summary><strong>Do I need a paid music subscription? Does Beatify work with free Spotify?</strong></summary>
 <br>
-Yes. Beatify plays a specific song on demand each round, and on every provider—Spotify, Apple Music, YouTube Music, Tidal, Deezer and Amazon Music—that requires a <strong>paid</strong> plan. <strong>Spotify Free does not work</strong> (its free tier blocks on-demand single-track playback via Music Assistant / Spotify Connect), and <strong>a free YouTube Music account does not work either</strong>—playback runs through Music Assistant, whose <a href="https://www.music-assistant.io/music-providers/youtube-music/">YouTube Music provider</a> supports Premium accounts only. This is a streaming-service limitation, not a Beatify one. The curated playlists carry URIs for the five URI-based services; Amazon Music (Alexa-only) plays those same tracks by text search (<code>artist</code> + <code>title</code>) rather than a fixed URI.
+Not necessarily—there are two ways to play. <strong>Streaming</strong> needs a paid plan: Beatify plays a specific song on demand each round, and on every provider—Spotify, Apple Music, YouTube Music, Tidal, Deezer and Amazon Music—that requires a <strong>paid</strong> plan. <strong>Spotify Free does not work</strong> (its free tier blocks on-demand single-track playback via Music Assistant / Spotify Connect), and <strong>a free YouTube Music account does not work either</strong>—playback runs through Music Assistant, whose <a href="https://www.music-assistant.io/music-providers/youtube-music/">YouTube Music provider</a> supports Premium accounts only. This is a streaming-service limitation, not a Beatify one. The curated playlists carry URIs for the five URI-based services; Amazon Music (Alexa-only) plays those same tracks by text search (<code>artist</code> + <code>title</code>) rather than a fixed URI.
+<br><br>
+<strong>Your own library needs no subscription at all.</strong> Since v4.3.0 a game can be sampled from the music you already own—Plex, Jellyfin, local files, anything Music Assistant exposes as a library provider. Beatify enriches that pool first, resolving release years against MusicBrainz and discarding what it cannot verify, because a compilation rip tagged with its pressing year would make the game unfair. Music Assistant is still required for playback; a streaming subscription is not.
 </details>
 
 <details>
