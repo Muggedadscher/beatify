@@ -1179,6 +1179,28 @@ def run(args: argparse.Namespace) -> int:
             yt_gap = "youtube_music" in gaps
             non_yt_gaps = [g for g in gaps if g != "youtube_music"]
 
+            # ---- Songs this run has no business with (#2301) ----------------
+            # Under ``--youtube-first`` the run exists to fill YouTube and
+            # nothing else. A song that already HAS its YouTube URI has
+            # nothing here to do — but its other gaps still drag the loop
+            # through a full Odesli call at ``--odesli-sleep`` seconds.
+            #
+            # That is the toll booth two earlier fixes drove straight past.
+            # Measured on 2026-08-23 in tomorrowland-top-1000: the 46 songs
+            # that already carry a YouTube URI sit at indices 0 through 45,
+            # and the first real gap is at 46. All 46 are missing Tidal, so
+            # `yt_gap` is false for every one of them and each costs the
+            # full 6 seconds — 276 of a 300-second slice, spent before the
+            # first gap is even reached. The next slice restarts at 0 and
+            # pays it again, which is why two slices in a row report zero.
+            #
+            # Both previous attempts were gated on `yt_gap` (#2310's cursor
+            # skip, #2320's Odesli skip), so neither could ever see these
+            # songs. Their Apple, Deezer and Tidal gaps are not abandoned —
+            # those providers have their own agents and their own windows.
+            if args.youtube_first and not yt_gap:
+                continue
+
             # ---- Fast-forward to the YouTube cursor (#2301) -----------------
             # Songs before the cursor were already offered to the YouTube phase
             # in an earlier run. The loop still walked them, paying one Odesli
@@ -1211,14 +1233,24 @@ def run(args: argparse.Namespace) -> int:
             # times and the run ended at its 25-minute cap having spent
             # 24 of 90 permitted searches.
             #
-            # So when this run exists to fill YouTube and YouTube is the
-            # song's only gap, skip Odesli and pay the search directly.
+            # So when this run exists to fill YouTube, a song with a YouTube
+            # gap skips Odesli entirely and pays the search directly.
+            #
+            # The first attempt narrowed that to songs whose *only* gap was
+            # YouTube, and on this catalogue that condition never holds:
+            # tomorrowland-top-1000 has 779 YouTube gaps and all 779 are also
+            # missing Tidal, musica-italiana 73 of 73. The 04:00 Tidal wave
+            # counts 1063 tracks missing Tidal across 58 playlists, so a
+            # sole-gap test is close to unreachable and the 19:32 run spent
+            # four searches where the 15:32 run spent twenty-four.
+            #
             # The trade is quota for time: 100 units against a wait that
-            # currently buys about 50 songs per slice. The other agents
-            # (Apple, Deezer, Tidal) run without the flag and keep the
-            # free pass unchanged.
-            want_odesli = bool(non_yt_gaps) or (
-                yt_gap and yt_key and not args.youtube_first
+            # buys about 50 songs per slice. The other gaps on these songs
+            # are not lost — Apple, Deezer and Tidal have their own agents
+            # and their own windows, and they call this script without the
+            # flag, so their free pass is unchanged.
+            want_odesli = not (args.youtube_first and yt_gap) and (
+                bool(non_yt_gaps) or (yt_gap and yt_key)
             )
             if want_odesli:
                 # Counted before the call, so --max caps attempts rather than
