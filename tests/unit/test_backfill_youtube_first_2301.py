@@ -102,7 +102,7 @@ def wants_odesli(
     non_yt_gaps: list[str], yt_gap: bool, yt_key: bool, youtube_first: bool
 ) -> bool:
     """Die ``want_odesli``-Bedingung aus dem Song-Loop, isoliert nachgebildet."""
-    return bool(non_yt_gaps) or (yt_gap and yt_key and not youtube_first)
+    return not (youtube_first and yt_gap) and (bool(non_yt_gaps) or (yt_gap and yt_key))
 
 
 class TestOdesliSkip:
@@ -110,37 +110,123 @@ class TestOdesliSkip:
 
     Er kostet ``--odesli-sleep`` Sekunden pro Song, und die YouTube-Suche steht
     im selben Schleifendurchgang dahinter. Der Zeitdeckel nimmt also zuerst die
-    Suche. Gemessen am 22.08.2026 um 15:32: fuenf Scheiben, drei davon erreichten
-    ``search.list`` kein einziges Mal, der Lauf endete am 25-Minuten-Deckel mit
-    24 von 90 erlaubten Suchen.
+    Suche.
+
+    **Der erste Anlauf war zu eng.** Er sprang nur, wenn YouTube die *einzige*
+    Luecke war — und diese Bedingung ist auf diesem Katalog praktisch nie wahr:
+    tomorrowland-top-1000 hat 779 YouTube-Luecken, allen 779 fehlt auch Tidal;
+    musica-italiana 73 von 73. Die 04:00-Welle zaehlt **1063** Tracks ohne Tidal
+    ueber 58 Playlists. Gemessen: 15:32-Lauf 24 Suchen, 19:32-Lauf mit dem engen
+    Fix **4** Suchen und vier von fuenf Scheiben ohne eine einzige.
+
+    Deshalb faellt Odesli jetzt fuer **jeden** Song mit YouTube-Luecke weg.
     """
 
-    def test_youtube_only_gap_skips_odesli_under_the_flag(self):
-        # Der Fall, um den es geht: nichts ausser YouTube fehlt, also gibt es
-        # nichts, wofuer sich die Wartezeit noch lohnen wuerde.
+    def test_a_youtube_gap_alone_skips_odesli_under_the_flag(self):
+        # Der Normalfall im Katalog: YouTube fehlt, Tidal fehlt mit. Frueher
+        # zwang das den 6-Sekunden-Aufruf, jetzt nicht mehr.
         assert wants_odesli([], yt_gap=True, yt_key=True, youtube_first=True) is False
-
-    def test_youtube_only_gap_still_asks_odesli_without_the_flag(self):
-        # Apple-, Deezer- und Tidal-Agenten rufen dasselbe Skript ohne das Flag
-        # auf. Fuer sie bleibt der Gratis-Vorabtreffer unveraendert erhalten.
-        assert wants_odesli([], yt_gap=True, yt_key=True, youtube_first=False) is True
-
-    def test_a_second_gap_still_needs_odesli_even_under_the_flag(self):
-        # Apple/Deezer/Tidal kommen NUR ueber Odesli. Fehlt einer davon mit,
-        # muss der Aufruf stattfinden — sonst repariert der YouTube-Lauf eine
-        # Luecke und reisst eine andere auf.
-        for extra in (["apple_music"], ["deezer"], ["tidal"]):
+        for extra in (
+            ["tidal"],
+            ["apple_music"],
+            ["deezer"],
+            ["apple_music", "deezer", "tidal"],
+        ):
             assert (
                 wants_odesli(extra, yt_gap=True, yt_key=True, youtube_first=True)
-                is True
-            )
+                is False
+            ), extra
 
-    def test_without_a_youtube_key_nothing_changes(self):
-        # Ohne Key gibt es keine Suche, die man vorziehen koennte. Dann haengt
-        # alles allein an den Nicht-YouTube-Luecken — mit Flag wie ohne.
-        assert wants_odesli([], yt_gap=True, yt_key=False, youtube_first=True) is False
+    def test_the_key_does_not_matter_under_the_flag(self):
+        # Ohne API-Key gibt es zwar keine Suche, aber auch keinen Grund, in
+        # einem YouTube-Lauf auf Odesli zu warten. Die Entscheidung haengt
+        # allein an Flag und Luecke.
+        assert (
+            wants_odesli(["tidal"], yt_gap=True, yt_key=False, youtube_first=True)
+            is False
+        )
+
+    def test_a_song_without_a_youtube_gap_is_untouched(self):
+        # Das Flag sagt nur, welchen Job dieser Lauf macht. Songs ohne
+        # YouTube-Luecke gehen ihren gewohnten Weg — sonst wuerde ein
+        # YouTube-Lauf fremde Luecken stillschweigend ueberspringen.
+        assert (
+            wants_odesli(["tidal"], yt_gap=False, yt_key=True, youtube_first=True)
+            is True
+        )
+        assert wants_odesli([], yt_gap=False, yt_key=True, youtube_first=True) is False
+
+    def test_without_the_flag_everything_is_as_before(self):
+        # Apple-, Deezer- und Tidal-Agenten rufen dasselbe Skript ohne das
+        # Flag auf. Fuer sie darf sich nichts aendern.
+        assert wants_odesli([], yt_gap=True, yt_key=True, youtube_first=False) is True
+        assert (
+            wants_odesli(["tidal"], yt_gap=True, yt_key=True, youtube_first=False)
+            is True
+        )
         assert wants_odesli([], yt_gap=True, yt_key=False, youtube_first=False) is False
+        assert wants_odesli([], yt_gap=False, yt_key=True, youtube_first=False) is False
+
+    def test_the_narrow_first_attempt_is_gone(self):
+        # Die alte Bedingung darf nicht zurueckkommen: sie war syntaktisch
+        # gueltig, gruen getestet — und feuerte auf echten Daten nie.
+        src = _SCRIPT.read_text()
+        assert "yt_gap and yt_key and not args.youtube_first" not in src
 
     def test_the_condition_is_wired_into_the_song_loop(self):
         src = _SCRIPT.read_text()
-        assert "yt_gap and yt_key and not args.youtube_first" in src
+        assert "want_odesli = not (args.youtube_first and yt_gap) and (" in src
+
+
+def is_skipped_outright(yt_gap: bool, youtube_first: bool) -> bool:
+    """Die #2301-Vorab-Bedingung aus dem Song-Loop, isoliert nachgebildet."""
+    return youtube_first and not yt_gap
+
+
+class TestSkipSongsWithoutAYouTubeGap:
+    """Die Mautstelle, an der zwei Fixes vorbeigefahren sind (#2301).
+
+    Gemessen am 23.08.2026 in ``tomorrowland-top-1000``: die **46** Songs, die
+    bereits eine YouTube-URI tragen, stehen auf den Indizes **0 bis 45**; die
+    erste echte Luecke sitzt auf **46**. Allen 46 fehlt Tidal, also ist
+    ``yt_gap`` fuer jeden von ihnen **falsch** und jeder kostet die vollen
+    6 Sekunden ``--odesli-sleep`` — **276 von 300 Sekunden** einer Scheibe,
+    verbraucht bevor die erste Luecke ueberhaupt erreicht ist. Die naechste
+    Scheibe faengt bei 0 an und zahlt denselben Zoll; daher zwei leere
+    Scheiben hintereinander, jedes Mal.
+
+    Beide frueheren Anlaeufe haengen an ``yt_gap`` (#2310 Cursor-Sprung,
+    #2320 Odesli-Verzicht) und konnten diese Songs **per Konstruktion** nie
+    sehen.
+    """
+
+    def test_a_song_with_its_youtube_uri_is_skipped_under_the_flag(self):
+        # Der Fall, um den es geht: nichts zu tun fuer diesen Lauf.
+        assert is_skipped_outright(yt_gap=False, youtube_first=True) is True
+
+    def test_a_song_with_a_youtube_gap_is_never_skipped(self):
+        # Das ist die Arbeit, fuer die der Lauf existiert.
+        assert is_skipped_outright(yt_gap=True, youtube_first=True) is False
+
+    def test_without_the_flag_nothing_is_skipped(self):
+        # Apple-, Deezer- und Tidal-Agenten rufen dasselbe Skript ohne das
+        # Flag auf und muessen weiterhin JEDEN Song sehen.
+        assert is_skipped_outright(yt_gap=False, youtube_first=False) is False
+        assert is_skipped_outright(yt_gap=True, youtube_first=False) is False
+
+    def test_the_skip_sits_before_the_cursor_fast_forward(self):
+        # Reihenfolge ist wesentlich: der Cursor-Sprung fragt ``yt_gap`` ab
+        # und kann diese Songs nicht abfangen. Stuende der neue Sprung
+        # dahinter, aendert das nichts — stuende er hinter dem Odesli-Block,
+        # waere der Zoll schon gezahlt.
+        src = _SCRIPT.read_text()
+        new_skip = src.index("if args.youtube_first and not yt_gap:")
+        cursor_skip = src.index(
+            "if args.youtube_first and yt_gap and this_global_idx < yt_state.cursor:"
+        )
+        odesli = src.index("---- Odesli (apple/tidal/deezer")
+        assert new_skip < cursor_skip < odesli
+
+    def test_the_condition_is_wired_into_the_song_loop(self):
+        src = _SCRIPT.read_text()
+        assert "if args.youtube_first and not yt_gap:" in src

@@ -4,6 +4,46 @@ All notable changes to Beatify are documented here. For detailed release notes, 
 
 ## [Unreleased]
 
+## [4.5.0] - 2026-08-27
+
+Syncs 48 upstream commits from `mholzi/beatify` main (the `4.3.1-rc1`/`rc2`
+line) onto the fork's 4.4.1 line. Brings one new game feature, several
+server/client robustness fixes and a large batch of catalogue corrections; no
+changes to the fork's own Race mode. Upstream's `4.3.1-rc1`/`rc2` notes are
+folded in below.
+
+### Added
+- **Collected row — keep every song you placed close enough (#2324).** In
+  closest-wins mode the songs you land near enough now stay in a personal
+  collection shown on the reveal screen, alongside the existing score row.
+- **Music Assistant resolves a Tidal track by name when no URI works (#2364).**
+  A missing `uri_tidal` can be filled by a name lookup that runs strictly
+  behind the stored URIs, rejecting remixes, live takes and karaoke stand-ins.
+- **Decade marks under the year slider (#2358)** and **the slider ends where the
+  playlist ends (#2347)**, so the first drag lands near the target.
+
+### Fixed
+- **The start-failure banner docks above the footer instead of inside it
+  (#2365, #2366).**
+- **Only a genuinely lost session sends a player back to the join screen
+  (#2353);** a brief network wobble no longer forces a mid-round rejoin.
+- **The submit button re-enables when an answer does not get through (#2354)**
+  and **after a reload the client trusts the server about its own submission
+  (#2355).**
+- **The round deadline applies to steal and sabotage (#2352).**
+- **The current answer is no longer readable from the status endpoint before
+  the reveal (#2348).**
+- **Playback confirmation waits for the speaker to actually change tracks
+  (#2349).**
+- **A handler that crashes is treated as a server error, not a client that sent
+  bad JSON (#2351).**
+
+### Data
+- Broken-URI, year and backfill corrections across `quebecois-1990-2020`,
+  `deutschrock-best-of`, `best-canadian-hits`, `100-greatest-rock-songs`,
+  `90er-hits` and others (#2383, #2381, #2378, #2362, #2357, #2345, #2346,
+  #2347, #2361, #2359, #2320, #2321, #2322).
+
 ## [4.4.1] - 2026-08-22
 
 Syncs 15 upstream commits from `mholzi/beatify` main onto the fork's 4.4.0 line
@@ -31,6 +71,29 @@ server- and tooling-side fixes; no changes to the fork's own Race mode.
 ### Docs
 - README rewrites — lead with the room over the stack, and drop the
   subscription-required framing (#2303, #2305, #2307).
+
+## [4.3.1-rc2] - 2026-08-23
+
+### Added
+- **Music Assistant resolves a Tidal track by name when no URI works (#2364).** Odesli's public API was retired on 2026-07-31 and was the only source Beatify had for Tidal ids, so a missing `uri_tidal` can no longer be filled. The name lookup runs strictly *behind* the stored URIs, with an edition check that rejects a remix, live take or karaoke version standing in for the recording asked for.
+
+### Fixed
+- **The start-failure banner docks above the footer instead of inside it (#2365).** Anchoring on the Start button put the banner into `.home-cta-bar`, a flex row, where it was squeezed to its min-content width and wrapped one character per line on a phone.
+
+## [4.3.1-rc1] - 2026-08-23
+
+### Added
+- **Decade marks under the year slider (#2358).** Seventy-odd years of blank rail now carry labelled ticks, so the first drag lands near the target instead of somewhere to correct.
+- **The slider ends where the playlist ends (#2347).** Bounds follow the songs actually shipped in the selected playlist rather than a fixed range.
+- **The reason a game refuses to start reaches the host (#2295, #2309, #2302).** Twelve rejections collapsed into one generic message; each actionable failure now carries its own code, the admin screen shows which one fired, and the Mix tab keeps the server's reason instead of failing silently.
+
+### Fixed
+- **Only a genuinely lost session sends a player back to the join screen (#2353).** A brief network wobble used to force a mid-round rejoin.
+- **The submit button no longer stays greyed out when an answer does not get through (#2354).** It re-enables and says so, with time still on the clock.
+- **After a page reload the client believes the server about its own submission (#2355).**
+- **The round deadline applies to steal and sabotage (#2352).** Power-ups were slipping through after the clock ran out.
+- **The current answer is no longer readable from the status endpoint before the reveal (#2348).**
+- **Playback confirmation waits for the speaker to actually change tracks (#2349).** A round could otherwise run against a song nobody heard.
 
 ## [4.3.0] - 2026-08-21
 
