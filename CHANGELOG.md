@@ -4,6 +4,60 @@ All notable changes to Beatify are documented here. For detailed release notes, 
 
 ## [Unreleased]
 
+## [4.6.0] - 2026-09-02
+
+Syncs **60 upstream commits** from `mholzi/beatify` main — up to and including
+their `4.4.0` release — onto the fork's 4.5.0 line. Brings the free YouTube
+Music provider, three new playlists (+1,069 songs), a run of end-game and
+round-cap fixes, and a large batch of catalogue corrections and backfills. The
+fork's own Race mode (Title & Artist Live Race, 10/15s auto-advance) is
+untouched.
+
+### Added
+- **Play through the free YouTube Music provider (#2426, #2428).** Beatify now
+  supports `ytmusic_free`, the third-party Music Assistant provider that streams
+  YouTube Music without a Premium account — the first provider that needs no
+  paid plan. The URI is derived from the existing `uri_youtube_music` field, so
+  no catalogue change was required; the provider is installed in Music Assistant
+  separately.
+- **Salsa y Merengue, 534 tracks (#2392, #2410)** — the second-largest playlist
+  in the catalogue.
+- **Two Spanish Disney playlists (#2385, #2386, #2433).**
+  `clasicos-disney-castellano` (64 songs, Castilian) and `disney-latino`
+  (54 songs, Latin American Spanish) ship as separate lists because the same
+  film is frequently a different recording, singer and lyric in the two regions.
+- **Italian song trivia across the catalogue (#2434, #2436).** 1,289 songs now
+  carry a `fun_fact_it`, up from 182, and eight playlists are complete in
+  Italian.
+
+### Fixed
+- **The final standings reach the players when the host ends a game (#2442,
+  #2443).** `EndGameView` tore the game down before finalizing, so the podium
+  never went out.
+- **The round cap holds across playlists (#2418, #2419).** Selecting a round
+  count did nothing once more than one playlist was picked.
+- **One rule decides whether a round is the last (#2421, #2424).**
+- **The game-over screen keeps its contents inside its boxes (#2130, #2417).**
+- **One favicon on all five pages (#2479, #2483).**
+- **The YouTube backfill budget counts on the Pacific day, not the local one
+  (#2452, #2453),** and the playlist version is raised once per run rather than
+  once per track (#2447).
+
+### Changed
+- **The catalogue reached 61 playlists and 8,211 songs**, from 58 and 7,142 at
+  upstream 4.3.0. Around a thousand of those songs came from four in-app
+  requests — a Schlager party list (#2372), a radio station's playlist (#2374),
+  a guilty-pleasures list (#2373) and a soundtracks list (#2377) — sorted into
+  the decade, Schlager, Deutschpop and film playlists.
+- **A soundtrack is dated by its work, not by its pressing (#2450).**
+
+### Data
+- Apple / YouTube / Deezer backfills and broken-URI, duplicate and year
+  corrections across `salsa-y-merengue`, `clasicos-disney-castellano`,
+  `musica-italiana`, `80er-hits`, `90er-hits` and many others (#2430, #2431,
+  #2432, #2435, #2437, #2448, #2454, #2481, #2484, and the #2372/#2373/#2374/#2377
+  request batches).
+
 ## [4.5.0] - 2026-08-27
 
 Syncs 48 upstream commits from `mholzi/beatify` main (the `4.3.1-rc1`/`rc2`
@@ -71,6 +125,71 @@ server- and tooling-side fixes; no changes to the fork's own Race mode.
 ### Docs
 - README rewrites — lead with the room over the stack, and drop the
   subscription-required framing (#2303, #2305, #2307).
+
+## [4.4.0] - 2026-09-01
+
+Released as **4.4.0** rather than 4.3.1: the work shipped as the `v4.3.1-rc1`, `v4.3.1-rc2` and
+`v4.4.0-rc1`…`rc4` release candidates, but a patch number promises bug fixes and this carries a
+new game mechanic, a provider that needs no paid subscription, three new playlists and 1,069
+more songs. Everything in those candidates is included.
+
+### Changed
+- **The catalogue reached 61 playlists and 8,211 songs**, from 58 and 7,142 at 4.3.0. Around a
+  thousand of those songs came from four requests filed through the in-app button — a Schlager
+  party list (#2372), a radio station's playlist (#2374), a guilty-pleasures list (#2373) and a
+  soundtracks list (#2377). None became a playlist of its own: each overlapped the catalogue by a
+  fifth to two thirds, so the usable songs were sorted into the decade, Schlager, Deutschpop and
+  film playlists instead.
+- **A soundtrack is dated by its work, not by its pressing (#2450).** The three signals behind a
+  song's year describe the same reissue when all three are read off the linked track, so they
+  agreed on a year decades off the work — the Seinfeld theme dated 2021 against a 1989 work. The
+  rule now takes the earliest recording credited to that artist, with the work's own year as a
+  ceiling where the artist is the composer of the film or series named in the title. A cover by
+  different performers keeps its own recording's year, unchanged from the rule of 2026-08-20.
+- **The catalogue figure in the README** now says 61 playlists and 8,211 songs. The landing page
+  is served from the `gh-pages` branch and still says 59 and 7,671.
+
+### Fixed
+- **The final standings reach the players when the host ends a game (#2442, #2443).**
+  `EndGameView` tore the game down before finalizing, so the podium never went out.
+- **The YouTube backfill budget counts on the Pacific day (#2452, #2453)** and the playlist
+  version is raised once per run rather than once per track (#2447).
+
+## [4.4.0-rc4] - 2026-08-31
+
+### Added
+- **Two Spanish Disney playlists (#2385, #2386, #2433).** `clasicos-disney-castellano` (64 songs, Castilian) and `disney-latino` (54 songs, Latin American Spanish) ship as separate lists rather than one merged one: the same film is frequently a different recording, singer and lyric in the two regions, so merging them would have made half the entries wrong for half the players. Both arrived through the in-app request funnel.
+- **Italian song trivia across the catalogue (#2434, #2436).** 1,289 songs now carry a `fun_fact_it`, up from 182, and eight playlists are complete in Italian. The 850 template-shaped texts were translated from their structure rather than their wording so no claim could drift; `eurovision-winners` and `world-cup-anthems` were translated in full. All 14 touched playlist files carry a raised `version`, without which `_copy_bundled_playlists` would only reach fresh installations.
+
+### Fixed
+- **Three duplicate songs removed from `salsa-y-merengue` (#2435).** 534 → 531. Two were the same recording under two Spotify ids, one was a live take of a track already present in its studio version. Thirteen further title pairs stay: different artist, therefore two legitimate questions.
+- **Sixteen wrong or missing provider links repaired (#2430, #2431, #2432, #2437).** Nine wrong links and four lost artists in `salsa-y-merengue`, three more Apple links the artist fix exposed, and four wrong Apple Music URIs in `clasicos-disney-castellano`.
+
+## [4.4.0-rc3] - 2026-08-31
+
+### Added
+- **Play through the free YouTube Music provider (#2426, #2428).** Beatify now supports `ytmusic_free`, the third-party Music Assistant provider by sproft, which streams YouTube Music without a Premium account. Every provider before this needed a paid plan. No catalogue change was required: the provider keys tracks by the YouTube video id, which already sits in the `uri_youtube_music` field, so the URI is derived rather than stored a second time. **6,935 of 7,671 songs are playable on it.** The provider has to be installed in Music Assistant separately; the wizard's subtitle says so in all six languages.
+
+## [4.4.0-rc2] - 2026-08-31
+
+Re-cut of `4.4.0-rc1` with no code change. `main` carries the same commit; only the version string differs.
+
+## [4.4.0-rc1] - 2026-08-31
+
+### Added
+- **Collected row (#2324, #2368).** A year guess that lands inside the difficulty's close range pins the song to a row the player keeps for the rest of the game. The row ships in the reveal payload and in the final leaderboard, and the share card gains a line with the count and the year span it covers. Shape E of the five discussed on the issue: it touches no scoring path, because swapping the question is cheap and swapping the currency is not.
+
+### Fixed
+- **The game-over screen keeps its contents inside its boxes (#2130, #2417).** The winner's name broke mid-word and left the podium card, the award row wrote its values outside the card border, and a two-player game rendered a third, empty stand. Three causes, all horizontal: `.podium-place` could shrink under its stand's fixed width, the award cards had no `min-width: 0` against their `1fr` track, and `renderEndView()` filled all three podium slots unconditionally. The reveal standings from #2133 and #2157 are untouched. Reported by @boardnick0815 on v4.3.0 with a screencast and screenshots.
+- **The round cap holds across playlists (#2418, #2419).** Selecting a round count did nothing once more than one playlist was picked: `PlaylistManager` capped `self._songs` but assigned `self._buckets` before the sample and never regrouped them, and the balanced path that serves a multi-playlist game reads the buckets. Measured before the fix, two playlists of 150 songs with a cap of 10 served all 300.
+- **One rule decides whether a round is the last (#2421, #2424).** The flag counted what was left in the pool while the TTS announcement re-derived the question from `round >= total_rounds`. A song dropped on the playback-failure path is marked played without a round being committed, so the two disagreed and the spoken cue never came. The announcement now reads the flag, and the `total_rounds > 1` guard moved onto it.
+
+### Changed
+- **Salsa y Merengue, 534 songs (#2392, #2410).** The second-largest playlist in the catalogue. Latin America was previously covered by `fiesta-latina-90s` and fifty songs.
+- **The decade playlists contain only their decade (#2403, #2411, #2413).** Nineteen songs sat outside their playlist's range. Eleven moved to the playlist of their own decade; the other eight already existed there and were removed rather than duplicated.
+- **Seventy-seven fun facts stopped contradicting the answer (#2415).** They followed the template `A chart hit by ARTIST (YEAR)`, where the bracketed year was not a release date: a 1988 Eddy Grant song carried 2026. Corrected in all five languages.
+- **Eighteen more provider links (#2409, #2412, #2416)** across Apple Music, YouTube Music and Deezer.
+- **The catalogue figures in the README and on the landing page (#2422, #2423)** now say 59 playlists and 7,671 songs.
 
 ## [4.3.1-rc2] - 2026-08-23
 
