@@ -417,6 +417,62 @@ export function easeOutQuart(t) {
     return 1 - Math.pow(1 - t, 4);
 }
 
+// ============================================
+// Year-guess classification (#2624)
+// ============================================
+
+/**
+ * Mirrors ``DIFFICULTY_SCORING`` in ``custom_components/beatify/const.py``.
+ *
+ * The reveal screen used to decide "so close" against fixed distances of 2 and
+ * 5 years while the server awarded points from this table. On easy that showed
+ * the sad face over a 5-point round; on hard it said "so close" over a
+ * 0-pointer. One table, two readings, and the player saw them contradict each
+ * other on screen.
+ *
+ * ``tests/unit/test_reveal_difficulty_parity_2624.py`` fails if these numbers
+ * ever stop matching const.py, so the copy cannot drift silently.
+ */
+export var DIFFICULTY_SCORING = {
+    easy: { close_range: 7, close_points: 5, near_range: 10, near_points: 1 },
+    normal: { close_range: 3, close_points: 5, near_range: 5, near_points: 1 },
+    hard: { close_range: 2, close_points: 3, near_range: 0, near_points: 0 },
+};
+
+/** Difficulty used when the state carries none or an unknown one (const.py DIFFICULTY_DEFAULT). */
+export var DIFFICULTY_DEFAULT = 'normal';
+
+/**
+ * Classify a year guess exactly the way the server scores it (#2624).
+ *
+ * Returns the server's own vocabulary from
+ * ``GameState._apply_round_results`` — deliberately, so there is one set of
+ * names for one rule instead of a second frontend one that can drift:
+ *
+ *   'exact'  — bang on, POINTS_EXACT
+ *   'scored' — inside close_range, close_points
+ *   'close'  — inside near_range, near_points (a consolation point)
+ *   'missed' — no points, or no guess at all
+ *
+ * A range of 0 disables its band (hard has no near band), which is why both
+ * checks test the range before the distance.
+ *
+ * @param {number|null|undefined} yearsOff - absolute distance to the real year
+ * @param {string} difficulty - 'easy' | 'normal' | 'hard'
+ * @returns {string} one of exact | scored | close | missed
+ */
+export function classifyYearsOff(yearsOff, difficulty) {
+    if (yearsOff == null || isNaN(yearsOff)) return 'missed';
+
+    var cfg = DIFFICULTY_SCORING[difficulty] || DIFFICULTY_SCORING[DIFFICULTY_DEFAULT];
+    var diff = Math.abs(yearsOff);
+
+    if (diff === 0) return 'exact';
+    if (cfg.close_range > 0 && diff <= cfg.close_range) return 'scored';
+    if (cfg.near_range > 0 && diff <= cfg.near_range) return 'close';
+    return 'missed';
+}
+
 /**
  * Animate a numeric value from start to end
  * Story 18.3: Now device-tier aware with instant updates for low-end devices
@@ -482,105 +538,6 @@ export function animateValue(element, start, end, duration, easing) {
     };
 }
 
-/**
- * Animate score change with visual effects
- * @param {HTMLElement} element - Score element to animate
- * @param {number} oldScore - Previous score value
- * @param {number} newScore - New score value
- * @param {Object} options - Effect options: { betWon, betLost, streakMilestone, isBigScore }
- */
-export function animateScoreChange(element, oldScore, newScore, options) {
-    options = options || {};
-
-    var duration = 500;
-    if (options.betWon) {
-        duration = 800;
-    } else if (options.isBigScore) {
-        duration = 700;
-    } else if (options.betLost) {
-        duration = 400;
-    }
-
-    element.classList.add('score-animating');
-
-    var animationClass = null;
-    if (options.betWon) {
-        animationClass = 'score-glow-gold';
-    } else if (options.betLost) {
-        animationClass = 'score-shake';
-        element.classList.add('score-flash-red');
-    } else if (options.streakMilestone) {
-        animationClass = 'score-burst';
-    } else if (options.isBigScore) {
-        animationClass = 'score-pop';
-    }
-
-    if (animationClass && !prefersReducedMotion()) {
-        element.classList.add(animationClass);
-    }
-
-    animateValue(element, oldScore, newScore, duration);
-
-    function cleanup() {
-        element.classList.remove('score-animating');
-        if (animationClass) {
-            element.classList.remove(animationClass);
-        }
-        element.classList.remove('score-flash-red');
-    }
-
-    if (animationClass && !prefersReducedMotion()) {
-        element.addEventListener('animationend', function onEnd() {
-            element.removeEventListener('animationend', onEnd);
-            cleanup();
-        });
-    } else {
-        setTimeout(cleanup, duration + 50);
-    }
-}
-
-/**
- * Show floating points popup above target element
- * @param {HTMLElement} targetElement - Element to position popup relative to
- * @param {number} points - Points value to display
- * @param {Object} options - Options: { text, isStreak, isBetWin }
- */
-export function showPointsPopup(targetElement, points, options) {
-    options = options || {};
-
-    if (prefersReducedMotion()) {
-        return;
-    }
-
-    var popup = document.createElement('div');
-    popup.className = 'points-popup';
-    popup.textContent = options.text || ('+' + points);
-
-    if (options.isStreak) {
-        popup.classList.add('points-popup--streak');
-    } else if (options.isBetWin) {
-        popup.classList.add('points-popup--gold');
-    }
-
-    var rect = targetElement.getBoundingClientRect();
-    popup.style.left = (rect.left + rect.width / 2) + 'px';
-    popup.style.top = rect.top + 'px';
-
-    document.body.appendChild(popup);
-
-    popup.addEventListener('animationend', function() {
-        if (popup.parentNode) {
-            popup.parentNode.removeChild(popup);
-        }
-    });
-
-    setTimeout(function() {
-        if (popup.parentNode) {
-            popup.parentNode.removeChild(popup);
-        }
-    }, 1200);
-}
-
 // ============================================
 // Previous State Cache (Story 13.2)
 // ============================================
@@ -597,24 +554,6 @@ export var previousState = {
  */
 export function isPreviousStateInitialized() {
     return previousState.initialized;
-}
-
-var STREAK_MILESTONES = [3, 5, 10, 15, 20, 25];
-
-/**
- * Check if a streak milestone was just reached
- * @param {number} oldStreak - Previous streak value
- * @param {number} newStreak - Current streak value
- * @returns {number|null} Milestone reached or null
- */
-export function isStreakMilestone(oldStreak, newStreak) {
-    for (var i = 0; i < STREAK_MILESTONES.length; i++) {
-        var milestone = STREAK_MILESTONES[i];
-        if (oldStreak < milestone && newStreak >= milestone) {
-            return milestone;
-        }
-    }
-    return null;
 }
 
 /**
