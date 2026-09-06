@@ -3,6 +3,15 @@
  * AnimationQueue, easing functions, score popups, confetti helpers, DOM utilities
  */
 
+// #2627: the name cap comes from the shared mirror of const.py, not from a
+// local literal. It used to be declared here AND written out as
+// `name.length > 20` twice in admin.js AND as `maxlength="20"` in two forms.
+import {
+    MAX_NAME_LENGTH,
+    DIFFICULTY_SCORING,
+    DIFFICULTY_DEFAULT,
+} from './game-constants.js';
+
 var utils = window.BeatifyUtils || {};
 
 // ============================================
@@ -80,6 +89,10 @@ export function showView(viewId) {
     }
 
     if (viewId === 'join-view') {
+        // #2627: the cap the field enforces is the cap the server enforces.
+        // player.html no longer ships `maxlength="20"` — a second copy of the
+        // number that a server-side change would have left behind.
+        applyNameLengthCap(document.getElementById('name-input'));
         // #2506: tapping Join disables the button and relabels it "Joining…",
         // and only the join-timeout path ever put it back. Leaving a game, a
         // session takeover, a failed reconnect and an unknown session all
@@ -95,7 +108,24 @@ export function showView(viewId) {
     }
 }
 
-export var MAX_NAME_LENGTH = 20;
+// Re-exported so existing importers of this module keep working; the value
+// itself is defined once, in game-constants.js (#2627).
+export { MAX_NAME_LENGTH };
+
+/**
+ * Stamp the shared cap onto a name field (#2627).
+ *
+ * The markup deliberately carries no `maxlength`: an attribute is a literal
+ * that no server-side change can reach, which is how the join button and the
+ * two forms drifted apart from `const.py` in the first place. Setting it here
+ * means the field, `validateName()` and `game/player_registry.py` all cap at
+ * the same number.
+ *
+ * @param {HTMLInputElement|null} input
+ */
+export function applyNameLengthCap(input) {
+    if (input) input.maxLength = MAX_NAME_LENGTH;
+}
 
 /**
  * Validate a typed player name. Pure — moved here from player-core (#2506) so
@@ -422,25 +452,21 @@ export function easeOutQuart(t) {
 // ============================================
 
 /**
- * Mirrors ``DIFFICULTY_SCORING`` in ``custom_components/beatify/const.py``.
+ * The scoring table and the default level, re-exported for the reveal's callers.
  *
  * The reveal screen used to decide "so close" against fixed distances of 2 and
  * 5 years while the server awarded points from this table. On easy that showed
  * the sad face over a 5-point round; on hard it said "so close" over a
  * 0-pointer. One table, two readings, and the player saw them contradict each
- * other on screen.
+ * other on screen (#2624).
  *
- * ``tests/unit/test_reveal_difficulty_parity_2624.py`` fails if these numbers
- * ever stop matching const.py, so the copy cannot drift silently.
+ * #2625 landed the frontend's single mirror of const.py in game-constants.js
+ * shortly after #2624 put a copy here; this file now reads that one rather than
+ * keeping a second. ``tests/unit/test_reveal_difficulty_parity_2624.py`` and
+ * ``__tests__/game-constants-mirror.test.js`` both fail if it stops matching
+ * const.py.
  */
-export var DIFFICULTY_SCORING = {
-    easy: { close_range: 7, close_points: 5, near_range: 10, near_points: 1 },
-    normal: { close_range: 3, close_points: 5, near_range: 5, near_points: 1 },
-    hard: { close_range: 2, close_points: 3, near_range: 0, near_points: 0 },
-};
-
-/** Difficulty used when the state carries none or an unknown one (const.py DIFFICULTY_DEFAULT). */
-export var DIFFICULTY_DEFAULT = 'normal';
+export { DIFFICULTY_SCORING, DIFFICULTY_DEFAULT };
 
 /**
  * Classify a year guess exactly the way the server scores it (#2624).

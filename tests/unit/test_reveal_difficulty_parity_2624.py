@@ -7,14 +7,16 @@ on Easy a six-year miss scored 5 points under the "way off" face, on Hard a
 three-year miss scored nothing under "so close".
 
 The frontend now classifies through ``classifyYearsOff`` in ``player-utils.js``,
-which carries a copy of the table — the browser cannot import ``const.py``. A
-copy is only safe while something fails when it drifts, and that is this test:
-it parses the JS literal and compares it to the Python dict, key for key and
-number for number.
+which reads the table from ``www/js/game-constants.js`` — the browser cannot
+import ``const.py``, so somewhere there has to be a copy. A copy is only safe
+while something fails when it drifts, and that is this test: it parses the JS
+literal and compares it to the Python dict, key for key and number for number.
 
-The precedent it fixes is right next door: ``wizard.js`` has carried a
-"keep in sync" comment over the same numbers since Story 14.1, with nothing
-behind the comment.
+#2625 moved that literal out of ``player-utils.js`` into ``game-constants.js``,
+the one place the frontend mirrors ``const.py`` — the wizard's own copy, carried
+behind a "keep in sync" comment since Story 14.1 with nothing behind the
+comment, is gone with it. This test follows the literal; the JS-side twin lives
+in ``www/js/__tests__/game-constants-mirror.test.js``.
 """
 
 from __future__ import annotations
@@ -25,24 +27,22 @@ from pathlib import Path
 
 from custom_components.beatify.const import DIFFICULTY_DEFAULT, DIFFICULTY_SCORING
 
-PLAYER_UTILS = (
-    Path(__file__).resolve().parents[2]
-    / "custom_components"
-    / "beatify"
-    / "www"
-    / "js"
-    / "player-utils.js"
+JS_DIR = (
+    Path(__file__).resolve().parents[2] / "custom_components" / "beatify" / "www" / "js"
 )
+GAME_CONSTANTS = JS_DIR / "game-constants.js"
 
-_TABLE = re.compile(r"export\s+var\s+DIFFICULTY_SCORING\s*=\s*\{(.*?)\n\};", re.DOTALL)
-_DEFAULT = re.compile(r"export\s+var\s+DIFFICULTY_DEFAULT\s*=\s*'([a-z]+)'")
+_TABLE = re.compile(
+    r"export\s+const\s+DIFFICULTY_SCORING\s*=\s*\{(.*?)\n\};", re.DOTALL
+)
+_DEFAULT = re.compile(r"export\s+const\s+DIFFICULTY_DEFAULT\s*=\s*'([a-z]+)'")
 
 
 def _js_table() -> dict[str, dict[str, int]]:
-    """Read the DIFFICULTY_SCORING object literal out of player-utils.js."""
-    src = PLAYER_UTILS.read_text(encoding="utf-8")
+    """Read the DIFFICULTY_SCORING object literal out of game-constants.js."""
+    src = GAME_CONSTANTS.read_text(encoding="utf-8")
     match = _TABLE.search(src)
-    assert match, "DIFFICULTY_SCORING literal not found in player-utils.js"
+    assert match, "DIFFICULTY_SCORING literal not found in game-constants.js"
 
     body = "{" + match.group(1) + "}"
     # JS object literal -> JSON: quote the bare keys, drop the trailing commas.
@@ -58,9 +58,9 @@ def test_frontend_table_matches_const_py() -> None:
 
 def test_frontend_default_difficulty_matches() -> None:
     """An unknown difficulty must fall back to the same level in both."""
-    src = PLAYER_UTILS.read_text(encoding="utf-8")
+    src = GAME_CONSTANTS.read_text(encoding="utf-8")
     match = _DEFAULT.search(src)
-    assert match, "DIFFICULTY_DEFAULT not found in player-utils.js"
+    assert match, "DIFFICULTY_DEFAULT not found in game-constants.js"
     assert match.group(1) == DIFFICULTY_DEFAULT
 
 
@@ -70,7 +70,7 @@ def test_no_hardcoded_year_thresholds_left_in_the_reveal() -> None:
     Guard against the exact shape that shipped the bug: a comparison of
     ``years_off`` (or the duel's ``yearsOff``) against a bare number.
     """
-    reveal = (PLAYER_UTILS.parent / "player-reveal.js").read_text(encoding="utf-8")
+    reveal = (JS_DIR / "player-reveal.js").read_text(encoding="utf-8")
     offenders = re.findall(r"yearsOff\s*<=?\s*\d+", reveal)
     assert not offenders, (
         f"hard-coded year threshold(s) back in player-reveal.js: {offenders}"
