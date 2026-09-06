@@ -3,10 +3,16 @@
  * Vanilla JS - no frameworks
  *
  * #1279 Schritt 2/6: admin.js is now an ES module (`<script type="module">`).
- * Pure helpers live in ./admin/util.js; their previous top-level globals are
- * re-exposed on `window` below (compat shim) for classic scripts that still
- * read them. Token helpers read the live `adminState.currentGame` via a resolver
- * registered once at module init.
+ * Pure helpers live in ./admin/util.js. Token helpers read the live
+ * `adminState.currentGame` via a resolver registered once at module init.
+ *
+ * #2637: this file used to publish 14 names on `window` and the extracted
+ * sections called back through six of them. Six were dead, one was a section's
+ * own export routed out and back, one was never defined by anyone, and the two
+ * config getters belonged to classic scripts that are now bundle modules. The
+ * six that remain are listed in full below, next to the shim block they
+ * replaced; all six cross to a separate entry point, none of them to a sibling
+ * module.
  */
 
 // #1279 Schritt 5/6: centralized mutable setup-/game-state. Previously the ~24
@@ -45,10 +51,6 @@ import {
     setCurrentGameResolver,
     _getAdminToken,
     _setAdminToken,
-    _adminHeaders,
-    groupPlayersByPlatform,
-    REQUEST_STATUS_LABELS,
-    buildRequestRowHtml,
     escapeHtml,
     errorHeadlineAndDetail,
     acquireWakeLockFirst,
@@ -100,12 +102,11 @@ import {
 // playlists.js: list render + selection + tag-filter, plus the shared
 // selection-summary / start-button-validation helpers. The intra-section
 // callees (handlePlaylistToggle, filter-bar render, etc.) are wired up inside
-// the module; admin.js core only drives the entry points below.
-// `clearPlaylistFilters` is shimmed onto `window` (below) for the inline
-// `onclick=` in the HTML the module generates.
+// the module; admin.js core only drives the entry points below. Since #2637 it
+// also wires its own "clear the filters" buttons, so nothing of it has to be
+// held on `window` by this file.
 import {
     renderPlaylists,
-    clearPlaylistFilters,
     updateStartButtonState,
 } from './admin/sections/playlists.js';
 
@@ -119,12 +120,14 @@ import {
 } from './admin/sections/mix.js';
 
 // media-players.js: speaker list render + radio-selection + platform-capability
-// gate (updateProviderOptions toggles the music-service provider chips). No
-// window shim: the no-players empty state's inline onclick="loadStatus()" resolves
-// to the loadStatus core fn already shimmed onto window below. admin.js core
-// drives renderMediaPlayers (from loadStatus) + handleMediaPlayerSelect (from
+// gate (updateProviderOptions toggles the music-service provider chips).
+// #2637: the no-players empty state's Refresh button used to be an inline
+// onclick="loadStatus()" resolved through a window shim; it now runs on the
+// `refreshStatus` handed to initMediaPlayers() at init. admin.js core drives
+// renderMediaPlayers (from loadStatus) + handleMediaPlayerSelect (from
 // BeatifyHome.hydrateFromStorage); the rest are intra-section.
 import {
+    initMediaPlayers,
     renderMediaPlayers,
     handleMediaPlayerSelect,
     expandMediaPlayersSection,
@@ -161,26 +164,48 @@ import {
     setupResetModal,
 } from './admin/sections/force-reset.js';
 
+// #2637: the TTS + party-lights setup sections. Both used to be classic
+// <script> tags at the very bottom of admin.html that published their config
+// getter on `window` for this file to read back when a game starts. That
+// handshake depended on the order of two script tags and on nothing at all
+// verifying it — the #1263 failure mode. They are ES modules now, so the
+// start-game payload is built from real imports and `npm run build:check`
+// covers their source.
+import { ttsConfig } from './tts-settings.js';
+import { partyLightsConfig } from './party-lights.js';
+
 // Token helpers in util.js need the live `currentGame`. The resolver reads it
 // off the shared `adminState` object (#1279 step 5), so it stays in sync across
 // every `adminState.currentGame = …` without touching each assignment site.
 setCurrentGameResolver(() => adminState.currentGame);
 
-// Compat shim (#1279 step 2): admin.js is now a module, so its top-level
-// helper declarations are no longer global. Classic scripts loaded after this
-// module (party-lights.min.js, tts-settings.js) and module siblings that read
-// these by name keep working by reading them off `window`. These helpers were
-// implicitly global before the module migration; the shim makes that explicit.
-window.escapeHtml = escapeHtml;
-window.groupPlayersByPlatform = groupPlayersByPlatform;
-window.buildRequestRowHtml = buildRequestRowHtml;
-window._getAdminToken = _getAdminToken;
-window._setAdminToken = _setAdminToken;
-window._adminHeaders = _adminHeaders;
-// #1279 step 4b: playlists.js generates HTML with inline onclick="clearPlaylistFilters()"
-// (empty-filter "Clear Filters" button + active-filter "Clear" link), so the
-// function must stay reachable as a window global.
-window.clearPlaylistFilters = clearPlaylistFilters;
+// #2637: the six helper shims that used to sit here (escapeHtml,
+// groupPlayersByPlatform, buildRequestRowHtml, _getAdminToken, _setAdminToken,
+// _adminHeaders) are gone. The comment claimed party-lights.js and
+// tts-settings.js read them by name; neither ever did — party-lights.js carries
+// its own escapeHtml (party-lights.js:7) and no file in www/ reads any of the
+// six off `window`. They were dead weight that made admin.js look like a
+// dependency of scripts that do not depend on it.
+//
+// What this file still publishes on `window`, and why — the whole list, so the
+// next person does not have to grep for it:
+//
+//   window.loadStatus                 ← wizard.js (refresh after the wizard finishes)
+//   window.loadSavedSettings          ← wizard.js (re-read the settings it just wrote)
+//   window.BeatifyHome                ← wizard.js (enter/refresh the home view)
+//   window.BeatifyPersistSetup        ← wizard.js (publish the host's picks)
+//   window.BeatifyNoteLocalSetupWrite ← wizard.js (stamp a local-only setup write)
+//   window.BEATIFY_VERSION            ← playlist-requests.js (version gate)
+//
+// Every one of them crosses from this bundle to a script the page loads as its
+// own entry point (`<script type="module" src="wizard.js">`,
+// `<script src="playlist-requests.min.js">`). Those cannot import from
+// admin.min.js — an import would fetch a second copy of the module with its own
+// state — so `window` is the only channel available and this is a boundary
+// between entry points, not the cycle #2637 was about. Nothing under
+// `./admin/` reads any of them; `__tests__/admin-section-independence-2637.test.js`
+// fails if that changes. Every read above is event-driven (after
+// DOMContentLoaded, or on a click), so the deferred module has always run first.
 
 // Screen Wake Lock (#622, #1122)
 // Layer 1: navigator.wakeLock — Safari ≥16.4, Chrome, Edge, Firefox.
@@ -789,7 +814,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // #1538: Smart Playlist Mixer "Mix" tab. Inject startGame so the mixer
     // funnels through the validated start-game path after assembling its set.
-    initMixTab({ startGame });
+    // #2637: refreshStatus goes in the same way — the mixer needs a status
+    // reload after "save as community playlist" and used to reach for
+    // window.loadStatus.
+    initMixTab({ startGame, refreshStatus: loadStatus });
+
+    // #2637: the media-players section's "no compatible players → Refresh"
+    // button. Same reason, same shape.
+    initMediaPlayers({ refreshStatus: loadStatus });
 
     // #1402 B7: one document-level Escape handler for all registered modals.
     // Wire it before the per-modal setups so their registerModalClose() calls
@@ -1320,8 +1352,8 @@ async function startGame() {
                 comeback_token_enabled: adminState.comebackTokenEnabled,  // Issue #1724
                 difficulty_bet_scaling_enabled: adminState.difficultyBetScalingEnabled,  // Issue #1727
                 sabotage_enabled: adminState.sabotageEnabled,  // Issue #1665
-                party_lights: window._partyLightsConfig ? window._partyLightsConfig() : null,  // Issue #331
-                tts: window._ttsConfig ? window._ttsConfig() : null,
+                party_lights: partyLightsConfig(),  // Issue #331
+                tts: ttsConfig(),
                 library: (typeof getLibraryConfig === 'function') ? getLibraryConfig() : null,  // Issue #447
             })
         });
@@ -1439,8 +1471,8 @@ async function startGameplay() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 media_player: (adminState.selectedMediaPlayer || {}).entityId || null,
-                tts: window._ttsConfig ? window._ttsConfig() : null,
-                party_lights: window._partyLightsConfig ? window._partyLightsConfig() : null,
+                tts: ttsConfig(),
+                party_lights: partyLightsConfig(),
             }),
         });
     } catch (e) { /* never block the start on a failed push */ }
