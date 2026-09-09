@@ -129,6 +129,8 @@
 
     /* Z-Index Tokens */
     --z-control-bar: 100;
+    /* #2723: height of .admin-control-bar, used to stack the host drawer on it */
+    --control-bar-h: 60px;
     --z-reaction-bar: 101;  /* Story 18.9: Above control bar */
     --z-modal: 1000;
     --z-overlay: 1100;
@@ -544,10 +546,6 @@ body.theme-dark .analytics-icon-link:focus {
 
 .pwa-ios-hint-close:hover {
     opacity: 1;
-}
-
-.pwa-ios-share-icon {
-    font-size: 1.2rem;
 }
 
 @keyframes slideUp {
@@ -1102,18 +1100,12 @@ body.theme-dark .btn-secondary span {
 
 /* Badge colors are explicitly set per badge type - no dark mode override needed */
 
-/* Inactive selector buttons need dark text on light backgrounds (Story 19.13) */
-body.theme-dark .lang-btn:not(.lang-btn--active),
-body.theme-dark .timer-btn:not(.timer-btn--active),
-body.theme-dark .difficulty-btn:not(.difficulty-btn--active) {
-    color: var(--color-text-primary, #1a1a2e);
-}
-
-body.theme-dark .lang-btn:not(.lang-btn--active) span,
-body.theme-dark .timer-btn:not(.timer-btn--active) span,
-body.theme-dark .difficulty-btn:not(.difficulty-btn--active) span {
-    color: var(--color-text-primary, #1a1a2e);
-}
+/* #2583: the dark-mode overrides for the inactive .lang-btn / .timer-btn /
+   .difficulty-btn states (Story 19.13) stood here. Those buttons appear in
+   no template — admin.html uses .chip[data-lang] / .chip[data-difficulty] —
+   so the rules could never match. Their .language-selector /
+   .timer-selector / .difficulty-selector wrappers and the icon/label
+   children below are left alone: #2583 verified the button rules only. */
 
 /* Language Selector (Story 12.4) */
 .language-selector {
@@ -1122,36 +1114,6 @@ body.theme-dark .difficulty-btn:not(.difficulty-btn--active) span {
     gap: var(--space-sm);
 }
 
-.lang-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-xs);
-    padding: var(--space-sm) var(--space-lg);
-    border: 2px solid var(--color-border-medium);
-    border-radius: var(--radius-md);
-    background: var(--color-bg-white);
-    color: var(--color-text-primary);
-    font-size: var(--font-size-base);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.lang-btn:hover {
-    border-color: var(--color-accent-brand);
-    background: var(--color-bg-card-alt);
-}
-
-.lang-btn--active {
-    border-color: var(--color-accent-brand);
-    background: var(--color-accent-brand);
-    color: var(--color-text-white);
-}
-
-.lang-btn--active:hover {
-    background: var(--color-accent-brand-hover);
-}
 
 .lang-flag {
     font-size: 1.25em;
@@ -1168,60 +1130,6 @@ body.theme-dark .difficulty-btn:not(.difficulty-btn--active) span {
     gap: var(--space-sm);
 }
 
-.timer-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2xs);
-    padding: var(--space-sm) var(--space-md);
-    min-width: 90px;
-    border: 2px solid var(--color-border-neon);
-    border-radius: var(--radius-md);
-    background: var(--color-bg-card);
-    color: var(--color-text-secondary);
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.timer-btn:hover {
-    border-color: var(--color-accent-brand);
-    background: var(--color-bg-card-alt);
-}
-
-.timer-btn:focus {
-    outline: none;
-    border-color: var(--color-accent-brand);
-    box-shadow: 0 0 0 3px rgba(30, 215, 96, 0.3);
-}
-
-.timer-btn:focus-visible {
-    outline: 2px solid var(--color-accent-brand);
-    outline-offset: 2px;
-}
-
-.timer-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    border-color: var(--color-border-neon);
-    background: var(--color-bg-card);
-}
-
-.timer-btn:disabled:hover {
-    border-color: var(--color-border-neon);
-    background: var(--color-bg-card);
-}
-
-.timer-btn--active {
-    border-color: var(--color-accent-brand);
-    background: var(--color-accent-brand);
-    color: var(--color-text-white);
-}
-
-.timer-btn--active:hover {
-    background: var(--color-accent-brand-hover);
-}
 
 .timer-icon {
     font-size: 1.5em;
@@ -1237,9 +1145,6 @@ body.theme-dark .difficulty-btn:not(.difficulty-btn--active) span {
     opacity: 0.8;
 }
 
-.timer-btn--active .timer-value {
-    opacity: 1;
-}
 
 /* Difficulty Selector (Story 14.1) */
 .difficulty-selector {
@@ -1248,48 +1153,6 @@ body.theme-dark .difficulty-btn:not(.difficulty-btn--active) span {
     gap: var(--space-sm);
 }
 
-.difficulty-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2xs);
-    padding: var(--space-sm) var(--space-md);
-    min-width: 90px;
-    border: 2px solid var(--color-border-light);
-    border-radius: var(--radius-md);
-    background: var(--color-bg-card);
-    color: var(--color-text-secondary);
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.difficulty-btn:hover {
-    border-color: var(--color-accent-brand);
-    background: var(--color-bg-card-alt);
-}
-
-.difficulty-btn:focus {
-    outline: none;
-    border-color: var(--color-accent-brand);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
-}
-
-.difficulty-btn:focus-visible {
-    outline: 2px solid var(--color-accent-brand);
-    outline-offset: 2px;
-}
-
-.difficulty-btn--active {
-    border-color: var(--color-accent-brand);
-    background: var(--color-accent-brand);
-    color: var(--color-text-white);
-}
-
-.difficulty-btn--active:hover {
-    background: var(--color-accent-brand-hover);
-}
 
 .difficulty-icon {
     font-size: 1.5em;
@@ -1995,6 +1858,26 @@ body.theme-dark .name-input::placeholder {
     color: var(--color-text-neon-muted);
 }
 
+/* Dark theme guest language line (#2585) */
+body.theme-dark .join-language-line {
+    color: var(--color-text-neon-muted);
+}
+
+body.theme-dark .join-language-toggle {
+    color: var(--color-accent-primary);
+}
+
+body.theme-dark .join-language-chip {
+    background: var(--color-dark-surface);
+    border-color: var(--color-border-neon);
+    color: var(--color-text-neon-muted);
+}
+
+body.theme-dark .join-language-chip:hover {
+    border-color: var(--color-accent-primary);
+    color: var(--color-text-white);
+}
+
 /* Dark theme join button */
 body.theme-dark .join-btn {
     background: var(--color-accent-primary);
@@ -2005,22 +1888,7 @@ body.theme-dark .join-btn:hover {
     box-shadow: var(--glow-primary);
 }
 
-/* Dark theme QR area */
-body.theme-dark .qr-share-area {
-    background: var(--color-dark-surface);
-    border: 1px solid var(--color-border-neon);
-}
-
 body.theme-dark .qr-hint {
-    color: var(--color-text-neon-muted);
-}
-
-/* Dark theme - QR collapsible (Story 18.8) */
-body.theme-dark .qr-share-header {
-    color: var(--color-text-white);
-}
-
-body.theme-dark .qr-share-chevron {
     color: var(--color-text-neon-muted);
 }
 
@@ -2392,6 +2260,53 @@ body.theme-dark .rejoin-hint {
     color: var(--color-text-neon-muted);
 }
 
+/* Dark theme — what's next picker (#2648) */
+body.theme-dark .next-playlist-title {
+    color: var(--color-text-white);
+}
+
+body.theme-dark .next-tile,
+body.theme-dark .next-result {
+    background: var(--color-bg-surface);
+    border-color: var(--color-border-neon);
+}
+
+body.theme-dark .next-tile.is-selected,
+body.theme-dark .next-result.is-selected {
+    border-color: var(--color-accent-primary);
+    background: rgba(255, 45, 106, 0.14);
+}
+
+body.theme-dark .next-tile-name,
+body.theme-dark .next-result-name {
+    color: var(--color-text-white);
+}
+
+body.theme-dark .next-tile-sub,
+body.theme-dark .next-result-count,
+body.theme-dark .next-search-empty,
+body.theme-dark .next-playlist-stay {
+    color: var(--color-text-neon-muted);
+}
+
+body.theme-dark .next-tile--current .next-tile-sub {
+    color: var(--color-accent-secondary);
+}
+
+body.theme-dark .next-search-input {
+    color: var(--color-text-white);
+    background: var(--color-bg-surface);
+    border-color: var(--color-border-neon);
+}
+
+body.theme-dark .end-waiting-line {
+    color: var(--color-text-white);
+}
+
+body.theme-dark .end-waiting-keep {
+    color: var(--color-text-neon-muted);
+}
+
 /* Dark theme paused view */
 body.theme-dark .paused-container {
     background: var(--color-bg-primary);
@@ -2730,6 +2645,63 @@ body.theme-dark .qr-modal-label {
     text-align: left;
 }
 
+/* #2585: guest language line under the join button. Quiet on purpose — it is a
+   statement the guest may ignore, not a step in the join flow. */
+.join-language {
+    margin-top: var(--space-md);
+    text-align: center;
+}
+
+.join-language-line {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.join-language-current {
+    white-space: nowrap;
+}
+
+.join-language-sep {
+    margin: 0 6px;
+}
+
+.join-language-toggle {
+    background: none;
+    border: none;
+    padding: 6px 4px;
+    font: inherit;
+    color: var(--color-accent-blue);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.join-language-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+.join-language-chip {
+    padding: 10px 14px;
+    /* 44px: the chips sit close together on a phone and every guest taps one
+       exactly once, so an undersized target here is a first impression. */
+    min-height: 44px;
+    font-size: var(--font-size-base);
+    background: transparent;
+    border: 1px solid var(--color-border-medium);
+    border-radius: var(--radius-full);
+    color: var(--color-text-muted);
+    cursor: pointer;
+}
+
+.join-language-chip:hover {
+    border-color: var(--color-accent-blue);
+    color: var(--color-accent-blue);
+}
+
 /* ==========================================
    Lobby Styles (Story 3.3)
    ========================================== */
@@ -2852,15 +2824,6 @@ body.theme-dark .qr-modal-label {
     box-sizing: border-box;
 }
 
-/* QR Share Area (Story 3.4) */
-.qr-share-area {
-    text-align: center;
-    padding: var(--space-lg) var(--space-md);
-    background: var(--color-bg-card);
-    border-radius: var(--radius-lg);
-    margin-bottom: var(--space-md);
-}
-
 .qr-icon {
     font-size: var(--font-size-xl);
 }
@@ -2896,77 +2859,6 @@ body.theme-dark .qr-modal-label {
     color: var(--color-text-muted);
 }
 
-/* QR Share Section - Collapsible (Story 18.8) */
-.qr-collapsible {
-    /* Override base qr-share-area padding for collapsible */
-    padding: 0;
-}
-
-.qr-share-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-sm);
-    padding: var(--space-md);
-    cursor: pointer;
-    user-select: none;
-    list-style: none; /* Remove default marker */
-    font-size: var(--font-size-md);
-    font-weight: 600;
-    color: var(--color-text-primary);
-    min-height: 44px; /* Touch target */
-}
-
-.qr-share-header::-webkit-details-marker {
-    display: none; /* Hide Safari default marker */
-}
-
-.qr-share-chevron {
-    margin-left: var(--space-sm);
-    transition: transform var(--transition-normal);
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-}
-
-.qr-collapsible[open] .qr-share-chevron {
-    transform: rotate(180deg);
-}
-
-.qr-share-content {
-    padding: 0 var(--space-md) var(--space-lg);
-    animation: qrSlideDown var(--transition-normal) ease-out;
-}
-
-@keyframes qrSlideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Collapsed state - just show header */
-.qr-collapsible:not([open]) {
-    padding-bottom: 0;
-}
-
-.qr-collapsible:not([open]) .qr-share-header {
-    padding-bottom: var(--space-md);
-}
-
-/* Reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-    .qr-share-chevron {
-        transition: none;
-    }
-    .qr-share-content {
-        animation: none;
-    }
-}
-
 /* Dashboard Hint (Story 16.4) */
 .dashboard-hint-container {
     margin-top: var(--space-md);
@@ -2995,12 +2887,6 @@ body.theme-dark .qr-modal-label {
 
 .dashboard-hint-icon {
     font-size: var(--font-size-base);
-}
-
-.dashboard-hint-url {
-    font-family: monospace;
-    color: var(--color-accent-secondary);
-    font-size: var(--font-size-sm);
 }
 
 /* QR Modal (Story 3.4) */
@@ -3183,25 +3069,9 @@ body.theme-dark .qr-modal-label {
     }
 }
 
-/* Leave Game Container (Story 11.5, Story 18.6) */
-.leave-game-container {
-    text-align: center;
-    padding: var(--space-md);
-    /* Story 18.6: Sticky positioning for mobile */
-    position: sticky;
-    bottom: 0;
-    background: linear-gradient(to top, var(--color-bg-card), transparent);
-    z-index: var(--z-controls, 10);
-}
-
-.leave-game-container.hidden {
-    display: none;
-}
-
-/* Story 18.6: Remove gradient background in dark theme (matching admin-controls) */
-body.theme-dark .leave-game-container {
-    background: transparent;
-}
+/* #2583: the .leave-game-container rules (Story 11.5, Story 18.6) stood
+   here. player.html has no leave element, and the handler behind it went
+   with them. */
 
 .btn-leave {
     opacity: 0.7;
@@ -3471,6 +3341,49 @@ body.theme-dark .admin-controls {
 /* =====================================================
    Mobile-Optimized Compact Lobby Layout
    ===================================================== */
+
+/* #2647: the lobby brief. The same sentence the TV shows, word for word, on
+   the guest's phone — one text for both surfaces rather than two components
+   that drift. Sits under the compact header; the difficulty badge, the player
+   tiles and the invite section are untouched.
+
+   Phone type comes from the scale (the TV's raw 40/52px is a couch-distance
+   exception, see dashboard.css); the accents below are shared by both. */
+.lobby-brief {
+    margin: 0 0 var(--space-md);
+    font-family: var(--font-display);
+    font-size: var(--font-size-lg);
+    /* 700, not 600: both pages load Outfit at 700/900 only (#2641), so a 600
+       would be synthesised by the browser and read fuzzier, not lighter. */
+    font-weight: var(--font-weight-bold);
+    line-height: 1.45;
+    text-wrap: pretty;
+    color: var(--color-text-neon-muted);
+}
+
+.lobby-brief.hidden {
+    display: none;
+}
+
+/* The deviations, inside the running text. No badge, no tile — the sentence
+   stays one object, and colour is the only thing that separates what is
+   unusual about this game from what is not. */
+.lobby-brief-em {
+    color: var(--color-text-white);
+}
+
+.lobby-brief-em--alt {
+    color: var(--color-accent-secondary);
+}
+
+.lobby-brief-em--key {
+    color: var(--color-accent-primary);
+}
+
+/* The "and N more" tail: present, never louder than what it stands in for. */
+.lobby-brief-em--rest {
+    color: var(--color-text-neon-muted);
+}
 
 /* Compact header with inline badges */
 .lobby-header-compact {
@@ -5374,6 +5287,21 @@ body.theme-dark .movie-reveal-section {
     text-align: left;
 }
 
+/* #2588: der Cover-Hinweis steht ueber dem Fun Fact und ist bewusst leiser als
+   er — er raeumt einen Widerspruch aus, er erzaehlt keine Geschichte. */
+.cover-hint {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-neon-muted);
+    border-left: 2px solid var(--color-accent-secondary);
+    padding-left: var(--space-sm);
+    margin-bottom: var(--space-sm);
+    line-height: 1.4;
+}
+
+.cover-hint.hidden {
+    display: none;
+}
+
 .fun-fact-section .fun-fact-text {
     font-size: 0.875rem;
     color: var(--color-text-white);
@@ -6344,41 +6272,16 @@ body.theme-dark .movie-reveal-section {
     40%, 80% { transform: translateX(5px); }
 }
 
-/* Confetti Canvas (Story 9.4, Story 14.5) */
-.confetti-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: var(--z-modal);
-}
-
 /* canvas-confetti library creates canvas dynamically at body level - ensure non-blocking (AC6) */
 /* M2 fix: Scoped to body > canvas to avoid affecting other fixed canvases */
 body > canvas[style*="position: fixed"] {
     pointer-events: none !important;
 }
 
-/* Score breakdown fade-in delay (Story 9.4) */
-.personal-result.is-delayed {
-    opacity: 0;
-    animation: fade-in-delay 0.5s ease-out 1s forwards;
-}
-
-@keyframes fade-in-delay {
-    to { opacity: 1; }
-}
-
 /* Reduced motion support for reveal */
 @media (prefers-reduced-motion: reduce) {
     .reveal-emotion,
     .reveal-emotion--close {
-        animation: none;
-    }
-    .personal-result.is-delayed {
-        opacity: 1;
         animation: none;
     }
 }
@@ -6632,28 +6535,34 @@ body.theme-dark .result-value.is-bet-lost {
     color: var(--color-error-dark);
 }
 
-/* Streak-Shield (#1666) — the counterpart to .streak-broken above. Same
-   shape on purpose: both explain what just happened to a streak, so they
-   should read as one pair rather than two unrelated notices. Success colours
-   because the run survived. */
+/* Streak-Shield (#1666, restyled #2601). The strip now sits under the score
+   row of the round-reveal v2 card, not in the old light result card. The
+   previous rule filled it with --color-success-light (#d1fae5) and set the
+   text in --color-success-hover — a pale mint block that glares on the dark
+   reveal. Same green semantic, because the run survived; a translucent tint
+   with a border reads as a sibling of the score row above it. The negative
+   top margin pulls the strip against that row: the two belong together, the
+   line explains the number. */
 .streak-shield-used {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
-    margin-top: var(--space-sm);
-    padding: var(--space-sm) var(--space-md);
-    background: var(--color-success-light);
-    border-radius: var(--radius-md);
+    margin: calc(-1 * var(--space-sm)) 0 var(--space-md);
+    padding: 10px 16px;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.38);
+    border-radius: var(--radius-lg);
 }
 
 .streak-shield-icon {
     font-size: var(--font-size-xl);
+    line-height: 1;
 }
 
 .streak-shield-text {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-sm);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-success-hover);
+    color: #6ee7b7;
 }
 
 .result-score.is-zero {
@@ -6959,18 +6868,6 @@ body.theme-dark .result-value.is-bet-lost {
     }
 }
 
-/* Quick you indicator */
-.leaderboard-you {
-    position: sticky;
-    bottom: 0;
-    padding: var(--space-sm) var(--space-md);
-    background: var(--color-accent-blue);
-    color: var(--color-text-white);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
-    text-align: center;
-}
-
 /* ============================================
    Final Leaderboard / End View (Story 5.6)
    ============================================ */
@@ -7209,6 +7106,158 @@ body.theme-dark .result-value.is-bet-lost {
 .new-game-btn:disabled {
     background: var(--color-text-light);
     cursor: not-allowed;
+}
+
+/* ============================================
+   What's next — the end screen's playlist picker (#2648)
+   The podium is followed by the choice itself, not by a menu.
+   ============================================ */
+
+.next-playlist-title {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    text-align: center;
+}
+
+.next-playlist-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-sm);
+}
+
+.next-tile {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-sm);
+    text-align: left;
+    background: var(--color-bg-card);
+    border: 2px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    min-height: 64px;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.next-tile.is-selected {
+    border-color: var(--color-accent-brand);
+    background: var(--color-accent-brand-bg);
+}
+
+.next-tile-name {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.next-tile-sub {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.next-tile--current .next-tile-sub {
+    color: var(--color-accent-brand);
+}
+
+.next-tile--search {
+    border-style: dashed;
+}
+
+.next-playlist-search {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.next-search-input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--font-size-md);
+    color: var(--color-text-primary);
+    background: var(--color-bg-white);
+    border: 2px solid var(--color-border-medium);
+    border-radius: var(--radius-lg);
+}
+
+.next-playlist-results {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.next-result {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: var(--space-sm);
+    text-align: left;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+}
+
+.next-result.is-selected {
+    border-color: var(--color-accent-brand);
+    background: var(--color-accent-brand-bg);
+}
+
+.next-result-name {
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    overflow-wrap: anywhere;
+}
+
+.next-result-count {
+    flex: 0 0 auto;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.next-search-empty {
+    margin: 0;
+    font-size: var(--font-size-base);
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.next-playlist-stay {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+/* The way back to the admin page. It has to exist — a host who wants other
+   guests and other settings needs it — but it must not read as a second main
+   exit, or #2648's trap is simply set again in smaller type. */
+.next-playlist-admin-link {
+    align-self: center;
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    background: none;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    min-width: auto;
+    min-height: auto;
+}
+
+.end-waiting-line {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.end-waiting-keep {
+    font-size: var(--font-size-base);
+    color: var(--color-text-muted);
 }
 
 /* Player message */
@@ -7786,6 +7835,279 @@ body.theme-dark .card-score {
 }
 
 /* ============================================
+   Host drawer (#2723)
+
+   Sits directly above the fixed control bar. The bar keeps what is needed
+   every second; anything that changes the *course* of the game lives one grip
+   below it. Built as a container — #2649 (party lights) and #2646 (drop a
+   song) are meant to arrive as further `.host-drawer__row` entries.
+   ============================================ */
+
+.host-drawer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    /* Sits on top of the fixed control bar. --control-bar-h is the bar's own
+       height (44px button + 2x 8px padding); it is a declared token rather than
+       a number sprinkled here, because the bar's padding and the drawer's
+       offset have to move together or the drawer overlaps the buttons. */
+    bottom: calc(var(--control-bar-h) + env(safe-area-inset-bottom));
+    z-index: var(--z-control-bar);
+    /* The gap between grip and body must not swallow taps meant for the page
+       behind it; only the grip and the body itself are interactive. */
+    pointer-events: none;
+}
+
+.host-drawer.hidden {
+    display: none;
+}
+
+.host-drawer__grip,
+.host-drawer__body {
+    pointer-events: auto;
+}
+
+.host-drawer__grip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    width: 100%;
+    padding: var(--space-xs) 0 var(--space-sm);
+    background: none;
+    border: none;
+    color: var(--color-text-neon-muted);
+    font-family: var(--font-display);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.host-drawer__grip-bar {
+    display: block;
+    width: 36px;
+    height: 4px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.host-drawer__grip:hover .host-drawer__grip-bar {
+    background: rgba(255, 255, 255, 0.34);
+}
+
+.host-drawer__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-sm);
+    margin: 0 var(--space-sm);
+    background: rgba(10, 10, 18, 0.96);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-md);
+}
+
+.host-drawer__row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    width: 100%;
+    min-height: 48px;
+    padding: var(--space-sm);
+    background: var(--color-dark-surface);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    color: var(--color-text-white);
+    font-family: var(--font-body);
+    text-align: left;
+    cursor: pointer;
+}
+
+.host-drawer__row:hover:not(:disabled) {
+    background: var(--color-dark-surface-hover);
+}
+
+.host-drawer__row:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.host-drawer__row.is-on {
+    border-color: rgba(255, 0, 64, 0.45);
+    background: rgba(255, 0, 64, 0.12);
+}
+
+.host-drawer__row-icon {
+    font-size: var(--font-size-lg);
+    line-height: 1;
+}
+
+.host-drawer__row-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.host-drawer__row-title {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+}
+
+/* The sentence that says what the switch does. Wrapping is correct here —
+   truncating it would leave exactly the bare label it exists to replace. */
+.host-drawer__row-sub {
+    font-size: var(--font-size-xs);
+    line-height: 1.35;
+    color: var(--color-text-dim, var(--color-text-neon-muted));
+}
+
+.host-drawer__pill {
+    flex: 0 0 auto;
+    padding: 3px 10px;
+    border: 1px solid var(--color-border-neon);
+    border-radius: 999px;
+    color: var(--color-text-neon-muted);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+}
+
+.host-drawer__pill.is-on {
+    background: var(--color-success-neon);
+    border-color: var(--color-success-neon);
+    color: var(--color-bg-primary);
+}
+
+/* #2649: the segmented light control inside the drawer row. Three steps,
+   because off/on alone is a choice between a disco and darkness — and the
+   middle one is what saves the evening. */
+.host-drawer__row--static { cursor: default; }
+
+.host-drawer__seg {
+    display: flex;
+    gap: 3px;
+    margin: 6px 0 4px;
+    padding: 3px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+}
+
+.host-drawer__seg-btn {
+    flex: 1;
+    min-height: 32px;
+    padding: 6px 4px;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-neon-muted);
+    font-family: var(--font-body);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.host-drawer__seg-btn:hover { color: var(--color-text-white); }
+
+.host-drawer__seg-btn.is-on {
+    background: var(--color-warning-alt);
+    color: #180a00;
+}
+
+/* #2649: the line above the round. It reports first and is the way in second —
+   a host who does not know lights are configured never looks for a switch. */
+.party-lights-line {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-bottom: var(--space-sm);
+    padding: 9px 11px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-md);
+    color: var(--color-text-neon-muted);
+    font-family: var(--font-body);
+    font-size: var(--font-size-sm);
+    text-align: left;
+    cursor: pointer;
+}
+
+.party-lights-line.hidden { display: none; }
+
+.party-lights-line__glow {
+    flex: 0 0 auto;
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--color-warning-alt);
+    box-shadow: 0 0 10px rgba(255, 102, 0, 0.9);
+}
+
+.party-lights-line.is-off .party-lights-line__glow {
+    background: var(--color-text-dim);
+    box-shadow: none;
+}
+
+.party-lights-line__text { flex: 1; min-width: 0; line-height: 1.35; }
+.party-lights-line__text b { color: var(--color-text-white); font-weight: 600; }
+.party-lights-line__chev { color: var(--color-text-dim); }
+
+/* ============================================
+   Sudden Death standing line (#2723)
+
+   One line under the reveal, in the same place every round, so the guest's
+   standing survives the loudest second of the game.
+   ============================================ */
+
+.sd-standing {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-border-neon);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-neon-muted);
+}
+
+.sd-standing.hidden {
+    display: none;
+}
+
+.sd-standing__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 99px;
+    background: var(--color-success-neon);
+}
+
+.sd-standing__dot.is-out {
+    background: var(--color-error-neon);
+}
+
+.sd-standing__you {
+    color: var(--color-text-white);
+    font-weight: 600;
+}
+
+.sd-standing.is-out .sd-standing__you {
+    color: var(--color-error-neon);
+}
+
+.sd-standing__sep {
+    opacity: 0.5;
+}
+
+.sd-standing__out {
+    text-decoration: line-through;
+    opacity: 0.75;
+}
+
+/* ============================================
    Live Reactions Bar (Story 18.9)
    ============================================ */
 
@@ -7812,8 +8134,10 @@ main:has(.admin-control-bar:not(.hidden)) .reaction-bar {
 }
 
 .reaction-bar-container {
+    /* #2562: column, because the cooldown line sits under the emoji row. */
     display: flex;
-    gap: var(--space-sm);
+    flex-direction: column;
+    gap: var(--space-xs);
     padding: var(--space-sm) var(--space-md);
     background: rgba(0, 0, 0, 0.6);
     border-radius: var(--radius-lg);
@@ -7821,6 +8145,42 @@ main:has(.admin-control-bar:not(.hidden)) .reaction-bar {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     pointer-events: auto;  /* Restore clicks on container */
+}
+
+.reaction-bar-buttons {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+/* #2562: the cooldown the server is enforcing, drawn as a line that drains
+   left to right. It is deliberately quiet — the point is only that a swallowed
+   tap has a visible reason, not that the wait draws attention to itself. */
+.reaction-cooldown {
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+}
+
+.reaction-cooldown.hidden {
+    display: none;
+}
+
+.reaction-cooldown-fill {
+    height: 100%;
+    width: 100%;
+    border-radius: 2px;
+    background: var(--color-accent-primary);
+    transform-origin: left center;
+    /* The duration is set from JS — it is the server's remaining cooldown, not
+       a constant the stylesheet gets to guess at. */
+    transition: transform linear 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reaction-cooldown-fill {
+        transition: none;
+    }
 }
 
 .reaction-btn {
@@ -7965,6 +8325,195 @@ main:has(.admin-control-bar:not(.hidden)) .reaction-container {
 .paused-hint {
     font-size: var(--font-size-base);
     color: var(--color-text-light);
+}
+
+/* #2551: the host's way out of a paused game, shown only to the admin.
+   Sits under the hint because the first thing to read is WHY the game
+   stopped; the buttons are the answer to that, not the headline. */
+/* #2557: the live level, sitting between the two volume buttons it explains. */
+.control-volume-readout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3.5ch;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-light);
+}
+
+.paused-admin-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-sm);
+    width: min(100%, 320px);
+    margin: var(--space-lg) auto 0;
+}
+.paused-admin-link {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    text-align: center;
+    text-decoration: underline;
+}
+
+/* ============================================
+   The host's pause, as an announcement (#2645)
+
+   The hierarchy is inverted on purpose: the *reason* is the headline and the
+   word "Pause" sits small underneath it, because "what is going on" is the
+   question a room asks and "something stopped" is not an answer to it.
+   ============================================ */
+
+/* The headline when a reason was named. It is prose, not a status label, so it
+   gets the accent colour the rest of the app reserves for the live thing. */
+.paused-title--announce {
+    color: var(--color-accent-primary);
+}
+
+.paused-state-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-accent-secondary);
+    margin-bottom: var(--space-sm);
+}
+
+.paused-state-label.hidden {
+    display: none;
+}
+
+.pause-announce {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    text-align: left;
+}
+
+.pause-announce.hidden {
+    display: none;
+}
+
+.pause-announce-label {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+}
+
+.pause-reasons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+/* One tile per announcement. The subtitle wraps rather than truncating: it is
+   the sentence that separates a pause from Stop, and half of it separates
+   nothing. */
+.pause-reason {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    width: 100%;
+    min-height: 48px;
+    padding: var(--space-sm);
+    background: var(--color-dark-surface);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    color: var(--color-text-white);
+    font-family: var(--font-body);
+    text-align: left;
+    cursor: pointer;
+}
+
+.pause-reason:hover {
+    background: var(--color-dark-surface-hover);
+}
+
+.pause-reason.is-on {
+    border-color: var(--color-accent-primary);
+    background: rgba(255, 45, 106, 0.12);
+}
+
+/* The fourth tile is the old Stop. It is not a warning about a mistake — it is
+   a different, legitimate choice — so it is marked out rather than greyed out. */
+.pause-reason--warn {
+    border-color: rgba(255, 102, 0, 0.5);
+    background: rgba(255, 102, 0, 0.07);
+}
+
+.pause-reason--warn .pause-reason__sub {
+    color: var(--color-warning-alt);
+}
+
+.pause-reason__emoji {
+    font-size: var(--font-size-lg);
+    line-height: 1;
+}
+
+.pause-reason__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.pause-reason__title {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+}
+
+.pause-reason__sub {
+    font-size: var(--font-size-xs);
+    line-height: 1.35;
+    color: var(--color-text-neon-muted);
+}
+
+/* The same panel on the admin page (#2645). It sits above the round card, next
+   to — not inside — the #805 recovery banner: that one is an alert about
+   something broken, this one is the announcement the room is reading. */
+.admin-host-pause {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+    background: var(--color-dark-card);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-md);
+}
+
+.admin-host-pause.hidden {
+    display: none;
+}
+
+.admin-host-pause-headline {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.admin-host-pause-emoji {
+    font-size: var(--font-size-2xl);
+    line-height: 1;
+}
+
+.admin-host-pause-title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent-primary);
+}
+
+.admin-host-pause-sub {
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    margin: 0;
 }
 
 /* ============================================
@@ -8477,129 +9026,6 @@ body.theme-dark .steal-target-btn:hover {
 }
 
 /* ============================================
-   Score Animations (Story 13.2)
-   ============================================ */
-
-/* Tabular figures for score stability during animation */
-.score-animating {
-    font-variant-numeric: tabular-nums;
-}
-
-/* Pop effect for big scores (20+ points) */
-@keyframes score-pop {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.3); }
-    100% { transform: scale(1); }
-}
-
-.score-pop {
-    animation: score-pop 700ms ease-out;
-    display: inline-block; /* Required for transform */
-}
-
-/* Shake effect for bet loss */
-@keyframes score-shake {
-    0%, 100% { transform: translateX(0); }
-    20% { transform: translateX(-5px); }
-    40% { transform: translateX(5px); }
-    60% { transform: translateX(-3px); }
-    80% { transform: translateX(3px); }
-}
-
-.score-shake {
-    animation: score-shake 400ms ease-out;
-    display: inline-block;
-}
-
-/* Red flash for bet loss */
-@keyframes score-flash-red {
-    0%, 100% { color: inherit; }
-    50% { color: var(--color-error); }
-}
-
-.score-flash-red {
-    animation: score-flash-red 400ms ease-out;
-}
-
-/* Golden glow for bet wins */
-@keyframes score-glow-gold {
-    0%, 100% {
-        text-shadow: 0 0 0 transparent;
-        color: inherit;
-    }
-    50% {
-        text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700;
-        color: #ffd700;
-    }
-}
-
-.score-glow-gold {
-    animation: score-glow-gold 800ms ease-out;
-    display: inline-block;
-}
-
-/* Burst effect for streak milestones */
-@keyframes score-burst {
-    0% {
-        transform: scale(1);
-        text-shadow: 0 0 0 transparent;
-    }
-    30% {
-        transform: scale(1.4);
-        text-shadow: 0 0 30px #ff6600;
-    }
-    100% {
-        transform: scale(1);
-        text-shadow: 0 0 0 transparent;
-    }
-}
-
-.score-burst {
-    animation: score-burst 700ms ease-out;
-    display: inline-block;
-}
-
-/* ============================================
-   Floating Points Popup (Story 13.2)
-   ============================================ */
-
-@keyframes popup-float {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, 0);
-    }
-    20% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, -30px);
-    }
-}
-
-.points-popup {
-    position: fixed;
-    z-index: var(--z-toast);
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-success);
-    pointer-events: none;
-    animation: popup-float 1000ms ease-out forwards;
-    transform: translateX(-50%);
-}
-
-.points-popup--gold {
-    color: #ffd700;
-    text-shadow: 0 0 10px #ffd700;
-}
-
-.points-popup--streak {
-    color: #ff6600;
-    text-shadow: 0 0 10px #ff6600;
-    font-size: var(--font-size-xl);
-}
-
-/* ============================================
    Leaderboard Slide Animations (Story 13.2)
    ============================================ */
 
@@ -8640,19 +9066,6 @@ body.theme-dark .steal-target-btn:hover {
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
-    .score-pop,
-    .score-shake,
-    .score-glow-gold,
-    .score-burst,
-    .score-flash-red {
-        animation: none !important;
-    }
-
-    .points-popup {
-        animation: none !important;
-        display: none !important;
-    }
-
     .leaderboard-entry--slide-up,
     .leaderboard-entry--slide-down {
         animation: none !important;
@@ -8676,17 +9089,6 @@ body.device-tier-low .btn-glow:hover {
     box-shadow: none !important;
 }
 
-body.device-tier-low .score-pop,
-body.device-tier-low .score-shake,
-body.device-tier-low .score-glow-gold,
-body.device-tier-low .score-burst {
-    animation: none !important;
-}
-
-body.device-tier-low .points-popup {
-    display: none !important;
-}
-
 /* Medium-tier device optimizations - simplify animations */
 body.device-tier-medium .leaderboard-entry--climbing,
 body.device-tier-medium .leaderboard-entry--falling {
@@ -8695,13 +9097,6 @@ body.device-tier-medium .leaderboard-entry--falling {
 
 body.device-tier-medium .neon-glow {
     animation: none !important;
-}
-
-body.device-tier-medium .score-pop,
-body.device-tier-medium .score-shake,
-body.device-tier-medium .score-glow-gold,
-body.device-tier-medium .score-burst {
-    animation-duration: 0.2s !important;
 }
 
 /* Tap-to-skip hint for reveal view (Story 18.3) */
@@ -10736,6 +11131,100 @@ body.home-mode .home-view {
 .home-cta-join.hidden { display: none; }
 
 /* Wizard Step 4 — game mode cards (Artist Challenge / Intro Mode / Closest Wins) */
+/* #2692: play styles — one big decision above the eleven switches.
+   Only the selected panel expands to say what it turns on; three open
+   expansions would turn the one decision back into a comparison table. */
+.wiz-style-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.wiz-style-panel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: var(--space-md) 14px;
+    background: var(--color-dark-surface);
+    border: 1.5px solid var(--color-border-neon);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), background var(--transition-fast), opacity var(--transition-fast);
+}
+
+.wiz-style-panel.dim { opacity: 0.55; }
+.wiz-style-panel.dim:hover { opacity: 0.85; }
+
+.wiz-style-glyph { font-size: 32px; line-height: 1; flex-shrink: 0; }
+
+.wiz-style-body { min-width: 0; }
+
+.wiz-style-name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--font-size-lg);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-text-white);
+    line-height: 1;
+}
+
+.wiz-style-line {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-neon-muted);
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+/* Only the chosen style lists its modes. */
+.wiz-style-what {
+    display: none;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-dim);
+    margin-top: 7px;
+    line-height: 1.5;
+}
+
+.wiz-style-panel.sel .wiz-style-what { display: block; }
+
+.wiz-style-panel[data-accent="cyan"].sel {
+    border-color: var(--color-accent-secondary);
+    background: rgba(0, 245, 255, 0.10);
+}
+
+.wiz-style-panel[data-accent="pink"].sel {
+    border-color: var(--color-accent-primary);
+    background: rgba(255, 45, 106, 0.10);
+}
+
+.wiz-style-panel[data-accent="orange"].sel {
+    border-color: var(--color-warning-alt);
+    background: rgba(255, 102, 0, 0.10);
+}
+
+/* The fold. Dashed on purpose — it is a way in, not a fourth style. */
+.wiz-manual-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: var(--space-xs);
+    padding: 11px 14px;
+    background: transparent;
+    border: 1px dashed var(--color-border-neon);
+    border-radius: var(--radius-lg);
+    color: var(--color-text-neon-muted);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+}
+
+.wiz-manual-line:hover { background: var(--color-dark-surface); }
+
+.wiz-manual-count { color: var(--color-text-dim); font-weight: 500; }
+
 .wiz-mode-cards {
     display: flex;
     flex-direction: column;
@@ -11647,6 +12136,155 @@ body.is-ingame .player-header { display: none; }
 }
 .home-learning-warning.hidden { display: none; }
 
+/* Admin home-view: away guests + the remove affordance (#2718).
+   The TV has painted "(away)" for `connected === false` since Story 11.4; the
+   host's phone never did, which made "remove" a coin flip between the guest
+   who left and the guest who is in the bathroom.
+   Variant C (design gate 05.09.2026): away GUESTS leave the grid entirely for
+   the list further down, so these two rules now dress exactly one tile — the
+   away HOST, who cannot be removed and whose own phone must not vanish from
+   its own lobby. */
+.home-player-tile--away {
+    opacity: 0.6;
+    filter: grayscale(0.55);
+}
+.home-player-tile-away {
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1;
+    color: var(--color-text-white);
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* --------------------------------------------------------------------------
+   #2718 variant C — present in the grid, away in a list underneath.
+
+   Both of these are full-width children of the `.home-players` grid (same
+   `grid-column: 1 / -1` trick `.home-players-waiting` uses), so the tiles keep
+   their auto-fill columns and the list simply starts a new row below them.
+
+   Why a list and not a badge on the tile: nothing removable then borders
+   anything untouchable, so the misplaced tap in a half-dark room is designed
+   out instead of caught; the row has room for the DURATION, which is the
+   number the host actually decides on; and the button can carry the word
+   "Remove" rather than a glyph to interpret.
+   -------------------------------------------------------------------------- */
+
+/* Shown only while somebody is away — the one moment the grid alone would
+   undercount the room ("7 guests · 5 here"). */
+.home-players-count {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-neon-muted);
+}
+
+.home-away {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    margin-top: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-border-neon);
+}
+/* Quiet heading: this is a place to look when something is wrong, not a
+   second headline competing with the guest grid. */
+.home-away-heading {
+    margin: 0 0 var(--space-xs);
+    font-family: var(--font-display);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-neon-muted);
+    opacity: 0.75;
+}
+.home-away-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.home-away-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 6px 0;
+}
+/* Same initial the tile shows, at chip size — the away guest stays
+   recognisable as the person who was in the grid a moment ago. */
+.home-away-initial {
+    flex: none;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--color-border-neon);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-neon-muted);
+}
+.home-away-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-neon-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* The whole reason this variant won: four minutes is the bathroom, twelve
+   minutes is gone. Dimmer than the name, but never hidden — it is the
+   information the host acts on. */
+.home-away-since {
+    flex: none;
+    font-family: var(--font-body);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+}
+/* A labelled button, not a "×" — the word is the affordance. */
+.home-away-remove {
+    flex: none;
+    padding: 6px 12px;
+    min-height: 32px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 45, 106, 0.5);
+    background: rgba(255, 45, 106, 0.14);
+    color: var(--color-accent-primary);
+    font-family: var(--font-display);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+.home-away-remove:active { transform: scale(0.96); }
+.home-away-remove:focus-visible {
+    outline: 2px solid var(--color-accent-secondary);
+    outline-offset: 2px;
+}
+
+/* Secondary explainer line inside a confirmation modal (#2718). */
+.modal-hint {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-md);
+}
+
 /* ==========================================================================
    Player lobby — tile grid (mirrors admin .home-player-tile)
    Jackbox-style tiles replace the legacy flat .player-card chips. Host wears
@@ -11850,6 +12488,125 @@ body.is-ingame .player-header { display: none; }
     font-weight: 900;
     font-size: 13px;
     color: var(--color-accent-secondary);
+}
+
+/* #2702: the ring after the countdown has run out and the next round has not
+   started yet. It keeps its place and its size — only the meaning changes: the
+   digit gives way to an ellipsis, the drained gauge gives way to a quarter arc
+   that turns, and the colour moves from the timer cyan to the accent so the two
+   states are not mistaken for each other at a glance. Movement is the point;
+   the complaint in #2702 was "this looks frozen", and no label answers that. */
+@keyframes reveal-advance-spin {
+    from { transform: rotate(-90deg); }
+    to   { transform: rotate(270deg); }
+}
+.reveal-advance-pill.is-waiting .reveal-advance-svg {
+    animation: reveal-advance-spin 1.15s linear infinite;
+}
+.reveal-advance-pill.is-waiting .reveal-advance-fg {
+    stroke: var(--color-accent-primary);
+    filter: drop-shadow(0 0 5px rgba(255, 45, 106, 0.55));
+}
+.reveal-advance-pill.is-waiting .reveal-advance-num {
+    font-size: 16px;
+    line-height: 0.5;
+    color: var(--color-accent-primary);
+}
+@media (prefers-reduced-motion: reduce) {
+    /* Static, but never the frozen zero it replaced: the gauge is gone, the
+       digit is an ellipsis, the track is dashed and the colour has changed. */
+    .reveal-advance-pill.is-waiting .reveal-advance-svg { animation: none; }
+    .reveal-advance-pill.is-waiting .reveal-advance-bg {
+        stroke-dasharray: 5 7;
+        stroke: rgba(255, 45, 106, 0.35);
+    }
+}
+
+/* #2702: the reveal in three beats — the answer, then who got it right, then
+   the standings. The stage attribute is written by player-reveal.js on its own
+   timer; when it is ABSENT everything shows, so a client whose timers never ran
+   loses nothing. Leaving REVEAL drops the attribute, which is what makes a fast
+   round simply cut whatever beat was on screen. */
+#reveal-view[data-reveal-stage="1"] [data-stage="2"],
+#reveal-view[data-reveal-stage="1"] [data-stage="3"],
+#reveal-view[data-reveal-stage="2"] [data-stage="3"] {
+    display: none;
+}
+@keyframes reveal-beat-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+}
+#reveal-view[data-reveal-stage] [data-stage] {
+    animation: reveal-beat-in 300ms ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+    #reveal-view[data-reveal-stage] [data-stage] { animation: none; }
+}
+
+/* #2702 beat two: who got it right this round. */
+#reveal-view .whogot-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+#reveal-view .whogot-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+#reveal-view .whogot-row--you {
+    border-color: var(--color-accent-primary);
+    background: rgba(255, 45, 106, 0.06);
+}
+#reveal-view .whogot-rank {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 1;
+    width: 18px;
+    flex-shrink: 0;
+    color: var(--color-text-neon-muted);
+}
+#reveal-view .whogot-name {
+    flex: 1;
+    min-width: 0;
+    font-weight: 700;
+    color: var(--color-text-white);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#reveal-view .whogot-you {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-primary);
+}
+#reveal-view .whogot-guess {
+    font-size: 13px;
+    color: var(--color-text-neon-muted);
+    flex-shrink: 0;
+}
+#reveal-view .whogot-pts {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 1;
+    color: var(--color-success-neon);
+    flex-shrink: 0;
+}
+
+/* #2702: the elision between the podium and your own row. */
+#reveal-view .rstand-gap {
+    text-align: center;
+    color: var(--color-text-neon-muted);
+    font-size: 14px;
+    line-height: 1;
+    padding: 2px 0;
 }
 .info-btn {
     width: 28px; height: 28px;
@@ -12539,6 +13296,14 @@ body.is-ingame .player-header { display: none; }
     border: 1px solid rgba(255, 45, 106, 0.5);
     text-transform: uppercase;
 }
+/* #2554: the host stopped the song. Deliberately muted — this is information,
+   not a prize or an alarm, and it must not compete with the steal / sabotage
+   chips next to it. */
+.arc-chip--stopped {
+    color: rgba(255, 255, 255, 0.78);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+}
 
 /* Year XXL */
 .year-xxl {
@@ -13058,31 +13823,6 @@ body.is-ingame .player-header { display: none; }
 
 /* Legacy "Submitted!" stamp — hidden in arcade but kept for any residual path */
 .submitted-confirmation.hidden { display: none; }
-
-/* Closest-wins ephemeral splash (rc30 parity) */
-.closest-wins-splash {
-    position: fixed; inset: 0;
-    z-index: 50;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(10, 10, 18, 0.7);
-    backdrop-filter: blur(4px);
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: 40px;
-    color: var(--color-success-neon);
-    letter-spacing: 0.08em;
-    gap: 12px;
-    pointer-events: none;
-    text-shadow: 0 0 32px rgba(57, 255, 20, 0.55);
-    animation: closest-wins-splash-in 1.6s ease-out both;
-}
-.closest-wins-splash.hidden { display: none; }
-@keyframes closest-wins-splash-in {
-    0%   { opacity: 0; transform: scale(0.8); }
-    20%  { opacity: 1; transform: scale(1); }
-    80%  { opacity: 1; transform: scale(1); }
-    100% { opacity: 0; transform: scale(1.05); }
-}
 
 /* sr-only helper (if not already in the stylesheet) */
 #round-indicator.sr-only {
@@ -15842,11 +16582,8 @@ body.theme-dark .your-result-stats .stat-value {
     background: radial-gradient(ellipse 320px 360px at 50% 24%,
         rgba(0, 245, 255, 0.13) 0%, rgba(0, 245, 255, 0) 62%);
 }
-/* Lift every real child above the backdrop/scrim — but NOT the confetti
-   canvas, which must keep its own `position: fixed` (full-screen overlay).
-   Without this exclusion the canvas drops into normal flow and adds a tall
-   empty gap between the duel and the score row. */
-#reveal-view .reveal-container--duel > *:not(.reveal-backdrop):not(.reveal-scrim):not(.confetti-canvas) {
+/* Lift every real child above the backdrop/scrim. */
+#reveal-view .reveal-container--duel > *:not(.reveal-backdrop):not(.reveal-scrim) {
     position: relative;
     z-index: 1;
 }
@@ -16066,9 +16803,10 @@ body.theme-dark .your-result-stats .stat-value {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    /* The reveal standings show every player (taper-dim lower ranks), so undo
-       the shared .leaderboard-list scroll box (max-height:200px; overflow:auto)
-       the in-game lazy leaderboard uses — otherwise rows 4+ get clipped. */
+    /* #2702: the phone shows the podium plus the reader's own row, never the
+       whole table — but the own row can still be the fourth or fifth element,
+       so the shared .leaderboard-list scroll box (max-height:200px;
+       overflow:auto) the in-game lazy leaderboard uses is still undone here. */
     max-height: none;
     overflow: visible;
 }
@@ -17149,6 +17887,106 @@ body.theme-dark .your-result-stats .stat-value {
     to { opacity: 1; transform: scale(1); }
 }
 
+/* --- #2721: halftime takeover (Comeback Token) ---
+   Same overlay grammar as the Sudden Death "OUT" screen, in the opposite
+   register: pink and cyan instead of the red of an elimination. It is the one
+   moment in the game where the players at the back get the big screen. */
+.comeback-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    text-align: center;
+    background: rgba(6, 6, 12, 0.96);
+}
+
+.comeback-overlay.show {
+    display: flex;
+    animation: comeback-in var(--transition-slow) ease-out;
+}
+
+.comeback__kicker {
+    font-family: var(--font-body);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-dim);
+}
+
+.comeback__word {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(56px, 14vw, 200px);
+    line-height: 0.88;
+    letter-spacing: -0.03em;
+    background: linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.comeback__line {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--font-size-xl);
+    color: var(--color-text-white);
+}
+
+.comeback__names {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    justify-content: center;
+}
+
+.comeback__plate {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 6px 14px;
+    border: 1px solid rgba(157, 78, 221, 0.55);
+    border-radius: 999px;
+    background: rgba(157, 78, 221, 0.12);
+    color: var(--color-text-white);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--font-size-md);
+}
+
+.comeback__plate-icon { color: var(--color-neon-purple); }
+
+.comeback__why {
+    font-size: var(--font-size-base);
+    color: var(--color-text-neon-muted);
+}
+
+.comeback__why.hidden { display: none; }
+
+/* The phone gets the same beat at a phone's scale. */
+.comeback-overlay--phone .comeback__word { font-size: clamp(40px, 17vw, 76px); }
+.comeback-overlay--phone .comeback__line { font-size: var(--font-size-md); }
+.comeback-overlay--phone .comeback__plate { font-size: var(--font-size-sm); }
+
+@keyframes comeback-in {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* #2721: a gifted steal is not a streak unlock, so the chip does not read like
+   one. Purple is the reserved steal colour; cyan stays the streak unlock. */
+.arc-chip--steal.arc-chip--comeback {
+    color: var(--color-neon-purple);
+    border-color: rgba(157, 78, 221, 0.55);
+    background: rgba(157, 78, 221, 0.10);
+}
+
 /* --- Spectator TV: FINAL banner (S5-C arena) --- */
 .sd-final-banner {
     display: inline-flex;
@@ -17163,6 +18001,43 @@ body.theme-dark .your-result-stats .stat-value {
     background: rgba(255, 45, 106, 0.12);
     border: 1px solid rgba(255, 45, 106, 0.5);
     box-shadow: 0 0 16px rgba(255, 45, 106, 0.3);
+}
+
+/* --- Spectator TV: the three notices that explain a changing number (#2703,
+       #2719, #2722). All three reuse the S5-C pill above and only re-tint it,
+       so a chip strip carrying two of them still reads as one row. --- */
+
+/* #2719 Finale ×2 — gold, because it is a reward, not a threat. */
+.sd-final-banner--finale {
+    color: var(--color-warning, #f59e0b);
+    background: rgba(245, 158, 11, 0.12);
+    border-color: rgba(245, 158, 11, 0.5);
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.3);
+}
+
+/* #2722 Finale playoff — purple, the colour the ⚔️ finalist badge already
+   uses in the leaderboard (#2578), so badge and banner read as one event. */
+.sd-final-banner--playoff {
+    color: var(--color-neon-purple, #9d4edd);
+    background: rgba(157, 78, 221, 0.12);
+    border-color: rgba(157, 78, 221, 0.5);
+    box-shadow: 0 0 16px rgba(157, 78, 221, 0.3);
+}
+
+/* #2703 idle halt — deliberately quiet. It reports a pause; a glowing pink
+   alarm would make a stalled round look like a failure. It also carries a
+   whole sentence rather than a label, so it drops the display face and the
+   wide tracking the other two use. */
+.sd-final-banner--idle {
+    color: var(--color-text-neon-muted, #b3b3c2);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: none;
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: 0;
+    max-width: 46ch;
+    text-align: left;
 }
 
 /* --- END: Last One Standing superlative + trophy hero (S6-C) --- */
@@ -17207,6 +18082,7 @@ body.theme-dark .your-result-stats .stat-value {
 
 @media (prefers-reduced-motion: reduce) {
     .sd-out-overlay.show { animation: none; }
+    .comeback-overlay.show { animation: none; }
 }
 
 /* ============================================
@@ -17293,4 +18169,242 @@ body.theme-dark .your-result-stats .stat-value {
 @keyframes collection-card-in {
     from { transform: scale(0.86); opacity: 0; }
     to   { transform: scale(1);    opacity: 1; }
+}
+
+/* ==========================================
+   #2646 — "End round N" host card
+
+   The three-choice card Next opens while a round is still running. It reuses
+   the `.modal` shell, so only the inside is styled here: a stack of full-width
+   choices whose subtitle is the point of the whole feature ("5 players count as
+   wrong · 4 streaks break · Tom is eliminated"). Scoring is the loud one
+   because it is the irreversible one; "let it keep playing" is quiet because
+   it changes nothing.
+   ========================================== */
+
+.round-end-card {
+    max-width: 380px;
+}
+
+.round-end-sub {
+    /* .modal-content p sets a bottom margin; the choices carry their own gap. */
+    margin-bottom: var(--space-md);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+.round-end-choice {
+    display: block;
+    width: 100%;
+    text-align: left;
+    margin-bottom: var(--space-sm);
+    padding: 12px 14px;
+    border: 1.5px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-card);
+    color: var(--color-text-primary);
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.round-end-choice:hover,
+.round-end-choice:focus-visible {
+    border-color: var(--color-border-medium);
+}
+
+.round-end-choice-label {
+    display: block;
+    font-weight: 600;
+    font-size: var(--font-size-base, 14px);
+}
+
+.round-end-choice-sub {
+    display: block;
+    margin-top: 3px;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    line-height: 1.4;
+}
+
+.round-end-choice--score {
+    border-color: var(--color-accent-primary);
+}
+
+.round-end-choice--score .round-end-choice-label {
+    color: var(--color-accent-primary);
+}
+
+.round-end-choice--void {
+    border-color: var(--color-accent-brand);
+}
+
+.round-end-choice--void .round-end-choice-label {
+    color: var(--color-accent-brand);
+}
+
+/* The optional reason row belongs to "Do not score it", so it sits tucked
+   under it — indented, quieter, and skippable without a second thought. */
+.round-end-reasons {
+    margin: calc(-1 * var(--space-xs, 4px)) 0 var(--space-md) 14px;
+}
+
+.round-end-reasons-label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--color-text-light);
+    font-size: var(--font-size-sm);
+}
+
+.round-end-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.round-end-chip {
+    padding: 5px 10px;
+    border: 1px solid var(--color-border-light);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+}
+
+.round-end-chip[aria-pressed="true"] {
+    border-color: var(--color-purple-primary);
+    background: rgba(139, 92, 246, 0.14);
+    color: var(--color-purple-secondary);
+    font-weight: 600;
+}
+
+/* #2503 — the encore offer on the reveal before the last round.
+   Cyan, not pink: the primary CTA on this screen is Next Round, and the
+   encore must read as the quieter of the two. Promoting it would push hosts
+   into an evening that never ends, which is the argument that lost option C
+   the gate. */
+.encore-offer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-xs, 6px);
+    margin: 0 auto var(--space-md, 16px);
+    max-width: 540px;
+    text-align: center;
+}
+
+.encore-badge {
+    align-self: center;
+    padding: 2px var(--space-sm, 8px);
+    border: 1px solid var(--color-accent-secondary, #00f5ff);
+    border-radius: var(--radius-sm, 8px);
+    color: var(--color-accent-secondary, #00f5ff);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.encore-hint {
+    margin: 0;
+    color: var(--color-text-secondary, rgba(255, 255, 255, 0.66));
+    font-size: 0.82rem;
+    line-height: 1.35;
+}
+
+/* #2503 — the one line under Rematch that says what it costs. Quiet: it is a
+   fact about the button above it, not a warning about a normal action. */
+.end-action-hint {
+    margin: calc(-1 * var(--space-xs, 6px)) 0 var(--space-sm, 8px);
+    color: var(--color-text-secondary, rgba(255, 255, 255, 0.66));
+    font-size: 0.82rem;
+    text-align: center;
+/* #2746 — a guest the host took out of the running game.
+   No skull and no red: nobody was eliminated, somebody left. The row keeps its
+   rank and its score, which is what makes the host's reach into the room
+   affordable — the next player is not promoted by a removal. */
+.leaderboard-entry.is-sat-out {
+    opacity: 0.55;
+}
+
+.sat-out-badge {
+    margin-left: var(--space-xs, 6px);
+    padding: 1px var(--space-xs, 6px);
+    border-radius: var(--radius-sm, 8px);
+    background: var(--bg-elevated, rgba(255, 255, 255, 0.08));
+    color: var(--color-text-secondary, rgba(255, 255, 255, 0.66));
+    font-size: 0.72rem;
+    white-space: nowrap;
+}
+
+/* The per-row control on the host's leaderboard. Quiet by default — it sits on
+   every guest row, and a row full of loud buttons reads as a warning. */
+.entry-host-action {
+    margin-left: var(--space-xs, 6px);
+    padding: 0 var(--space-xs, 6px);
+    border: 0;
+    border-radius: var(--radius-sm, 8px);
+    background: transparent;
+    color: var(--color-text-secondary, rgba(255, 255, 255, 0.66));
+    font-size: 1rem;
+    line-height: 1.6;
+    cursor: pointer;
+}
+
+.entry-host-action:hover,
+.entry-host-action:focus-visible {
+    background: var(--bg-elevated, rgba(255, 255, 255, 0.08));
+    color: var(--color-text-primary, #fff);
+}
+
+/* The way back, on the guest's own phone. */
+.rejoin-control {
+    margin-top: var(--space-md, 16px);
+    text-align: center;
+}
+
+.rejoin-pending {
+    margin: 0;
+    color: var(--color-text-secondary, rgba(255, 255, 255, 0.66));
+    font-size: 0.9rem;
+}
+
+/* #2559 Ghost League auf dem Spieler-Handy. Gedaempft und gestrichelt wie auf
+   dem Fernseher — dieselbe Aussage, dieselbe Optik: eigene Punkte, kein
+   Einfluss auf das Spiel. */
+.arc-chip--ghost {
+    border-color: var(--color-warning-alt, #ff6600);
+    color: var(--color-warning-alt, #ff6600);
+}
+
+.ghost-panel {
+    margin: var(--space-md, 16px) auto 0;
+    max-width: 420px;
+    padding: var(--space-sm, 10px) var(--space-md, 14px);
+    border: 1px dashed var(--color-border, rgba(255, 255, 255, 0.18));
+    border-radius: var(--radius-md, 12px);
+}
+
+.ghost-panel-head {
+    margin-bottom: 6px;
+    color: var(--color-text-secondary, rgba(255, 255, 255, 0.6));
+    font-size: 0.7rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.ghost-panel-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 3px 0;
+    color: var(--color-text-secondary, rgba(255, 255, 255, 0.7));
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.ghost-panel-row.is-me {
+    color: var(--color-warning-alt, #ff6600);
+    font-weight: 700;
 }

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import math
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
@@ -11,10 +12,8 @@ import pytest
 from custom_components.beatify.const import (
     DOMAIN,
     ERR_CANNOT_STEAL_SELF,
-    ERR_GAME_ALREADY_STARTED,
     ERR_GAME_ENDED,
     ERR_GAME_FULL,
-    ERR_GAME_NOT_STARTED,
     ERR_INVALID_ACTION,
     ERR_NAME_INVALID,
     ERR_NAME_TAKEN,
@@ -22,6 +21,9 @@ from custom_components.beatify.const import (
     ERR_NOT_IN_GAME,
     ERR_TARGET_NOT_SUBMITTED,
     MAX_PLAYERS,
+    MIN_PLAYERS,
+    REACTION_THROTTLE_SECONDS,
+    SUDDEN_DEATH_MIN_PLAYERS,
 )
 from custom_components.beatify.game.state import (
     GamePhase,
@@ -631,44 +633,6 @@ class TestAddPlayer:
 
 
 # ---------------------------------------------------------------------------
-# GameState.start_game
-# ---------------------------------------------------------------------------
-
-
-class TestStartGame:
-    def setup_method(self):
-        self.state = make_game_state()
-        _create_fresh_game(self.state)
-
-    def test_start_with_players(self):
-        self.state.add_player("Alice", MagicMock())
-        self.state.add_player("Bob", MagicMock())
-        ok, err = self.state.start_game()
-        assert ok is True
-        assert err is None
-        assert self.state.phase == GamePhase.PLAYING
-
-    def test_start_with_one_player_rejected(self):
-        self.state.add_player("Alice", MagicMock())
-        ok, err = self.state.start_game()
-        assert ok is False
-        assert err == ERR_GAME_NOT_STARTED
-
-    def test_start_with_no_players(self):
-        ok, err = self.state.start_game()
-        assert ok is False
-        assert err == ERR_GAME_NOT_STARTED
-
-    def test_double_start_rejected(self):
-        self.state.add_player("Alice", MagicMock())
-        self.state.add_player("Bob", MagicMock())
-        self.state.start_game()
-        ok, err = self.state.start_game()
-        assert ok is False
-        assert err == ERR_GAME_ALREADY_STARTED
-
-
-# ---------------------------------------------------------------------------
 # GameState.all_submitted
 # ---------------------------------------------------------------------------
 
@@ -857,27 +821,94 @@ class TestUseSteal:
 
 
 class TestRecordReaction:
+    """#2562: the reaction brake is a time throttle, not a per-phase budget.
+
+    Every case here drives the public ``record_reaction`` /
+    ``reaction_retry_after`` pair against an injected clock, so what is asserted
+    is when a reaction is accepted — not which attribute happens to hold the
+    bookkeeping.
+    """
+
     def setup_method(self):
-        self.state = make_game_state()
+        self.clock = 1000.0
+        self.state = make_game_state(time_fn=lambda: self.clock)
         _create_fresh_game(self.state)
         self.state.add_player("Alice", MagicMock())
+
+    def _advance(self, seconds):
+        self.clock += seconds
 
     def test_first_reaction_accepted(self):
         assert self.state.record_reaction("Alice", "🎉") is True
 
-    def test_second_reaction_from_same_player_rejected(self):
+    def test_burst_is_swallowed(self):
+        # A child hammering the bar: one lands, the rest do not.
+        assert self.state.record_reaction("Alice", "🎉") is True
+        for _ in range(20):
+            assert self.state.record_reaction("Alice", "😄") is False
+
+    def test_still_throttled_one_tick_before_the_interval(self):
         self.state.record_reaction("Alice", "🎉")
+        self._advance(REACTION_THROTTLE_SECONDS - 0.01)
         assert self.state.record_reaction("Alice", "😄") is False
 
-    def test_different_players_each_get_one(self):
+    def test_accepted_again_once_the_interval_has_passed(self):
+        self.state.record_reaction("Alice", "🎉")
+        self._advance(REACTION_THROTTLE_SECONDS)
+        assert self.state.record_reaction("Alice", "😄") is True
+
+    def test_spacing_holds_across_a_whole_round(self):
+        # 45 seconds of tapping once a second yields one reaction per interval,
+        # not 45 — the number the TV has to survive.
+        accepted = 0
+        for _ in range(45):
+            if self.state.record_reaction("Alice", "🎉"):
+                accepted += 1
+            self._advance(1.0)
+        assert accepted == math.ceil(45 / REACTION_THROTTLE_SECONDS)
+
+    def test_throttle_is_per_player(self):
         self.state.add_player("Bob", MagicMock())
         assert self.state.record_reaction("Alice", "🎉") is True
+        # Alice's cooldown must not silence Bob.
         assert self.state.record_reaction("Bob", "🎉") is True
+        assert self.state.record_reaction("Alice", "🎉") is False
+        assert self.state.record_reaction("Bob", "🎉") is False
 
-    def test_reset_between_phases(self):
+    def test_retry_after_counts_down(self):
+        assert self.state.reaction_retry_after("Alice") == 0.0
         self.state.record_reaction("Alice", "🎉")
-        # Simulate phase reset (happens in end_round)
-        self.state._player_registry._reactions_this_phase = set()
+        assert self.state.reaction_retry_after("Alice") == pytest.approx(
+            REACTION_THROTTLE_SECONDS
+        )
+        self._advance(3.0)
+        assert self.state.reaction_retry_after("Alice") == pytest.approx(
+            REACTION_THROTTLE_SECONDS - 3.0
+        )
+        self._advance(REACTION_THROTTLE_SECONDS)
+        assert self.state.reaction_retry_after("Alice") == 0.0
+
+    def test_retry_after_never_goes_negative(self):
+        self.state.record_reaction("Alice", "🎉")
+        self._advance(3600)
+        assert self.state.reaction_retry_after("Alice") == 0.0
+
+    def test_phase_change_does_not_lift_the_throttle(self):
+        # The old rule cleared the budget on REVEAL entry. #2562 keeps the
+        # cooldown running across the phase boundary on purpose: the reveal is
+        # exactly when everyone reacts at once.
+        self.state.record_reaction("Alice", "🎉")
+        self.state.phase = GamePhase.REVEAL
+        assert self.state.record_reaction("Alice", "🎉") is False
+        self._advance(REACTION_THROTTLE_SECONDS)
+        assert self.state.record_reaction("Alice", "🎉") is True
+
+    def test_leaving_the_game_drops_the_cooldown(self):
+        # A name freed by a leave must not hand its cooldown to the next
+        # player who takes it.
+        self.state.record_reaction("Alice", "🎉")
+        self.state.remove_player("Alice")
+        self.state.add_player("Alice", MagicMock())
         assert self.state.record_reaction("Alice", "🎉") is True
 
 
@@ -1260,7 +1291,6 @@ def _setup_playing_game(state: GameState) -> None:
     ws = MagicMock()
     state.add_player("Admin", ws)
     state.set_admin("Admin")
-    state.start_game()
     state.phase = GamePhase.PLAYING
     state.deadline = int(state._now() * 1000) + 30_000  # 30s remaining
 
@@ -1545,7 +1575,7 @@ class TestEndRoundResilience:
         _create_fresh_game(self.state)
         self.state.add_player("Alice", MagicMock())
         self.state.add_player("Bob", MagicMock())
-        self.state.start_game()
+        self.state.phase = GamePhase.PLAYING
         # Set up a current song so end_round has correct_year context.
         self.state.current_song = {
             "title": "Test Song",
@@ -1627,7 +1657,7 @@ class TestTimerExpiryNoSubmissions:
         _create_fresh_game(self.state)
         self.state.add_player("Alice", MagicMock())
         self.state.add_player("Bob", MagicMock())
-        self.state.start_game()
+        self.state.phase = GamePhase.PLAYING
         self.state.current_song = {
             "title": "Test Song",
             "artist": "Test Artist",
@@ -1930,12 +1960,14 @@ class TestStartRoundGhostRoundGuard:
     """
 
     def _setup(self) -> GameState:
+        # #2638: the speaker comes from the injected factory, so the round path
+        # picks up the mock on its own — no monkey-patching of
+        # _ensure_media_player_service to "keep our mock service".
         state = make_game_state()
         _create_fresh_game(state)
         state.add_player("Admin", MagicMock())
         state.add_player("Bob", MagicMock())
         state.set_admin("Admin")
-        state.start_game()  # LOBBY -> PLAYING (needs MIN_PLAYERS)
         state.phase = GamePhase.PLAYING
         # music_assistant platform skips the verify_responsive branch so the
         # only await before _initialize_round is play_song.
@@ -1943,7 +1975,6 @@ class TestStartRoundGhostRoundGuard:
         media = AsyncMock()
         media.is_available = MagicMock(return_value=True)
         state._media_player_service = media
-        state._ensure_media_player_service = MagicMock()  # keep our mock service
         return state
 
     @pytest.mark.asyncio
@@ -2138,7 +2169,6 @@ class TestMetadataCoroNoLeak:
         _create_fresh_game(state)
         state.add_player("Admin", MagicMock())
         state.set_admin("Admin")
-        state.start_game()
 
         # Force the intro-splash deferral path and a present media player.
         state._media_player_service = AsyncMock()
@@ -2166,7 +2196,6 @@ class TestEndGameSerializesWithRoundEnd:
         _create_fresh_game(state)
         state.add_player("Admin", MagicMock())
         state.set_admin("Admin")
-        state.start_game()
         state.phase = GamePhase.PLAYING
 
         order = []
@@ -2308,14 +2337,28 @@ class TestPauseSnapshotRace:
         assert state._previous_phase == GamePhase.PLAYING
 
 
+class _RecordingLights:
+    """A party-lights stub that records what ``start`` was handed."""
+
+    def __init__(self) -> None:
+        self.inherited = None
+
+    async def start(self, *args, **kwargs):
+        self.inherited = kwargs.get("inherited_states")
+
+
 class TestConfigurePartyLightsPreservesStates:
     """#1402 B2 finding 5: a reconfigure must carry the genuine pre-party light
-    states forward, not lose them by replacing the service outright."""
+    states forward, not lose them by replacing the service outright.
+
+    #2638: no ``hass`` and no patching of the concrete service — the game is
+    handed a party-lights factory and the test reads what it built.
+    """
 
     @pytest.mark.asyncio
     async def test_reconfigure_inherits_prior_saved_states(self):
-        state = make_game_state()
-        state._hass = MagicMock()
+        lights = _RecordingLights()
+        state = make_game_state(party_lights=lambda: lights)
 
         snap_calls = {"n": 0}
 
@@ -2326,46 +2369,29 @@ class TestConfigurePartyLightsPreservesStates:
 
         state._party_lights = PriorService()
 
-        captured = {}
-
-        class FakeService:
-            def __init__(self, hass):
-                self.hass = hass
-
-            async def start(self, *args, **kwargs):
-                captured["inherited"] = kwargs.get("inherited_states")
-
-        with patch(
-            "custom_components.beatify.services.lights.PartyLightsService",
-            FakeService,
-        ):
-            await state.configure_party_lights(["light.a"], "medium")
+        await state.configure_party_lights(["light.a"], "medium")
 
         assert snap_calls["n"] == 1
-        assert captured["inherited"] == {"light.a": {"state": "on", "brightness": 42}}
+        assert lights.inherited == {"light.a": {"state": "on", "brightness": 42}}
 
     @pytest.mark.asyncio
     async def test_first_configure_passes_no_inherited_states(self):
-        state = make_game_state()
-        state._hass = MagicMock()
+        lights = _RecordingLights()
+        state = make_game_state(party_lights=lambda: lights)
         state._party_lights = None
 
-        captured = {}
+        await state.configure_party_lights(["light.a"], "medium")
 
-        class FakeService:
-            def __init__(self, hass):
-                pass
+        assert lights.inherited is None
 
-            async def start(self, *args, **kwargs):
-                captured["inherited"] = kwargs.get("inherited_states")
+    @pytest.mark.asyncio
+    async def test_no_factory_means_no_party_lights(self):
+        """#2638: a game with no lights factory runs without lights."""
+        state = make_game_state()
 
-        with patch(
-            "custom_components.beatify.services.lights.PartyLightsService",
-            FakeService,
-        ):
-            await state.configure_party_lights(["light.a"], "medium")
+        await state.configure_party_lights(["light.a"], "medium")
 
-        assert captured["inherited"] is None
+        assert state._party_lights is None
 
 
 # ---------------------------------------------------------------------------
@@ -2549,10 +2575,10 @@ class TestSuddenDeathAutoEnd:
         state.get_player("Carol").eliminated = True
         state.round = 3
         state.phase = GamePhase.PLAYING
-        # Stub playback so start_round can proceed past the guard without media.
-        with patch.object(state, "_ensure_media_player_service"):
-            state._media_player_service = None
-            await state.start_round()
+        # #2638: no media-player factory is wired, so start_round proceeds past
+        # the guard with no speaker at all — nothing to stub.
+        assert state._media_player_service is None
+        await state.start_round()
         # The auto-end guard did not fire (phase is not END from the guard).
         assert state.phase != GamePhase.END
 
@@ -2653,8 +2679,107 @@ class TestSuddenDeathLiveToggle:
         assert state.get_player("Alice").eliminated is True
 
 
+class TestStartGameplayFloor:
+    """The minimum-player gate on the REST start path (#2717).
+
+    These four cases used to live in a ``TestStartGame`` class that drove
+    ``GameState.start_game()`` — a method no production path called. The gate
+    they were asserting was a third copy, with error codes (``(False,
+    ERR_GAME_NOT_STARTED)``) no client ever received. The floor a host actually
+    meets is this view's 409 ``NOT_ENOUGH_PLAYERS`` and the websocket handler's
+    error frame (covered in ``test_sabotage_start_path_2497.py``), so the cases
+    were repointed here rather than deleted.
+
+    ``start_round`` is stubbed for the same reason ``TestSuddenDeathStartFloor``
+    below stubs it: only the gate is under test, not the first-round machinery.
+    """
+
+    def _hass(self, state: GameState) -> MagicMock:
+        hass = MagicMock()
+        hass.data = {DOMAIN: {"game": state}}  # no ws_handler
+        return hass
+
+    @patch(
+        "custom_components.beatify.server.game_views.is_authorized_http",
+        return_value=True,
+    )
+    async def test_start_at_the_floor_is_allowed(self, _auth):
+        state = make_game_state()
+        _create_fresh_game(state)
+        for i in range(MIN_PLAYERS):
+            _add_live_player(state, f"P{i}")
+        state.start_round = AsyncMock(return_value=True)
+
+        resp = await StartGameplayView(self._hass(state)).post(MagicMock())
+
+        assert resp.status == 200
+        state.start_round.assert_awaited_once()
+
+    @patch(
+        "custom_components.beatify.server.game_views.is_authorized_http",
+        return_value=True,
+    )
+    async def test_one_short_of_the_floor_is_refused(self, _auth):
+        state = make_game_state()
+        _create_fresh_game(state)
+        for i in range(MIN_PLAYERS - 1):
+            _add_live_player(state, f"P{i}")
+        state.start_round = AsyncMock(return_value=True)
+
+        resp = await StartGameplayView(self._hass(state)).post(MagicMock())
+        body = json.loads(resp.body)
+
+        assert resp.status == 409
+        assert body["code"] == "NOT_ENOUGH_PLAYERS"
+        # The message names the floor, so raising MIN_PLAYERS cannot leave the
+        # host reading the old number (same guarantee as #2699's warning).
+        assert str(MIN_PLAYERS) in body["message"]
+        assert state.phase == GamePhase.LOBBY
+        state.start_round.assert_not_awaited()
+
+    @patch(
+        "custom_components.beatify.server.game_views.is_authorized_http",
+        return_value=True,
+    )
+    async def test_empty_lobby_is_refused(self, _auth):
+        state = make_game_state()
+        _create_fresh_game(state)
+        state.start_round = AsyncMock(return_value=True)
+
+        resp = await StartGameplayView(self._hass(state)).post(MagicMock())
+
+        assert resp.status == 409
+        assert json.loads(resp.body)["code"] == "NOT_ENOUGH_PLAYERS"
+        assert state.phase == GamePhase.LOBBY
+        state.start_round.assert_not_awaited()
+
+    @patch(
+        "custom_components.beatify.server.game_views.is_authorized_http",
+        return_value=True,
+    )
+    async def test_starting_an_already_started_game_is_refused(self, _auth):
+        """The double-start case: the phase gate fires before the floor."""
+        state = make_game_state()
+        _create_fresh_game(state)
+        for i in range(MIN_PLAYERS):
+            _add_live_player(state, f"P{i}")
+        state._set_phase(GamePhase.PLAYING)
+        state.start_round = AsyncMock(return_value=True)
+
+        resp = await StartGameplayView(self._hass(state)).post(MagicMock())
+
+        assert resp.status == 409
+        assert json.loads(resp.body)["code"] == "INVALID_PHASE"
+        state.start_round.assert_not_awaited()
+
+
 class TestSuddenDeathStartFloor:
-    """The >=3-connected-player floor enforced in StartGameplayView (#827)."""
+    """The connected-player floor enforced in StartGameplayView (#827).
+
+    #2699: the floor is ``SUDDEN_DEATH_MIN_PLAYERS`` in const.py, so the player
+    counts here are derived from it rather than typed out — moving the floor
+    should not turn these red for a reason that has nothing to do with them.
+    """
 
     def _hass(self, state: GameState) -> MagicMock:
         hass = MagicMock()
@@ -2666,11 +2791,11 @@ class TestSuddenDeathStartFloor:
         return_value=True,
     )
     async def test_below_floor_auto_disables_sudden_death(self, _auth):
-        """Starting gameplay with <3 connected players turns the mode off."""
+        """Starting gameplay one short of the floor turns the mode off."""
         state = make_game_state()
         _create_fresh_game(state, sudden_death_mode=True)  # phase = LOBBY
-        for n in ("Alice", "Bob"):  # only 2 connected
-            _add_live_player(state, n)
+        for i in range(SUDDEN_DEATH_MIN_PLAYERS - 1):  # one short
+            _add_live_player(state, f"P{i}")
         # Skip the real first-round machinery; we only assert the floor logic.
         state.start_round = AsyncMock(return_value=True)
 
@@ -2688,11 +2813,11 @@ class TestSuddenDeathStartFloor:
         return_value=True,
     )
     async def test_at_floor_keeps_sudden_death(self, _auth):
-        """With 3 connected players the mode survives the start, no warning."""
+        """Exactly at the floor the mode survives the start, no warning."""
         state = make_game_state()
         _create_fresh_game(state, sudden_death_mode=True)
-        for n in ("Alice", "Bob", "Carol"):  # exactly 3 connected
-            _add_live_player(state, n)
+        for i in range(SUDDEN_DEATH_MIN_PLAYERS):  # exactly at the floor
+            _add_live_player(state, f"P{i}")
         state.start_round = AsyncMock(return_value=True)
 
         view = StartGameplayView(self._hass(state))

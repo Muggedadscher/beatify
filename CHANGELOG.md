@@ -4,6 +4,66 @@ All notable changes to Beatify are documented here. For detailed release notes, 
 
 ## [Unreleased]
 
+## [4.7.0] - 2026-09-09
+
+Syncs **145 upstream commits** from `mholzi/beatify` main — up to and including
+their `4.6.0-rc1` ("Second Wind") candidate, and past their `4.5.0` ("Your
+Call") and `4.4.2`/`4.4.3` releases — onto the fork's 4.6.0 line. A large game
+release: six selectable game modes with a way into them, a host control drawer,
+Ghost League, Encore, rematch without re-scanning, per-guest language, plus
+five new Latin/Spanish playlists and a run of engine hardening. The fork's own
+Race mode (Title & Artist Live Race, 10/15s auto-advance) is carried forward
+unchanged.
+
+### Added
+- **Six finished game modes get a way in, led by a play style (#2692, #2759).**
+- **Ghost League — eliminated players keep guessing, in a league of their own
+  (#2559).** Scored per ghost round, with its own TV block and a Best-Ghost award.
+- **Encore — five more rounds, offered one round early (#2503),** without
+  touching any score; the offer is gone once the last round starts.
+- **A host control drawer on the phone (#2645, #2757):** pause with a reason for
+  the room (#2645), arm Sudden Death (#2723), take the party lights back (#2649),
+  read a guest's standing (#2718).
+- **Drop a round instead of scoring a broken song (#2646),** with a consequence
+  preview and an optional reason.
+- **Rematch with a different playlist without twenty people rescanning — the end
+  screen becomes the start screen (#2648).**
+- **Take a guest out of a running game, and let them come back (#2746).**
+- **In-round reactions for players who have already answered (#2562).**
+- **Each guest's phone speaks the guest's language (#2585);** the lobby announces
+  what game is coming as a generated sentence (#2647).
+
+### Fixed
+- **The speaker no longer plays on after the game ends (#2605),** the TV shows the
+  pause screen instead of freezing (#2617), and spectators in the finale are no
+  longer scored or allowed to guess (#2612).
+- **The setup wizard's picks reach the open lobby game it left running (#2769),**
+  and the YouTube backfill cursor wraps at the end of a playlist instead of
+  stalling (#2301).
+- **`End` ends the game and a phone rematch keeps its own socket (#2726);** the
+  podium survives the REST path (#2724).
+- **Health-check asks the ISRC and the claimed storefronts, not the display
+  title (#2787).**
+- Half-German/half-English lines on the start card, TV, end screen and reveal
+  (#2620, #2618, #2619, #2624), and 16 i18n keys missing from every locale
+  (#2582).
+
+### Changed
+- **The catalogue reached 66 playlists and 8,432 songs** — Deutschrap Klassiker,
+  Clásicos del Rock en Español, Rock Rioplatense, Vallenato Clásico and Música
+  Colombiana Alegre. Latin repertoire now needs three sources to agree on a year.
+- **One provider registry instead of fifteen hand-kept copies (#2713);** confetti
+  and the dashboard stylesheets are served from the box, not the internet (#2742).
+- **`MediaPlayerService` split one module per platform (#2636),** shared
+  constants get a single home (#2625, #2626, #2627, #2635, #2699, #2700), and the
+  CI matrix runs Python 3.14 (#2581).
+- **The lockfile is committed, CI switched to `npm ci`, and Dependabot added
+  (#2788).**
+
+### Removed
+- Dead facades, unused `hass.data` keys, stale sourcemaps and the third copy of
+  the start gate (#2629, #2715, #2716, #2717, #2714).
+
 ## [4.6.0] - 2026-09-02
 
 Syncs **60 upstream commits** from `mholzi/beatify` main — up to and including

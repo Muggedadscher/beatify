@@ -6,15 +6,19 @@ the **round-start / round-setup orchestration** cluster is pulled out of the
 ``game/state.py`` God-Object into this ``RoundLifecycleMixin``.
 
 The cluster is the "kick off the game and set up each new round" half of the
-class: the LOBBY→PLAYING start gate plus the full ``start_round`` orchestration
-(song selection, playback dispatch, metadata build, round-state commit). It is
-**behavior-preserving**: it carries the exact same methods that previously
-lived on ``GameState``, so its public API and every caller / test are
-unchanged.
+class: the full ``start_round`` orchestration (song selection, playback
+dispatch, metadata build, round-state commit) and its setup helpers.
 
-* ``start_game`` — the LOBBY→PLAYING start gate: validates the phase and the
-  minimum player count, then flips to PLAYING (#390 precursor). Called by the
-  admin ``start_game`` WebSocket / view handlers.
+#2717: there used to be a ``start_game`` here as well — a synchronous
+LOBBY→PLAYING flip with its own phase + minimum-player gate. Nothing in
+production ever called it (both start paths go straight to ``start_round``),
+and it could not be adopted either: ``start_round`` keys the sabotage grant and
+the crate-digger pre-start hook on ``self.phase == GamePhase.LOBBY``, so
+flipping to PLAYING first would silently skip both. It is gone; the phase flip
+belongs to ``_initialize_round`` and the start gate to the two handlers a host
+actually reaches (``ws_handlers/admin.admin_start_game`` and
+``server/game_views.StartGameplayView``).
+
 * ``start_round`` — the round-start orchestrator (#390): pulls the next
   playable song from the :class:`PlaylistManager`, skips/retries songs with no
   provider URI (capped at ``MAX_SONG_RETRIES``), dispatches playback through
@@ -22,11 +26,11 @@ unchanged.
   storefront skips vs. systemic playback failures per #808 / #949), builds the
   round metadata, commits the round state, flips the lights and fires the
   round-start TTS announcements (#471 / #841 / #842). The single entry point
-  every "advance to the next round" caller (``ws_handlers``, ``game_views``,
-  ``GameService``) hits.
-* ``_ensure_media_player_service`` — lazily constructs the
-  :class:`MediaPlayerService` on the first round (and wires analytics for
-  error recording, Story 19.1) so the service is only created once a media
+  every "advance to the next round" caller (``ws_handlers``, ``game_views``)
+  hits.
+* ``_ensure_media_player_service`` — lazily builds the media-player service on
+  the first round via the injected factory (#2638) and wires analytics for
+  error recording (Story 19.1), so the service is only created once a media
   player is configured.
 * ``_prepare_intro_round`` — thin pass-through to
   ``RoundManager.prepare_intro_round`` (intro-splash deferral decision).
@@ -53,15 +57,17 @@ The mixin relies on attributes / methods the host class owns and that live on
 ``self`` at runtime:
 
 * ``self.phase`` / ``self._set_phase`` — phase read + the single transition
-  chokepoint used by ``start_game`` / ``start_round`` / ``_initialize_round``.
-* ``self.players`` — minimum-player-count gate (``start_game``) and the
-  per-player round reset list passed to ``RoundManager.initialize_round``.
+  chokepoint used by ``start_round`` / ``_initialize_round``.
+* ``self.players`` — the sabotage-grant recipients and the per-player round
+  reset list passed to ``RoundManager.initialize_round``.
 * ``self._playlist_manager`` — next-song selection, remaining-count
   (``last_round``) and ``mark_played`` for skipped songs.
 * ``self.provider`` / ``self.storefront`` / ``self.platform`` /
   ``self.media_player`` — URI resolution and media-player dispatch context.
 * ``self._media_player_service`` / ``self._stats_service`` — lazily-built
   playback service + the analytics sink wired into it.
+* ``self._service_factories`` — the #2638 injection bundle; supplies the
+  media-player factory ``_ensure_media_player_service`` calls.
 * ``self._round_manager`` — the :class:`RoundManager` the intro/metadata/commit
   helpers delegate to; also supplies ``_timer_countdown`` / ``_on_round_end``
   callbacks.
@@ -85,8 +91,17 @@ The mixin relies on attributes / methods the host class owns and that live on
 
 It carries no state of its own. ``GamePhase`` is imported lazily inside the
 methods that need it (``# noqa: PLC0415``) to avoid a top-level circular import
-back into ``state.py``; ``MediaPlayerService`` is likewise imported lazily
-inside ``_ensure_media_player_service`` (matching the original).
+back into ``state.py``. The concrete ``MediaPlayerService`` is no longer
+imported here at all (#2638) — ``_ensure_media_player_service`` calls the
+injected factory, so the import graph stays acyclic without a lazy import.
+
+#2710: the post-announcement resume watchdog used to run here too — 215 lines
+of ``hass.states.get`` / ``hass.services.async_call("media_player", …)`` inside
+``_start_round_locked``, which is why "the game logic does not know Home
+Assistant exists" was false on every round with TTS enabled. The loop now lives
+on the media-player port (``resume_after_announcement``), next to every other
+way this game presses play; what stays here is the announcement budget, the
+"was this stopped on purpose" answer only the game can give, and the task.
 """
 
 from __future__ import annotations
@@ -95,12 +110,7 @@ import asyncio
 import contextlib
 import logging
 
-from custom_components.beatify.const import (
-    ERR_GAME_ALREADY_STARTED,
-    ERR_GAME_NOT_STARTED,
-    MAX_CONSECUTIVE_PLAYBACK_FAILURES,
-    MIN_PLAYERS,
-)
+from custom_components.beatify.const import MAX_CONSECUTIVE_PLAYBACK_FAILURES
 
 from .playlist import get_playback_uri, get_song_uri
 
@@ -110,41 +120,29 @@ _LOGGER = logging.getLogger(__name__)
 class RoundLifecycleMixin:
     """Round-start / round-setup behavior for :class:`GameState`.
 
-    Carries the LOBBY→PLAYING start gate plus the full ``start_round``
-    orchestration and its round-setup helpers (#1271 extraction). See the
-    module docstring for the full attribute / method contract this mixin
-    expects on ``self`` at runtime.
+    Carries the full ``start_round`` orchestration and its round-setup
+    helpers (#1271 extraction). See the module docstring for the full
+    attribute / method contract this mixin expects on ``self`` at runtime.
     """
 
-    def start_game(self) -> tuple[bool, str | None]:
+    def _grant_sabotage_tokens(self) -> None:
+        """Hand every player their single sabotage token (#1665).
+
+        Unlike the steal (unlocked by a streak), the sabotage token exists from
+        round 1 — a token you have to earn first would rarely be spent in a
+        short game. No-op when the setting is off, so default games are
+        unchanged, and idempotent, so being called twice cannot hand out two.
+
+        #2497: this used to live inline in a ``start_game()`` that no
+        production path called — both real start paths go straight to
+        ``start_round()``. The grant moved to the LOBBY transition there;
+        #2717 then deleted ``start_game()`` itself, so this method now has a
+        single caller and the drift it was factored out to prevent is gone.
         """
-        Start the game, transitioning from LOBBY to PLAYING.
-
-        Returns:
-            (success, error_code) - error_code is None on success
-
-        """
-        from .state import GamePhase
-
-        if self.phase != GamePhase.LOBBY:
-            return False, ERR_GAME_ALREADY_STARTED
-
-        if len(self.players) < MIN_PLAYERS:
-            return False, ERR_GAME_NOT_STARTED  # Need at least MIN_PLAYERS to play
-
-        self._set_phase(GamePhase.PLAYING)
-
-        # Issue #1665: hand every player their single sabotage token. Unlike the
-        # steal (unlocked by a streak), the sabotage token exists from round 1 —
-        # a token you have to earn first would rarely be spent in a short game.
-        # No-op when the setting is off, so default games are unchanged.
-        if self.sabotage_enabled:
-            for player in self.players.values():
-                player.unlock_sabotage()
-
-        # Round and song selection will be implemented in Epic 4
-        _LOGGER.info("Game started: %d players", len(self.players))
-        return True, None
+        if not self.sabotage_enabled:
+            return
+        for player in self.players.values():
+            player.unlock_sabotage()
 
     def _get_round_start_lock(self) -> asyncio.Lock:
         """Get (lazily creating) the #1697 round-start serialization lock.
@@ -227,6 +225,17 @@ class RoundLifecycleMixin:
         # that view entirely — hooking the view fixed one path and left the
         # other broken. Fires once; a hook failure must never block a game, so
         # the worst case is the room keeping its creation-time songs.
+        # #2497: the sabotage grant belongs to the LOBBY -> first-round
+        # transition, and this is the only place both start paths pass through.
+        # It used to sit in a start_game() that nothing in production called
+        # (#2717 deleted it): the websocket admin handler and the REST start
+        # view both call start_round() directly and the phase flip happens
+        # inside _initialize_round. Note that this guard and the pre-start hook
+        # below both read GamePhase.LOBBY — any caller that flipped the phase
+        # before start_round would skip the grant AND the crate-digger hook.
+        if self.phase == GamePhase.LOBBY and _retry_count == 0:
+            self._grant_sabotage_tokens()
+
         hook = getattr(self, "pre_start_hook", None)
         if hook is not None and self.phase == GamePhase.LOBBY and _retry_count == 0:
             self.pre_start_hook = None
@@ -307,6 +316,17 @@ class RoundLifecycleMixin:
         self.last_round = (
             self.total_rounds > 1 and self._playlist_manager.get_remaining_count() <= 1
         )
+        # #2503: the encore offer belongs to the reveal that preceded this
+        # round and to no other moment. Closing it here is what makes the
+        # finale final — the whole reason this option was chosen over a chip on
+        # the last reveal, which could be tapped again on each new last round.
+        self._encore_window = False
+        # #2746: parked returns come in HERE, at the round boundary, and
+        # nowhere else. A guest let back mid-round would be scored on a song
+        # they did not hear from the start, and the leaderboard would move for
+        # a reason the room cannot see. Their name goes into the round's
+        # returning list so the reveal can say one line about it.
+        self._returned_this_round = self.apply_pending_rejoins()
         self._ensure_media_player_service()
         will_defer_for_splash = self._prepare_intro_round(song)
 
@@ -381,9 +401,11 @@ class RoundLifecycleMixin:
                 # "error" / unset → systemic failure (speaker offline, MA
                 # provider broken). Count toward MAX_SONG_RETRIES so the
                 # recovery banner kicks in for real problems.
-                failure_reason = getattr(
-                    self._media_player_service, "last_failure_reason", None
-                )
+                # #2711: a plain read. The port declares this attribute, so
+                # a `getattr(..., None)` guard would only hide a fake that
+                # does not — by classifying its failures as "error" and
+                # quietly disabling the skip logic below.
+                failure_reason = self._media_player_service.last_failure_reason
                 self._playlist_manager.mark_played(get_playback_uri(song))
 
                 if failure_reason == "unavailable":
@@ -397,11 +419,19 @@ class RoundLifecycleMixin:
 
                 # #1936: a timeout is not proof of a broken system. Music
                 # Assistant's Apple Music provider rate-limits and then retries
-                # after its OWN backoff — measured at 15.7s, i.e. longer than
-                # the deadline we just gave it. Pausing the whole game on that
-                # first timeout ended the evening for a provider that was
-                # working, and handed the host a re-authenticate banner for a
-                # problem they did not have.
+                # on its OWN exponential backoff, which can outlast whatever
+                # deadline we gave it. Pausing the whole game on that first
+                # timeout ended the evening for a provider that was working,
+                # and handed the host a re-authenticate banner for a problem
+                # they did not have.
+                #
+                # #2682 moved the deadline out to 25s so a start throttled to
+                # MA's fifth retry (~23s) now lands instead of timing out, and
+                # made the log say which cause it was — `last_failure_reason`
+                # is "rate_limited" when a recent start was measurably slow,
+                # "error" when none was. Both count here, deliberately: past
+                # the fifth retry the next one is ~16s away, and skipping the
+                # song beats holding the room in silence for it.
                 #
                 # So the first failures skip the song, exactly like a
                 # storefront gap; only MAX_CONSECUTIVE_PLAYBACK_FAILURES in a
@@ -451,9 +481,9 @@ class RoundLifecycleMixin:
                 # defect and sends the next reader into the wrong provider.
                 # Falls back to the base field when no attempt was recorded
                 # (e.g. the song carried no playable URI at all).
-                attempted_uri = getattr(
-                    self._media_player_service, "last_attempted_uri", None
-                ) or song.get("uri")
+                attempted_uri = (
+                    self._media_player_service.last_attempted_uri or song.get("uri")
+                )
                 # #1927: name the speaker too. The pause banner used to explain
                 # *what* failed and *which provider* to re-authenticate, but
                 # never *where* it was playing — the whole reason a game running
@@ -564,25 +594,44 @@ class RoundLifecycleMixin:
         # fail to auto-resume afterwards — the player sits "paused" until a
         # human presses play. Verify playback shortly after the announcement
         # chain and press play on the device's behalf if needed.
-        if self._tts_service and self._hass and self.media_player:
+        #
+        # #2710: the watching itself is a conversation with one speaker, so it
+        # lives on the media-player port (``resume_after_announcement``) next
+        # to every other way this game presses play. What stays here is what
+        # only the game knows — how long the announcements still run, whether
+        # playback stopped on purpose, and who owns the task.
+        #
+        # The old `self._hass` in this condition went with the old body. It
+        # meant "we are running under Home Assistant, so there is a state
+        # machine to poll"; nothing below polls one any more, and keeping it
+        # would have left the whole path reachable only from a `hass` stub —
+        # which is the #2638 complaint this change exists to answer.
+        if self._tts_service and self.media_player:
             import asyncio as _asyncio
-
-            # Snapshot the level BEFORE announcements duck/restore it, so the
-            # watchdog below can undo an upward ratchet.
-            _vol_before = None
-            with contextlib.suppress(Exception):
-                _st0 = self._hass.states.get(self.media_player)
-                _v = _st0.attributes.get("volume_level") if _st0 else None
-                if isinstance(_v, (int, float)):
-                    _vol_before = float(_v)
 
             # The song is (or is about to be) audible: start the round clock
             # from here rather than from initialize_round, so players get the
             # full round duration of MUSIC.
+            # #2543: on an intro-splash round the clock belongs to
+            # confirm_intro_splash — the song has not played yet, so there is
+            # nothing to start here and the "clock started" log would lie.
             start_now = getattr(self._round_manager, "start_timer_at_playback", None)
-            if callable(start_now):
+            if callable(start_now) and not will_defer_for_splash:
                 with contextlib.suppress(Exception):
-                    start_now(self._timer_countdown)
+                    # #2546: hand the remaining announcement budget along. The
+                    # announce_* calls above queue their phrases (see
+                    # _tts_announce) instead of blocking until the speaker is
+                    # free, so "the song is audible" is not yet true when we get
+                    # here. announcement_busy_seconds() is what the queue itself
+                    # believes is left, and _tts_pre_round_delay is the user's
+                    # manual #1211 allowance for device overhead we cannot see.
+                    _extra = 0.0
+                    with contextlib.suppress(Exception):
+                        busy = getattr(self, "announcement_busy_seconds", None)
+                        if callable(busy):
+                            _extra += max(0.0, float(busy()))
+                    _extra += max(0.0, float(self._tts_pre_round_delay or 0.0))
+                    start_now(self._timer_countdown, _extra)
                     _LOGGER.info(
                         "Round %s: clock started at playback (%.0fs of music)",
                         getattr(self, "round", "?"),
@@ -594,152 +643,58 @@ class RoundLifecycleMixin:
                     with contextlib.suppress(Exception):
                         self._notify_state_callbacks()
 
-            _LOGGER.info("TTS resume watchdog armed for %s", self.media_player)
+            # How long the speaker is still expected to be busy announcing.
+            # The TTS queue's own reservation, capped: the watchdog waits it
+            # out and then kicks immediately, rather than spending three more
+            # seconds confirming a hang we already expect.
+            lead = 0.0
+            _busy = getattr(self, "announcement_busy_seconds", None)
+            if callable(_busy):
+                with contextlib.suppress(Exception):
+                    lead = min(float(_busy()), 15.0)
 
-            async def _resume_watchdog() -> None:
-                # v0.7.22 — triggers verified on hardware via the narrating
-                # build:
-                # * VA satellites stick in state='idle' after an announcement
-                #   (HA never reports 'paused' even while MA's UI shows the
-                #   paused track) -> sustained idle WITH a loaded title is
-                #   the kick signature.
-                # * 'playing' is healthy, full stop: media_position on MA
-                #   entities is a snapshot+timestamp, not a live counter, so
-                #   the old frozen-position stall heuristic false-positived
-                #   on a perfectly playing ShieldTV. Removed.
-                # v0.7.30 — ANTICIPATE instead of observe. Playback starts
-                # BEFORE the announcements are fired, so every announcement
-                # interrupts the song and the device has to resume. Waiting
-                # for 3 consecutive idle ticks to prove that meant a 3-4s
-                # silence after "…3, 2, 1, go" (reported). We now know how
-                # long the announcements should take, so: wait out that
-                # window, then kick IMMEDIATELY if the speaker isn't playing,
-                # instead of spending three more seconds confirming what we
-                # already expect.
-                kicks = 0
-                idle_streak = 0
-                vol_restored = False
-                lead = 0.0
-                _busy = getattr(self, "announcement_busy_seconds", None)
-                if callable(_busy):
-                    with contextlib.suppress(Exception):
-                        lead = min(float(_busy()), 15.0)
-                if lead > 0:
-                    await _asyncio.sleep(lead + 0.4)
-                    st0 = self._hass.states.get(self.media_player)
-                    if st0 is not None and st0.state in ("idle", "paused"):
-                        kicks += 1
-                        _LOGGER.info(
-                            "Resume watchdog: announcement window over, resuming "
-                            "immediately (state=%s)",
-                            st0.state,
-                        )
-                        with contextlib.suppress(Exception):
-                            await self._hass.services.async_call(
-                                "media_player",
-                                "media_play",
-                                {"entity_id": self.media_player},
-                                blocking=True,
-                            )
-                    elif st0 is not None and st0.state == "playing":
-                        # Device resumed on its own (ShieldTV behaviour) —
-                        # nothing to do, but keep polling as a safety net.
-                        pass
-                for tick in range(20):
-                    await _asyncio.sleep(1.0)
-                    st = self._hass.states.get(self.media_player)
-                    if st is None:
-                        _LOGGER.info("Resume watchdog: entity vanished — exit")
-                        return
-                    title = st.attributes.get("media_title")
+            def _watchdog_should_continue() -> bool:
+                """False once playback stopped on purpose (#2576).
+
+                Two *wanted* states are indistinguishable from a hang when you
+                only look at the speaker: the host taps "stop song"
+                (``media_stop`` leaves a Music Assistant player ``idle`` WITH a
+                title — exactly the stuck signature), and the game pauses
+                (``pause_game`` stops the speaker). Only the game can tell the
+                difference, so the port asks before every read.
+                """
+                from .state import GamePhase  # noqa: PLC0415 — Zirkelbezug
+
+                if self.phase != GamePhase.PLAYING or getattr(
+                    self, "song_stopped", False
+                ):
                     _LOGGER.info(
-                        "Resume watchdog[%02d]: state=%s title=%s",
-                        tick,
-                        st.state,
-                        title,
+                        "Resume watchdog: phase=%s song_stopped=%s — exit "
+                        "(playback stopped on purpose)",
+                        self.phase,
+                        getattr(self, "song_stopped", None),
                     )
+                    return False
+                return True
 
-                    # Volume ratchet guard. Music Assistant raises the volume
-                    # for an announcement and restores it afterwards; on a
-                    # ShieldTV feeding an AV receiver the restore wrote back a
-                    # HIGHER level each round, so the music grew painfully
-                    # loud within a few rounds. Beatify itself never changes
-                    # volume here, but it is the only component positioned to
-                    # notice — so undo an upward drift once per round, inside
-                    # the announcement window only, leaving the host's own
-                    # volume buttons alone for the rest of the round.
-                    if _vol_before is not None and not vol_restored and tick <= 10:
-                        cur = st.attributes.get("volume_level")
-                        if (
-                            isinstance(cur, (int, float))
-                            and float(cur) > _vol_before + 0.05
-                        ):
-                            vol_restored = True
-                            _LOGGER.warning(
-                                "Volume rose from %.2f to %.2f across the TTS "
-                                "announcement — restoring (announcement "
-                                "duck/restore ratchet)",
-                                _vol_before,
-                                float(cur),
-                            )
-                            with contextlib.suppress(Exception):
-                                await self._hass.services.async_call(
-                                    "media_player",
-                                    "volume_set",
-                                    {
-                                        "entity_id": self.media_player,
-                                        "volume_level": _vol_before,
-                                    },
-                                    blocking=True,
-                                )
-                    if st.state == "idle" and title:
-                        idle_streak += 1
-                    else:
-                        idle_streak = 0
-                    # 2 ticks, not 3: the anticipatory kick above handles the
-                    # normal case, so this fallback should react faster to the
-                    # cases it misses. Satellites flap idle<->playing for
-                    # SINGLE ticks during healthy playback, so 2 consecutive
-                    # remains the floor — and a spurious media_play on a
-                    # playing device is a no-op anyway.
-                    if st.state == "paused" or idle_streak >= 2:
-                        kicks += 1
-                        idle_streak = 0
-                        _LOGGER.warning(
-                            "Media player %s after TTS announcement — "
-                            "resuming playback (kick %d)",
-                            "paused" if st.state == "paused" else "idle-stuck",
-                            kicks,
-                        )
-                        try:
-                            await self._hass.services.async_call(
-                                "media_player",
-                                "media_play",
-                                {"entity_id": self.media_player},
-                                blocking=True,
-                            )
-                        except Exception as err:  # noqa: BLE001
-                            _LOGGER.warning(
-                                "Resume watchdog: media_play failed: %s", err
-                            )
-                            return
-                        if kicks >= 3:
-                            _LOGGER.info("Resume watchdog: 3 kicks — exit")
-                            return
-                    elif st.state == "off":
-                        _LOGGER.info("Resume watchdog: player off — exit")
-                        return
-                _LOGGER.info("Resume watchdog: 20s window elapsed — exit")
-
-            # Retain the task reference: asyncio's loop keeps only WEAK refs,
-            # so an unreferenced task can be garbage-collected before running.
-            prev = getattr(self, "_tts_resume_task", None)
-            if prev is not None and not prev.done():
-                prev.cancel()
-            self._tts_resume_task = _asyncio.create_task(_resume_watchdog())
-            self._tts_resume_task.add_done_callback(
-                lambda _t: setattr(self, "_tts_resume_task", None)
-            )
+            service = self._media_player_service
+            if service is not None:
+                _LOGGER.info("TTS resume watchdog armed for %s", self.media_player)
+                # Retain the task reference: asyncio's loop keeps only WEAK
+                # refs, so an unreferenced task can be garbage-collected before
+                # running.
+                prev = getattr(self, "_tts_resume_task", None)
+                if prev is not None and not prev.done():
+                    prev.cancel()
+                self._tts_resume_task = _asyncio.create_task(
+                    service.resume_after_announcement(
+                        lead_seconds=lead,
+                        should_continue=_watchdog_should_continue,
+                    )
+                )
+                self._tts_resume_task.add_done_callback(
+                    lambda _t: setattr(self, "_tts_resume_task", None)
+                )
 
         return True
 
@@ -792,23 +747,111 @@ class RoundLifecycleMixin:
                 _LOGGER.warning("start_round abort: stop playback failed: %s", err)
         return True
 
+    # ------------------------------------------------------------------
+    # Encore — five more rounds, asked one round early (#2503)
+    # ------------------------------------------------------------------
+
+    ENCORE_ROUNDS = 5
+
+    def encore_available(self) -> bool:
+        """True while the host may still add five rounds to THIS game (#2503).
+
+        The window is the reveal of the second-to-last round, and only that.
+        Four options were drawn for this; the one chosen moves the offer back
+        one round rather than putting it on the final reveal or on the end
+        screen. The reason is that a last round which can be revoked while it
+        is being revealed was never a last round — tap it again on the new
+        final round and the ending keeps receding. Asking one round early
+        leaves the actual finale undisturbed and still gives the host a whole
+        song to think during.
+
+        Three conditions, all of them:
+
+        * REVEAL — the standings are on screen and the room is between songs.
+        * ``_encore_window``, decided once on the way into this reveal and
+          cleared when the next round starts. It is a flag rather than a live
+          re-derivation because the first tap moves the finish line: "one song
+          left" stops being true the moment the host uses the offer, and a
+          re-derived condition would take the control away under their finger.
+          The drawn option annotates that a second tap makes it thirty, so the
+          offer has to survive its own use and die only when the round starts.
+          Set from the pool rather than from ``round >= total_rounds`` for the
+          same reason ``last_round`` is (#2421): a song dropped by a playback
+          failure is marked played without a round being committed, so the
+          counter falls behind reality while the pool does not.
+        * the reserve still holds songs. A game whose playlist ran out has
+          nothing to extend with, and offering five more rounds that cannot be
+          delivered is worse than offering nothing.
+        """
+        from .state import GamePhase
+
+        if self.phase is not GamePhase.REVEAL:
+            return False
+        if not getattr(self, "_encore_window", False):
+            return False
+        manager = getattr(self, "_playlist_manager", None)
+        return manager is not None and manager.reserve_count() > 0
+
+    def extend_rounds(self, count: int | None = None) -> int:
+        """Add up to ``count`` more rounds to the running game (#2503).
+
+        Returns the number of rounds actually added; 0 means the offer was not
+        open or the reserve could not cover a single round, and nothing was
+        touched.
+
+        The scores are not reset and are not recomputed — that is the whole
+        point of the feature, and it is why the control says so itself rather
+        than putting the promise in a confirmation dialog after the tap. The
+        issue assumed the cap threw the unplayed songs away; since #2547 it
+        does not, so an encore is a release from the reserve plus a raised cap,
+        not a new game.
+
+        Fewer than ``count`` songs in the reserve still counts as an encore:
+        three more rounds is a better answer to "play a bit longer" than a
+        refusal because the reserve was two short.
+        """
+        if not self.encore_available():
+            return 0
+        wanted = self.ENCORE_ROUNDS if count is None else count
+        if wanted <= 0:
+            return 0
+        released = self._playlist_manager.release_reserved_songs(
+            wanted, reason="Encore (#2503)"
+        )
+        if not released:
+            return 0
+        # The cap governs normal play, so it has to move with the pool —
+        # otherwise a later manager rebuild (a lobby option patch, a rematch)
+        # would sample the game straight back down to the old count.
+        self.max_rounds = self.max_rounds + released if self.max_rounds else 0
+        self.total_rounds = self._playlist_manager.get_total_count()
+        _LOGGER.info(
+            "Encore: +%d round(s) on the host's request, now %d total (#2503)",
+            released,
+            self.total_rounds,
+        )
+        return released
+
     def _ensure_media_player_service(self) -> None:
-        """Create MediaPlayerService lazily on first round.
+        """Create the media-player service lazily on first round.
 
         Idempotent: if the service was already built (e.g. by the #1540 LOBBY
         pre-warm — see :meth:`prewarm_media_player_service`), the
         ``not self._media_player_service`` guard makes this a no-op, so the
         round path keeps working unchanged whether or not the pre-warm ran.
+
+        #2638: the concrete class is no longer named here. The injected
+        ``media_player`` factory builds it; with no factory wired (a game-logic
+        unit test) the game simply has no speaker, which every caller of
+        ``self._media_player_service`` already guards for.
         """
-        # Lazy import: only the concrete class for instantiation; type hints
-        # use MediaPlayerProtocol (module-level) to keep the import graph acyclic.
-        from custom_components.beatify.services.media_player import (
-            MediaPlayerService,
-        )
+        factory = self._service_factories.media_player
+        if factory is None:
+            _LOGGER.debug("No media-player factory wired — playback unavailable")
+            return
 
         if self.media_player and not self._media_player_service:
-            self._media_player_service = MediaPlayerService(
-                self._hass,
+            self._media_player_service = factory(
                 self.media_player,
                 platform=self.platform,
                 provider=self.provider,

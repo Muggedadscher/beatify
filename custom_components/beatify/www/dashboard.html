@@ -40,12 +40,21 @@
     <!-- Preconnect for faster font loading (Story 9.8) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+    <!-- #2641: the font stylesheet is fetched non-blocking. A cross-origin
+         <link rel=stylesheet> in the head stops rendering until the CDN answers
+         or times out, and on party wifi with no working internet that is 5-30
+         seconds of blank screen before anything appears. media="print" makes
+         the browser fetch it at low priority without blocking the render; the
+         onload swap applies it the moment it arrives. The page is fully
+         readable in the fallback stack until then. -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;900&display=swap" rel="stylesheet"></noscript>
     <!-- Story 18.4: Use minified CSS in production -->
-    <link rel="stylesheet" href="/beatify/static/css/styles.css?v={{ASSET_VER}}">
+    <link rel="stylesheet" href="/beatify/static/css/styles.min.css?v={{ASSET_VER}}">
     <link rel="stylesheet" href="/beatify/static/css/dashboard.min.css?v={{ASSET_VER}}">
-    <!-- Confetti library for celebrations (Story 14.5) -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <!-- #2698: canvas-confetti no longer comes from jsdelivr. It moved to
+         /beatify/static/js/vendor/ and is loaded next to qrcode.min.js and
+         no-sleep.min.js at the end of the body — see the script block there. -->
     <!-- Wake-Lock banner styles (#1285, design option 2). Inline + self-contained
          so the dezenter Bottom-Banner ships with the directly-served HTML and
          introduces no dashboard.css / dashboard.min.css drift. Uses the same
@@ -283,9 +292,23 @@
                 <!-- Game settings indicator (top-right corner) -->
                 <div id="dashboard-game-settings" class="dashboard-game-settings"></div>
             </header>
+            <!-- #2647: the one sentence that says what game this is. Sits in the
+                 band between the header and the QR/players row, which was empty.
+                 Deliberately NOT a second column: #2556 built the "Scan to join"
+                 hint into the QR corner a week ago and that corner is left
+                 untouched. Filled by dashboard.js (renderLobbyView) via
+                 BeatifyUtils.renderLobbyBrief; hidden while there is nothing
+                 trustworthy to say. -->
+            <p id="dashboard-lobby-brief" class="dashboard-lobby-brief hidden" role="status"></p>
             <div class="dashboard-lobby-content">
                 <!-- QR Code Section (left) -->
                 <div class="lobby-qr-section">
+                    <!-- #2556: the QR code, the URL and the player count said
+                         nothing about what to DO with them. A first-time guest
+                         on the couch has no reason to know the code is the way
+                         into the game. Reuses the existing lobby.scanToJoin
+                         key, already translated in all five locales. -->
+                    <p class="dashboard-scan-hint" data-i18n="lobby.scanToJoin">Scan to join the game</p>
                     <div id="dashboard-qr-code" class="dashboard-qr-code">
                         <!-- QR code rendered here -->
                     </div>
@@ -325,6 +348,12 @@
                     <span data-i18n="game.ofLabel">of</span>
                     <strong id="dashboard-total-rounds">10</strong>
                 </div>
+                <!-- #2554: the host stopped the song on purpose. Without this
+                     the music simply cuts out while the timer runs on. -->
+                <span id="dashboard-song-stopped" class="chip-badge chip-badge--stopped hidden">
+                    <span class="chip-badge-icon" aria-hidden="true">⏹</span>
+                    <span data-i18n="game.songStoppedChip">Song stopped — keep guessing</span>
+                </span>
                 <div id="dashboard-submissions-meter" class="chip-meter" data-submissions="0/0">
                     <div class="chip-meter-fill" style="width:0%"></div>
                     <div class="chip-meter-label">
@@ -335,6 +364,14 @@
                 <!-- Issue #827: Sudden-Death FINAL banner (design S5-C) — shown by
                      dashboard.js when exactly 2 players remain in Sudden Death. -->
                 <div id="sd-final-banner-playing" class="sd-final-banner hidden"></div>
+                <!-- #2719: Finale ×2 is live this round. The phones have said so
+                     since #1725; the TV showed the doubled scores and nothing
+                     else, which reads as a scoring bug in the deciding round. -->
+                <div id="dashboard-finale-banner-playing" class="sd-final-banner sd-final-banner--finale hidden"></div>
+                <!-- #2722: the finale playoff round. The scoreboard says the game
+                     should have ended and another song starts anyway; this names
+                     the two who are still playing and why. -->
+                <div id="dashboard-playoff-banner-playing" class="sd-final-banner sd-final-banner--playoff hidden"></div>
             </div>
             <!-- Legacy round-stats block — hidden via CSS but JS still writes to IDs -->
             <div id="dashboard-round-stats" class="dashboard-round-stats" aria-hidden="true">
@@ -368,6 +405,22 @@
                     <h2 class="leaderboard-title" data-i18n="leaderboard.title">Leaderboard</h2>
                     <div id="dashboard-leaderboard" class="dashboard-leaderboard">
                         <!-- Leaderboard entries rendered by JS -->
+                    </div>
+
+                    <!-- #2559 Ghost League: die zweite Tabelle, unter den
+                         Lebenden und optisch abgesetzt (gestrichelt, gedaempft).
+                         Die Beschriftung sagt ausdruecklich, dass diese Punkte
+                         das Spiel nicht beruehren — zwei Tabellen auf einem
+                         Fernseher sind die bekannte Schwaeche der gewaehlten
+                         Variante, und die Zeile ist die Antwort darauf.
+                         JS blendet den Block aus, solange niemand als Geist
+                         geraten hat. -->
+                    <div id="ghost-league-playing" class="ghost-league hidden">
+                        <div class="ghost-league-head">
+                            <span data-i18n="superlatives.ghostLeague">Ghost League</span>
+                            <span class="ghost-league-note" data-i18n="superlatives.ghostLeagueNote">own points, no effect on the game</span>
+                        </div>
+                        <div class="ghost-league-rows"></div>
                     </div>
                 </div>
             </div>
@@ -405,6 +458,26 @@
                 <!-- Issue #827: Sudden-Death FINAL banner (design S5-C) — shown by
                      dashboard.js when exactly 2 players remain in Sudden Death. -->
                 <div id="sd-final-banner-reveal" class="sd-final-banner hidden"></div>
+                <!-- #2703: the round stalled — nobody guessed, playback stopped and
+                     the game holds here until the host advances. The countdown ring
+                     above hides itself in that case (#1185), which left the TV with
+                     a reveal and no explanation while every phone had one (#2622).
+                     The TV is always an observer, so it reads the guest sentence. -->
+                <div id="dashboard-idle-halt" class="sd-final-banner sd-final-banner--idle hidden">
+                    <span aria-hidden="true">⏸</span>
+                    <span id="dashboard-idle-halt-text" data-i18n="reveal.idleHaltBannerGuest">Game idle — no one played this round. The host will start the next round.</span>
+                </div>
+                <!-- #2646: the host dropped this round. The TV is the one
+                     screen the whole room is looking at, so it is where "this
+                     does not count" has to be said. -->
+                <div id="dashboard-round-voided" class="sd-final-banner sd-final-banner--idle hidden">
+                    <span aria-hidden="true">🚫</span>
+                    <span data-i18n="reveal.roundVoidedBanner">This round does not count — no points, no broken streaks.</span>
+                </div>
+                <!-- #2719 / #2722: mirrors of the PLAYING banners so the finale
+                     stays explained while the scores are being read out. -->
+                <div id="dashboard-finale-banner-reveal" class="sd-final-banner sd-final-banner--finale hidden"></div>
+                <div id="dashboard-playoff-banner-reveal" class="sd-final-banner sd-final-banner--playoff hidden"></div>
             </div>
 
             <!-- "Broadcast Lower-Third" reveal (design-shotgun C): upper stage
@@ -429,19 +502,41 @@
                             <div id="song-difficulty" class="song-difficulty hidden"></div>
                             <!-- Year-mode artist-challenge result (🎤 who guessed the artist) -->
                             <div id="reveal-artist-challenge" class="reveal-artist-challenge hidden"></div>
+                            <!-- #2720: movie-quiz result (🎬 who named the film). The
+                                 quiz is on by default and the server has always sent
+                                 the winner; only the phone rendered it, so the round's
+                                 point happened on one guest's screen. -->
+                            <div id="reveal-movie-challenge" class="reveal-artist-challenge reveal-movie-challenge hidden"></div>
                         </div>
                     </div>
 
-                    <!-- Standings card (top-right) -->
-                    <div class="reveal-standings-card">
+                    <!-- Standings card (top-right). #2702 beat three. -->
+                    <div class="reveal-standings-card" data-stage="3">
                         <h2 class="leaderboard-title" data-i18n="leaderboard.standings">Standings</h2>
                         <div id="reveal-leaderboard" class="dashboard-leaderboard">
                             <!-- Leaderboard entries rendered by JS -->
                         </div>
+
+                        <!-- #2559 Ghost League: die zweite Tabelle, unter den
+                             Lebenden und optisch abgesetzt (gestrichelt, gedaempft).
+                             Die Beschriftung sagt ausdruecklich, dass diese Punkte
+                             das Spiel nicht beruehren — zwei Tabellen auf einem
+                             Fernseher sind die bekannte Schwaeche der gewaehlten
+                             Variante, und die Zeile ist die Antwort darauf.
+                             JS blendet den Block aus, solange niemand als Geist
+                             geraten hat. -->
+                        <div id="ghost-league-reveal" class="ghost-league hidden">
+                            <div class="ghost-league-head">
+                                <span data-i18n="superlatives.ghostLeague">Ghost League</span>
+                                <span class="ghost-league-note" data-i18n="superlatives.ghostLeagueNote">own points, no effect on the game</span>
+                            </div>
+                            <div class="ghost-league-rows"></div>
+                        </div>
                     </div>
 
-                    <!-- This round: per-player results + (TA board) + fun fact -->
-                    <div class="reveal-results">
+                    <!-- This round: per-player results + (TA board) + fun fact.
+                         #2702 beat two: who got it right. -->
+                    <div class="reveal-results" data-stage="2">
                         <h2 class="top-guesses-title" data-i18n="dashboard.topGuesses">Top Guesses This Round</h2>
                         <div id="reveal-top-guesses-list" class="top-guesses-list">
                             <!-- Top guesses rendered by JS -->
@@ -526,7 +621,7 @@
                                 <div class="podium-info">
                                     <div class="podium-avatar" id="end-podium-2-avatar" aria-hidden="true"></div>
                                     <div class="podium-name" id="end-podium-2-name">---</div>
-                                    <div class="podium-score"><span id="end-podium-2-score">0</span><span class="podium-pts">PTS</span></div>
+                                    <div class="podium-score"><span id="end-podium-2-score">0</span><span class="podium-pts" data-i18n="reveal.pointsShort">PTS</span></div>
                                 </div>
                                 <div class="podium-stand">
                                     <span class="podium-medal">🥈</span>
@@ -538,7 +633,7 @@
                                     <div class="podium-crown" aria-hidden="true">👑</div>
                                     <div class="podium-avatar" id="end-podium-1-avatar" aria-hidden="true"></div>
                                     <div class="podium-name" id="end-podium-1-name">---</div>
-                                    <div class="podium-score"><span id="end-podium-1-score">0</span><span class="podium-pts">PTS</span></div>
+                                    <div class="podium-score"><span id="end-podium-1-score">0</span><span class="podium-pts" data-i18n="reveal.pointsShort">PTS</span></div>
                                 </div>
                                 <div class="podium-stand">
                                     <span class="podium-medal">🥇</span>
@@ -549,7 +644,7 @@
                                 <div class="podium-info">
                                     <div class="podium-avatar" id="end-podium-3-avatar" aria-hidden="true"></div>
                                     <div class="podium-name" id="end-podium-3-name">---</div>
-                                    <div class="podium-score"><span id="end-podium-3-score">0</span><span class="podium-pts">PTS</span></div>
+                                    <div class="podium-score"><span id="end-podium-3-score">0</span><span class="podium-pts" data-i18n="reveal.pointsShort">PTS</span></div>
                                 </div>
                                 <div class="podium-stand">
                                     <span class="podium-medal">🥉</span>
@@ -581,9 +676,23 @@
         <!-- Paused view -->
         <div id="dashboard-paused" class="dashboard-view hidden">
             <div class="dashboard-centered">
-                <div class="paused-icon">||</div>
-                <h1 data-i18n="game.paused">Game Paused</h1>
-                <p class="dashboard-message" data-i18n="game.waitingForHost">Waiting for host to reconnect...</p>
+                <!-- #2552: was the literal string "||", which renders as two
+                     pipes in the page font rather than a pause glyph.
+                     #2645: on a pause the host set, this is the announcement's
+                     emoji instead — 🍕 for the pizza that just arrived. -->
+                <div id="dashboard-pause-icon" class="paused-icon" aria-hidden="true">⏸</div>
+                <!-- #2645: written by dashboard.js. On a host pause the
+                     hierarchy inverts — the *reason* is the headline and the
+                     word "Pause" moves to the small line below it, because
+                     "why" is the question twenty people in a living room are
+                     actually asking. No data-i18n: a later translation pass
+                     would put the generic heading back over the announcement. -->
+                <h1 id="dashboard-pause-title">Game Paused</h1>
+                <p id="dashboard-pause-state" class="dashboard-pause-state hidden"></p>
+                <!-- #2552: the text follows pause_reason (dashboard.js). It used
+                     to always say the host had disconnected — in front of a room
+                     where the host was standing next to the TV. -->
+                <p id="dashboard-pause-message" class="dashboard-message" data-i18n="game.waitingForHost">Waiting for host to reconnect...</p>
             </div>
         </div>
     </main>
@@ -628,6 +737,17 @@
         <div class="sd-out__name"><span class="sd-out__skull">💀</span><span id="sd-out-name"></span></div>
     </div>
 
+    <!-- #2721: the halftime takeover. The Comeback Token falls once per game,
+         to a group, at the midpoint — the shape of a game beat, not of a badge.
+         Until now the room heard "Anna unlocked steal" about a player who had
+         got nothing right, which reads as a broken streak counter. -->
+    <div id="comeback-overlay" class="comeback-overlay">
+        <div class="comeback__kicker" id="comeback-round"></div>
+        <div class="comeback__word" id="comeback-word">HALFTIME</div>
+        <div class="comeback__line" id="comeback-line"></div>
+        <div class="comeback__names" id="comeback-names"></div>
+    </div>
+
     <script src="/beatify/static/js/vendor/qrcode.min.js?v={{ASSET_VER}}"></script>
     <!-- Story 18.4: Use minified JS in production with fallback to source -->
     <!-- Version query strings prevent browser caching issues -->
@@ -637,6 +757,19 @@
          loaded before dashboard.min.js so window.NoSleep is available when
          requestWakeLock() runs on dashboard init. -->
     <script src="/beatify/static/js/vendor/no-sleep.min.js?v={{ASSET_VER}}"></script>
+    <!-- canvas-confetti for celebrations (Story 14.5), vendored in #2698.
+         It used to hang off cdn.jsdelivr.net: the one runtime dependency
+         fetched from someone else's server, with no integrity= to check it
+         against — and no way to add one, because jsDelivr generates that
+         `.min.js` on the fly and says so in the file's own header. Local also
+         means the service worker precaches it (sw.js), so on party wifi with
+         no working internet confetti is simply there instead of waiting out a
+         CDN timeout. #2641's `async` is no longer needed or wanted: this is a
+         same-origin file next to the other vendored libraries, and a plain
+         script here runs before the deferred module bundle, so window.confetti
+         exists by the time any call site looks for it. The guards in
+         player-utils.js and dashboard.js stay as they are. -->
+    <script src="/beatify/static/js/vendor/confetti.browser.js?v={{ASSET_VER}}"></script>
     <script src="/beatify/static/js/dashboard.min.js?v={{ASSET_VER}}"></script>
     <!-- v3.2.1 Arcade shims: submission meter fill, album ring progress, reveal round mirror.
          Pure view-layer helpers — no state, no API calls. Safe to remove if dashboard.js
@@ -706,5 +839,19 @@
         mirror('dashboard-total-rounds', 'reveal-total-num');
     })();
     </script>
+    <!-- #2504: the way in stays visible while the game runs. The server admits
+         latecomers throughout LOBBY, PLAYING and REVEAL (server/serializers.py
+         can_join), but the code left the TV the moment round one started, so the
+         host had to hand their own phone around. Sits in the corner, outside the
+         zone that holds artwork, timer and player chips, and hides itself on a
+         deterministic rule rather than a judgement call — see renderJoinCorner. -->
+    <aside id="dashboard-join-corner" class="join-corner hidden" aria-hidden="true">
+        <div id="join-corner-qr" class="join-corner__qr"></div>
+        <div class="join-corner__text">
+            <p class="join-corner__badge" data-i18n="dashboard.stillOpen">Still open</p>
+            <p id="join-corner-url" class="join-corner__url"></p>
+        </div>
+        <p class="join-corner__hint" data-i18n="lobby.scanToJoin">Scan to join the game</p>
+    </aside>
 </body>
 </html>

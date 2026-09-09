@@ -2,10 +2,18 @@
 
 from __future__ import annotations
 
-from unittest.mock import MagicMock
+import json
+from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import AsyncMock, MagicMock, patch
 
+import pytest
+
+from custom_components.beatify.const import DOMAIN
 from custom_components.beatify.game.player import PlayerSession
+from custom_components.beatify.game.protocols import GameOutputFactories
 from custom_components.beatify.game.state import GameState
+from custom_components.beatify.server.views import StartGameView
 
 
 def make_player(name: str = "Alice", score: int = 0, **kwargs) -> PlayerSession:
@@ -13,9 +21,29 @@ def make_player(name: str = "Alice", score: int = 0, **kwargs) -> PlayerSession:
     return PlayerSession(name=name, ws=MagicMock(), score=score, **kwargs)
 
 
-def make_game_state(time_fn=None) -> GameState:
-    """Create a fresh GameState (optionally with injected time function)."""
-    return GameState(time_fn=time_fn)
+def make_game_state(
+    time_fn=None,
+    *,
+    media_player=None,
+    party_lights=None,
+    tts=None,
+) -> GameState:
+    """Create a fresh GameState with no Home Assistant behind it (#2638).
+
+    The game logic needs none: with no factories the media player, party
+    lights and TTS announcer are simply absent, which every caller of them
+    already guards for. A test that exercises one of those outputs passes a
+    fake factory for that one output — a callable returning a stub — instead
+    of mocking ``hass`` and patching the concrete service class.
+    """
+    return GameState(
+        time_fn=time_fn,
+        service_factories=GameOutputFactories(
+            media_player=media_player,
+            party_lights=party_lights,
+            tts=tts,
+        ),
+    )
 
 
 def make_songs(n: int = 5) -> list[dict]:
@@ -30,3 +58,108 @@ def make_songs(n: int = 5) -> list[dict]:
         }
         for i in range(n)
     ]
+
+
+# ---------------------------------------------------------------------------
+# start-game harness (#2530): moved here from test_start_game_view.py so more
+# than one module can drive a real create_game. Importing a fixture across test
+# modules works but reads as a redefinition to the linter, and the repo's own
+# convention for shared test scaffolding is conftest (see make_game_state /
+# make_songs in tests/conftest.py). Behaviour is unchanged.
+# ---------------------------------------------------------------------------
+VALID_START_GAME_PLAYLIST = json.dumps(
+    {
+        "songs": [
+            {
+                "year": 1985,
+                "title": "Song One",
+                "artist": "Artist One",
+                "uri": "spotify:track:0000000000000000000001",
+            },
+            {
+                "year": 1990,
+                "title": "Song Two",
+                "artist": "Artist Two",
+                "uri": "spotify:track:0000000000000000000002",
+            },
+        ]
+    }
+)
+
+
+def make_start_game_request(hass: MagicMock, body: dict) -> MagicMock:
+    """Build a mock request returning ``body`` from ``.json()`` (#1180)."""
+    request = MagicMock()
+    request.remote = "1.2.3.4"
+    request.json = AsyncMock(return_value=body)
+    request.url = SimpleNamespace(scheme="http", host="localhost", port=8123)
+    return request
+
+
+def write_start_game_playlist(tmp_path: Path) -> Path:
+    """Put ``test.json`` on disk under a real playlist directory.
+
+    #2648: the create-game loader moved into ``game/playlist.py`` and resolves
+    its directory through ``get_playlist_directory``, so a ``Path`` patched on
+    the view module no longer reaches it. Rather than chase the patch into a
+    module that also uses ``Path`` for discovery, these fixtures now hand the
+    code a real directory with a real playlist in it — which is also what the
+    memoised discovery walk expects to find.
+    """
+    playlist_dir = tmp_path / "beatify" / "playlists"
+    playlist_dir.mkdir(parents=True, exist_ok=True)
+    (playlist_dir / "test.json").write_text(VALID_START_GAME_PLAYLIST, encoding="utf-8")
+    return playlist_dir
+
+
+@pytest.fixture
+def start_game_env(tmp_path):
+    """A StartGameView + real GameState + a valid playlist on disk.
+
+    Returns ``(view, hass, body)`` where the body is a minimal-but-complete
+    start-game payload. Platform capabilities are mocked so ``create_game``
+    runs and writes the body flags onto the real ``GameState`` stored in
+    ``hass.data[DOMAIN]["game"]``.
+    """
+    game_state = GameState()
+    hass = MagicMock()
+    hass.data = {DOMAIN: {"game": game_state}}
+
+    # Media player entity exists and is available.
+    media_state = MagicMock()
+    media_state.state = "playing"
+    hass.states.get.return_value = media_state
+
+    hass.config.path.return_value = str(write_start_game_playlist(tmp_path))
+
+    # Kept for the cache-miss fallback path; discovery normally serves the
+    # parse and this is never awaited.
+    async def _executor(func, *args):
+        return VALID_START_GAME_PLAYLIST
+
+    hass.async_add_executor_job = AsyncMock(side_effect=_executor)
+
+    body = {
+        "playlists": ["test.json"],
+        "media_player": "media_player.test",
+    }
+
+    with (
+        patch(
+            "custom_components.beatify.server.game_views.is_authorized_http",
+            new=MagicMock(return_value=True),
+        ),
+        patch(
+            "custom_components.beatify.server.game_views.er.async_get"
+        ) as mock_async_get,
+        patch(
+            "custom_components.beatify.server.game_views.get_platform_capabilities",
+            return_value={"supported": True},
+        ),
+    ):
+        entity_entry = MagicMock()
+        entity_entry.platform = "music_assistant"
+        mock_async_get.return_value.async_get.return_value = entity_entry
+
+        view = StartGameView(hass)
+        yield view, hass, body

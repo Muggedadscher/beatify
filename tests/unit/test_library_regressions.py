@@ -150,11 +150,6 @@ class TestAnnouncementsAndPlayback:
             "game/state_lifecycle.py"
         )
 
-    def test_resume_watchdog_triggers_on_idle_not_only_paused(self):
-        """MA voice satellites stick in 'idle' with a title loaded; HA never
-        reports 'paused' for them."""
-        assert "idle_streak >= 2" in src("game/state_lifecycle.py")
-
     def test_announcement_is_not_mistaken_for_a_song_ending(self):
         """With auto-advance "Off" (= advance at song end), an announcement
         interruption read as a finished song and skipped the round."""
@@ -165,19 +160,31 @@ class TestAnnouncementsAndPlayback:
     def test_each_round_replaces_the_playback_queue(self):
         """Without enqueue=replace, rounds accumulated in MA's queue and a
         post-announcement resume advanced into earlier rounds' songs."""
-        assert '"enqueue": "replace"' in src("services/media_player.py")
+        assert '"enqueue": "replace"' in src("services/playback/music_assistant.py")
 
 
 class TestPlaybackWiring:
     def test_library_uri_field_survives_rebases(self):
         """This branch has been silently dropped by a rebase before; without
-        it every library game resolves no URIs at all."""
-        code = src("game/playlist.py")
-        assert "uri_ma_library" in code
-        assert "PROVIDER_MA_LIBRARY" in code
+        it every library game resolves no URIs at all.
+
+        #2713 moved the branch into the provider registry, so this asks the
+        resolver for an answer instead of grepping for the field name — the
+        same regression, caught one step closer to the symptom.
+        """
+        from custom_components.beatify.game.playlist import get_song_uri
+
+        assert (
+            get_song_uri({"uri_ma_library": "library://track/42"}, "ma_library")
+            == "library://track/42"
+        )
 
     def test_library_provider_is_declared_playable(self):
-        assert '"ma_library"' in src("services/media_player.py")
+        from custom_components.beatify.services.media_player import (
+            get_platform_capabilities,
+        )
+
+        assert get_platform_capabilities("music_assistant")["ma_library"] is True
 
     def test_stale_uris_fall_back_to_a_name_lookup(self):
         """Library item ids change when a library is rebuilt.
@@ -187,10 +194,12 @@ class TestPlaybackWiring:
         asserts on the guard that actually decides whether the fallback runs
         instead of on the wording of a log message.
         """
-        code = src("services/media_player.py")
-        assert "_NAME_FALLBACK_PROVIDERS" in code
-        assert '"ma_library"' in code
-        assert "MA name fallback" in code
+        from custom_components.beatify.services.playback.music_assistant import (
+            _NAME_FALLBACK_PROVIDERS,
+        )
+
+        assert "ma_library" in _NAME_FALLBACK_PROVIDERS
+        assert "MA name fallback" in src("services/playback/music_assistant.py")
 
 
 class TestWizardIntegration:
@@ -206,9 +215,18 @@ class TestWizardIntegration:
 
     def test_provider_entry_explains_what_it_plays(self):
         """ "Crate Digger" alone doesn't tell a new host that this is their
-        own library."""
-        code = src("www/js/wizard.js")
-        assert "wizard.providerLibrarySub" in code
+        own library.
+
+        #2713 moved the chip list into the provider registry, so the second
+        line is asserted where it is now declared — and in the generated mirror
+        the wizard actually reads.
+        """
+        from custom_components.beatify.providers import PROVIDERS_BY_ID
+
+        spec = PROVIDERS_BY_ID["ma_library"]
+        assert spec.sub_key == "wizard.providerLibrarySub"
+        assert spec.sub
+        assert "wizard.providerLibrarySub" in src("www/js/providers.generated.js")
         assert "wiz-provider-sub" in src("www/css/library.css")
 
 
@@ -268,11 +286,18 @@ class TestSetupCompleteness:
         )
 
     def test_client_fallback_matches_the_server_rule(self):
-        code = src("www/js/admin.js")
         # Source syntax, checked in the SOURCE file — variable names do not
         # survive minification, so bundle checks use string constants only.
-        assert "(s.provider || s.selectedProvider) === 'ma_library'" in code
-        assert "libraryPlaylistLabel" in code
+        #
+        # The two halves live in two modules since #2620: admin.js reads the
+        # provider out of the stored settings blob, and admin/util.js
+        # (buildHomeMeta) turns that into the label. What the host actually
+        # ends up reading is asserted in
+        # www/js/__tests__/home-status-line-i18n-2620.test.js.
+        assert "(s.provider || s.selectedProvider) === 'ma_library'" in src(
+            "www/js/admin.js"
+        )
+        assert "libraryPlaylistLabel" in src("www/js/admin/util.js")
 
 
 class TestCreateGameAcceptsAGeneratingProvider:
@@ -333,7 +358,10 @@ class TestProviderIsAccepted:
     def test_players_advertise_library_support(self):
         """The wizard greys out providers a speaker can't play; without this
         flag Crate Digger would be offered on speakers that cannot serve it."""
-        assert '"supports_ma_library"' in src("services/media_player.py")
+        from custom_components.beatify.providers import supports_keys
+
+        assert supports_keys("music_assistant")["supports_ma_library"] is True
+        assert supports_keys("sonos")["supports_ma_library"] is False
 
 
 class TestRoundClockStartsWithTheMusic:
@@ -369,18 +397,12 @@ class TestRoundClockStartsWithTheMusic:
         assert "_notify_state_callbacks()" in src("game/state_lifecycle.py")
 
 
-class TestVolumeRatchetGuard:
-    def test_an_upward_drift_across_an_announcement_is_undone(self):
-        """MA's announce duck/restore wrote back a HIGHER level each round on
-        a ShieldTV feeding an AV receiver — painfully loud within a few
-        rounds."""
-        code = src("game/state_lifecycle.py")
-        assert "_vol_before" in code and "volume_set" in code
-
-    def test_the_guard_fires_once_and_only_during_the_announcement_window(self):
-        """The host's own volume buttons must keep working."""
-        code = src("game/state_lifecycle.py")
-        assert "not vol_restored" in code and "tick <= 10" in code
+# The resume watchdog's own guards — idle-streak detection and the volume
+# ratchet — used to be checked here by reading the source, because the loop was
+# a closure inside `_start_round_locked` that reached into `hass` directly and
+# could not be called. #2710 moved it onto the media-player port, so those
+# three checks are real behaviour tests now: see
+# tests/unit/test_watchdog_respects_deliberate_stop_2576.py.
 
 
 class TestClientClockIndependence:

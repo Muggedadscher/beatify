@@ -59,12 +59,16 @@ beforeAll(() => {
     const state = { playerName: 'Me' };
     const getInitials = (n) => String(n || '').slice(0, 2).toUpperCase();
     const escapeHtml = (s) => String(s == null ? '' : s);
+    // #2562: the non-race path fills the submitted banner via the module-level
+    // waitingLine() helper; the strip test only cares that the count renders, so
+    // a stub is enough to satisfy the reference.
+    const waitingLine = () => '';
     // A fresh `document` is injected per call so each test drives its own DOM.
     renderSubmissionTracker = (players, raceMode, dom) =>
         new Function(
-            'document', 'utils', 'state', 'getInitials', 'escapeHtml', 'players', 'raceMode',
+            'document', 'utils', 'state', 'getInitials', 'escapeHtml', 'waitingLine', 'players', 'raceMode',
             fnSrc + '\nreturn renderSubmissionTracker(players, raceMode);'
-        )(dom, utils, state, getInitials, escapeHtml, players, raceMode);
+        )(dom, utils, state, getInitials, escapeHtml, waitingLine, players, raceMode);
 });
 
 describe('renderSubmissionTracker — race mode', () => {

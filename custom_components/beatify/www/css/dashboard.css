@@ -141,6 +141,32 @@
     margin-bottom: var(--space-lg);
 }
 
+/* #2645: the host's announcement on the TV. The reason takes poster size and
+   the word "Pause" drops to the line under it — inverted on purpose, because
+   the room's question is "why did the music stop", not "did it".
+   The cost of that inversion is that a glance reads the reason and not the
+   state, so the state keeps the accent colour rather than a muted grey: at
+   this size a grey line is not read at all. */
+#dashboard-pause-title.is-announcement {
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 1.05;
+    color: var(--color-accent-primary);
+    text-shadow: 0 0 34px rgba(255, 45, 106, 0.55);
+}
+
+.dashboard-pause-state {
+    margin-top: var(--space-sm);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent-secondary);
+}
+
+.dashboard-pause-state.hidden {
+    display: none;
+}
+
 /* ==========================================
    Dashboard Header
    ========================================== */
@@ -180,6 +206,46 @@
    Lobby View (AC 10.4.2)
    ========================================== */
 
+/* #2647: the lobby brief — one sentence across the band the lobby left empty,
+   between the header and the QR/players row. Both of those keep their place and
+   their size; this only takes the air above them.
+
+   The colour split IS the message: the running text is the muted secondary,
+   because "10 rounds" is not news. Only what deviates from the server defaults
+   gets a colour, and the deviation that changes the game most gets the brand
+   pink and the glow — that is the skull the room used to meet in round 2.
+
+   Sized in raw px like the wordmark above it (48/64) rather than from the type
+   scale, which tops out at 32px: this has to read from the couch. It stays
+   below the reserved oversize tokens (year 56 / timer 64 / hero 72) — those
+   belong to the game moments, and a lobby line is not one.
+
+   The .lobby-brief-em* accents live in styles.css: the guest's phone shows the
+   same sentence and only loads that file. */
+.dashboard-lobby-brief {
+    flex-shrink: 0;
+    margin: 0 auto;
+    padding: 0 var(--space-xl);
+    max-width: min(90vw, 28ch);
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+    text-align: center;
+    text-wrap: balance;
+    color: var(--color-text-neon-muted);
+}
+
+.dashboard-lobby-brief.hidden {
+    display: none;
+}
+
+/* The glow is the TV's alone — a phone at arm's length does not need it and
+   the accents themselves are shared (styles.css). */
+.dashboard-lobby-brief .lobby-brief-em--key {
+    text-shadow: var(--glow-primary);
+}
+
 .dashboard-lobby-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -217,6 +283,17 @@
     font-weight: var(--font-weight-bold);
     margin-top: var(--space-lg);
     color: var(--color-accent-secondary);
+}
+
+/* #2556: the call to action above the QR code. Same weight as the player
+   count so it reads from across the room, but in the plain text colour — the
+   accent belongs to the count, which is the number people watch. */
+.dashboard-scan-hint {
+    margin: 0 0 var(--space-md);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-white);
+    text-align: center;
 }
 
 .lobby-players-section {
@@ -625,6 +702,46 @@
     animation: bet-pulse 2s ease-in-out infinite;
 }
 
+/* #2578: die zwei Finalisten im Stechen. Bewusst das einzige Abzeichen mit
+   Akzentfarbe in der Zeile — es markiert genau zwei Spieler und sagt, warum
+   die Runde anders heisst. */
+.finalist-badge {
+    display: inline-block;
+    background: var(--color-accent-secondary, #c8a24a);
+    color: var(--color-text-dark, #11131a);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    margin-left: var(--space-xs);
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/* #2584: Sabotage-Treffer in der Zeile des Getroffenen. Bewusst ruhiger als
+   .bet-badge — kein Verlauf, kein Puls: es steht den ganzen Reveal lang da und
+   soll die Zahl daneben nicht ueberstrahlen. Aus vier Metern zaehlt der Kontrast
+   des Symbols, nicht die Flaeche. */
+.sabotage-badge {
+    display: inline-block;
+    background: rgba(90, 169, 214, 0.18);
+    color: #9fd2ee;
+    border: 1px solid rgba(90, 169, 214, 0.45);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    margin-left: var(--space-xs);
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.sabotage-badge small {
+    font-weight: var(--font-weight-normal);
+    opacity: 0.75;
+    margin-left: 3px;
+}
+
 .bet-badge--won {
     background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-hover) 100%);
 }
@@ -803,6 +920,15 @@
 
     .dashboard-player-count {
         font-size: var(--font-size-3xl);
+    }
+
+    .dashboard-scan-hint {
+        font-size: var(--font-size-3xl);
+    }
+
+    .dashboard-lobby-brief {
+        font-size: 52px;
+        max-width: min(88vw, 30ch);
     }
 
     .dashboard-album-container {
@@ -1349,6 +1475,12 @@
     font-size: 22px;
     filter: drop-shadow(0 0 8px var(--color-accent-primary));
 }
+/* #2554: song stopped by the host. Neutral on purpose — it explains silence,
+   it does not celebrate anything. */
+.chip-badge.chip-badge--stopped {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+}
 .chip-badge.chip-badge--closest {
     background: rgba(0, 245, 255, 0.15);
     border: 1px solid rgba(0, 245, 255, 0.5);
@@ -1512,6 +1644,57 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: rgba(255, 159, 67, 0.92);
+}
+
+/* #2702: the TV ring once the countdown has run out and the next round has not
+   started. Same place, same size — the digit becomes an ellipsis and the
+   drained gauge becomes a quarter arc that turns. At TV distance the rotation
+   is the whole message: it answers "is this thing frozen?" without a word, and
+   a static "next song…" chip would have been exactly as silent as the zero it
+   replaced. The label swaps to the cold-start string that already exists in all
+   six locales, so nothing new had to be translated. */
+@keyframes chip-countdown-spin {
+    from { transform: rotate(-90deg); }
+    to   { transform: rotate(270deg); }
+}
+#dashboard-reveal .chip-countdown.is-waiting .chip-countdown-svg {
+    animation: chip-countdown-spin 1.15s linear infinite;
+}
+#dashboard-reveal .chip-countdown.is-waiting .chip-countdown-num {
+    font-size: 26px;
+    line-height: 0.5;
+}
+@media (prefers-reduced-motion: reduce) {
+    /* Static, but never the frozen zero: the gauge is gone, the digit is an
+       ellipsis and the track is dashed. */
+    #dashboard-reveal .chip-countdown.is-waiting .chip-countdown-svg { animation: none; }
+    #dashboard-reveal .chip-countdown.is-waiting .chip-countdown-bg {
+        stroke-dasharray: 5 7;
+        stroke: rgba(255, 159, 67, 0.35);
+    }
+}
+
+/* #2702: the reveal in three beats — the answer, then who got it right, then
+   the standings. The TV grid is fixed, so the later beats fade up in place
+   instead of being pulled out of the layout: a collapsing grid area would make
+   the whole screen jump twice per round. When the stage attribute is ABSENT
+   everything shows, so a TV whose timers never ran loses nothing. */
+#dashboard-reveal[data-reveal-stage] [data-stage] {
+    opacity: 1;
+    transform: none;
+    transition: opacity 340ms ease-out, transform 340ms ease-out;
+}
+#dashboard-reveal[data-reveal-stage="1"] [data-stage="2"],
+#dashboard-reveal[data-reveal-stage="1"] [data-stage="3"],
+#dashboard-reveal[data-reveal-stage="2"] [data-stage="3"] {
+    opacity: 0;
+    transform: translateY(14px);
+}
+@media (prefers-reduced-motion: reduce) {
+    #dashboard-reveal[data-reveal-stage] [data-stage] { transition: none; }
+    #dashboard-reveal[data-reveal-stage="1"] [data-stage="2"],
+    #dashboard-reveal[data-reveal-stage="1"] [data-stage="3"],
+    #dashboard-reveal[data-reveal-stage="2"] [data-stage="3"] { transform: none; }
 }
 
 /* Hide the legacy absolutely-positioned round indicator (replaced by chip strip) */
@@ -2428,6 +2611,13 @@
 #dashboard-reveal .reveal-ac-result--won { color: var(--color-success-neon, #39ff14); background: rgba(57, 255, 20, 0.12); border: 1px solid rgba(57, 255, 20, 0.4); }
 #dashboard-reveal .reveal-ac-result--none { color: var(--color-text-neon-muted, #b3b3c2); background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); }
 
+/* #2720: the movie-quiz result sits directly under the artist-challenge chip
+   and shares its shape. Only the accent changes, so two decided mini-games in
+   one reveal are told apart at TV distance without reading them. */
+#dashboard-reveal .reveal-movie-challenge {
+    border-color: rgba(99, 102, 241, 0.45);
+}
+
 /* --- Standings card --- */
 #dashboard-reveal .reveal-standings-card {
     background: rgba(255, 255, 255, 0.05);
@@ -2705,3 +2895,129 @@
         padding: 7px 22px;
     }
 }
+
+/* ==========================================================================
+   #2504 — the join corner
+   The server admits latecomers throughout PLAYING and REVEAL, but the code
+   used to leave the TV the moment round one started. This sits in the corner,
+   clear of the artwork/timer/chips zone, and is hidden by dashboard.js on a
+   deterministic rule (Sudden Death armed, or under three songs left).
+   ========================================================================== */
+.join-corner {
+    position: fixed;
+    right: clamp(16px, 2.2vw, 40px);
+    bottom: clamp(16px, 2.2vw, 40px);
+    z-index: 40;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "qr text" "hint hint";
+    gap: 10px 12px;
+    align-items: center;
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(23, 26, 33, 0.92);
+    border: 1px solid rgba(91, 200, 200, 0.45);
+    backdrop-filter: blur(6px);
+    max-width: 260px;
+}
+
+.join-corner__qr {
+    grid-area: qr;
+    display: flex;
+    padding: 6px;
+    background: #ffffff;
+    border-radius: 6px;
+    line-height: 0;
+}
+
+.join-corner__qr img,
+.join-corner__qr canvas {
+    display: block;
+    width: 96px;
+    height: 96px;
+}
+
+.join-corner__text {
+    grid-area: text;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.join-corner__badge {
+    margin: 0;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #5bc8c8;
+}
+
+.join-corner__url {
+    margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.6875rem;
+    color: #868c97;
+    /* A long path must not push the panel wider than its max-width. */
+    overflow-wrap: anywhere;
+}
+
+.join-corner__hint {
+    grid-area: hint;
+    margin: 0;
+    font-size: 0.75rem;
+    color: #b9bec7;
+}
+
+/* The TV is watched from the sofa; on a small screen the corner would cover
+   the round itself, so it steps aside rather than shrinking into illegibility. */
+@media (max-width: 720px) {
+    .join-corner { display: none; }
+}
+
+/* #2559 Ghost League — die zweite Tabelle auf dem Fernseher.
+   Gestrichelt und gedaempft, weil sie NICHT die Rangliste ist: die gewaehlte
+   Variante nimmt zwei Tabellen auf einem Bildschirm in Kauf, und die einzige
+   Verteidigung dagegen ist, dass man auf einen Blick sieht, welche die
+   richtige ist. Kein Totenkopf: hier wird gespielt, nicht getrauert. */
+.ghost-league {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--color-border, rgba(255, 255, 255, 0.12));
+}
+
+.ghost-league-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 8px;
+    color: var(--color-text-secondary, rgba(255, 255, 255, 0.66));
+    font-size: 0.78rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.ghost-league-note {
+    color: var(--color-text-secondary, rgba(255, 255, 255, 0.5));
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+}
+
+.ghost-row {
+    display: grid;
+    grid-template-columns: 2.2rem 1fr auto auto;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+    padding: 8px 12px;
+    border: 1px dashed var(--color-border, rgba(255, 255, 255, 0.18));
+    border-radius: var(--radius-md, 12px);
+    color: var(--color-text-secondary, rgba(255, 255, 255, 0.7));
+}
+
+.ghost-rank { font-variant-numeric: tabular-nums; opacity: 0.7; }
+.ghost-name { font-weight: 600; }
+.ghost-meta { font-size: 0.72rem; opacity: 0.65; }
+.ghost-score { font-variant-numeric: tabular-nums; font-weight: 700; }

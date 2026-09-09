@@ -26,8 +26,31 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
+from custom_components.beatify.services.playback import queue_restore
 from custom_components.beatify.services.media_player import MediaPlayerService
 from tests.conftest import make_game_state, make_songs
+
+
+@pytest.fixture(autouse=True)
+def _fast_pause_guard(monkeypatch):
+    """Run the #2605 pause guard on a compressed clock.
+
+    The fixtures here model a speaker that never stops, so the guard spends its
+    full production budget (a 5s hold inside a 12s window) on every restore in
+    this file. Only the durations shrink; the logic is untouched, and the
+    #2605 contract itself is tested in
+    ``test_queue_restore_stays_paused_2605.py``.
+    """
+    monkeypatch.setattr(queue_restore, "MA_PAUSE_CONFIRM_WAIT", 0.05)
+    monkeypatch.setattr(queue_restore, "MA_PAUSE_SETTLE_HOLD", 0.05)
+    monkeypatch.setattr(queue_restore, "MA_PAUSE_GUARD_WINDOW", 0.30)
+    # #2691: the restore that never sees `playing` gets the longer late-start
+    # watch instead of the guard window. One fixture in this file (the idle
+    # speaker in the seek test) takes that path and would otherwise sit here
+    # for the full production 18s.
+    monkeypatch.setattr(queue_restore, "MA_LATE_START_WATCH", 0.30)
+    monkeypatch.setattr(queue_restore, "MA_PAUSE_POLL", 0.01)
+
 
 QUEUE_RESPONSE = {
     "media_player.esszimmer": {
@@ -83,7 +106,7 @@ class TestQueueSnapshot:
 
         await svc.save_queue()
 
-        assert svc._saved_queue == {
+        assert svc._promises.queue == {
             "uri": "apple_music://track/1686851478",
             "name": "Stuck In The Middle With You",
             "elapsed_time": 9.0,
@@ -112,7 +135,7 @@ class TestQueueSnapshot:
         }
         await svc.save_queue()
 
-        assert svc._saved_queue["uri"] == "apple_music://track/1686851478"
+        assert svc._promises.queue["uri"] == "apple_music://track/1686851478"
         assert len(_calls_to(hass, "music_assistant", "get_queue")) == 1
 
     @pytest.mark.asyncio
@@ -124,7 +147,7 @@ class TestQueueSnapshot:
         await svc.save_queue()
         await svc.save_queue()
 
-        assert svc._saved_queue == {}
+        assert svc._promises.queue == {}
         assert len(_calls_to(hass, "music_assistant", "get_queue")) == 1
         assert await svc.restore_queue() is False
 
@@ -136,7 +159,7 @@ class TestQueueSnapshot:
 
         await svc.save_queue()
 
-        assert svc._saved_queue is None
+        assert svc._promises.queue is None
         assert hass.services.async_call.await_count == 0
 
     @pytest.mark.asyncio
@@ -151,7 +174,7 @@ class TestQueueSnapshot:
 
         await svc.save_queue()
 
-        assert svc._saved_queue == {}
+        assert svc._promises.queue == {}
 
 
 class TestQueueRestore:
@@ -175,7 +198,14 @@ class TestQueueRestore:
 
         # Paused, not playing: the host just ended the game. Starting their
         # music unasked would be its own surprise.
-        assert len(_calls_to(hass, "media_player", "media_pause")) == 1
+        #
+        # #2605: this used to assert exactly ONE pause. The fixture's speaker
+        # reports `playing` on every read — it never stops — and since #2605 a
+        # pause that does not take is sent again until the guard window runs
+        # out. One call was the old behaviour, not the requirement; what this
+        # test is about is that we pause and never resume.
+        assert len(_calls_to(hass, "media_player", "media_pause")) >= 1
+        assert not _calls_to(hass, "media_player", "media_play")
         assert _calls_to(hass, "media_player", "shuffle_set")[0].args[2]["shuffle"]
         assert _calls_to(hass, "media_player", "repeat_set")[0].args[2]["repeat"] == (
             "all"
@@ -210,7 +240,7 @@ class TestQueueRestore:
                 new_callable=AsyncMock,
             ),
             patch(
-                "custom_components.beatify.services.media_player.MA_QUEUE_RESTORE_WAIT",
+                "custom_components.beatify.services.playback.queue_restore.MA_QUEUE_RESTORE_WAIT",
                 0.05,
             ),
         ):
@@ -276,8 +306,8 @@ class TestSnapshotSurvivesASpeakerSwitch:
 
         svc.save_volume()  # would capture the current 0.5 if the adopt failed
 
-        assert svc._saved_volume == 0.2
-        assert svc._inherited_states == {}
+        assert svc._promises.volume == 0.2
+        assert svc._promises.others == {}
 
     @pytest.mark.asyncio
     async def test_the_old_speaker_gets_its_queue_back_too(self):
@@ -315,16 +345,25 @@ class TestGameStateKeepsThePromiseAcrossTheSwitch:
         assert gs._pending_speaker_states == {"media_player.esszimmer": {"volume": 0.2}}
 
     def test_the_new_service_inherits_what_the_old_one_owed(self):
-        gs = make_game_state()
+        # #2638: the game asks its injected factory for a speaker service; the
+        # fake records what it was handed, so no hass is needed to see the
+        # promise travel.
+        built = {}
+
+        def _factory(entity_id, **kwargs):
+            built["entity_id"] = entity_id
+            built.update(kwargs)
+            return MagicMock()
+
+        gs = make_game_state(media_player=_factory)
         gs.media_player = "media_player.kueche"
         gs.platform = "music_assistant"
         gs._pending_speaker_states = {"media_player.esszimmer": {"volume": 0.2}}
 
         gs._ensure_media_player_service()
 
-        assert gs._media_player_service._inherited_states == {
-            "media_player.esszimmer": {"volume": 0.2}
-        }
+        assert built["entity_id"] == "media_player.kueche"
+        assert built["inherited_states"] == {"media_player.esszimmer": {"volume": 0.2}}
         # Handed over, not shared — a later release/build cycle must not
         # restore the same speaker twice.
         assert gs._pending_speaker_states == {}
@@ -359,11 +398,11 @@ class TestPlayPathTakesTheSnapshotFirst:
                 new_callable=AsyncMock,
             ),
             patch(
-                "custom_components.beatify.services.media_player.MA_PLAYBACK_TIMEOUT",
+                "custom_components.beatify.services.playback.music_assistant.MA_PLAYBACK_TIMEOUT",
                 0.05,
             ),
         ):
-            await svc._try_ma_play("spotify:track:abc", "New Song")
+            await svc._strategy.try_play("spotify:track:abc", "New Song")
 
         services = [c.args[:2] for c in hass.services.async_call.await_args_list]
         assert services.index(("music_assistant", "get_queue")) < services.index(
