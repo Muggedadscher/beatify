@@ -756,9 +756,7 @@ class ChallengeManager:
                 setattr(ch, winner_attr, player_name)
                 setattr(ch, f"{field_name}_winner_ts", ts)
                 result[f"won_{field_name}"] = True
-                _LOGGER.info(
-                    "Race: %s won the %s (%r)", player_name, field_name, value
-                )
+                _LOGGER.info("Race: %s won the %s (%r)", player_name, field_name, value)
 
             ch.feed.append(
                 {

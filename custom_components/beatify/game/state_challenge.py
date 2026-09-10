@@ -248,9 +248,7 @@ class ChallengeMixin:
         Returns {"title_status", "artist_status", "won_title", "won_artist"}.
         Unlimited attempts; the first correct guesser of each field wins it.
         """
-        return self._challenge_manager.submit_race_guess(
-            player_name, title, artist, ts
-        )
+        return self._challenge_manager.submit_race_guess(player_name, title, artist, ts)
 
     def race_complete(self) -> bool:
         """Whether the Race round is over (both fields settled). Delegates."""
