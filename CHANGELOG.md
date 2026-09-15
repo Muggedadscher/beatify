@@ -4,6 +4,23 @@ All notable changes to Beatify are documented here. For detailed release notes, 
 
 ## [Unreleased]
 
+## [4.7.1] - 2026-09-15
+
+Hotfix for a Race-mode regression introduced by the 4.7.0 upstream sync.
+
+### Fixed
+- **A play style no longer drops you out of Race / Title & Artist mode.** After
+  the 4.7.0 merge, upstream's play-style cards (#2692) lead the wizard's game-mode
+  step. Applying any style routed its bonus toggles through the shared precedence
+  that turns Title & Artist OFF when a year-round bonus (artist, closest) turns
+  ON — and the "Classic" style names `artist`. So a host who picked Race mode and
+  then tapped a play style was silently thrown back to guessing years when the
+  round started. `applyPlayStyle` now snapshots and restores the core game mode
+  (Year vs Title & Artist, and the Race variant): a play style flavours only the
+  year-round bonus layer, which stays suppressed under Title & Artist at
+  payload-build time anyway. New regression test:
+  `play-style-preserves-race-mode.test.js`.
+
 ## [4.7.0] - 2026-09-09
 
 Syncs **145 upstream commits** from `mholzi/beatify` main — up to and including

@@ -1154,14 +1154,28 @@ export const PLAY_STYLES = [
  *
  * `suddenDeath` is deliberately left alone: it defaults ON, is gated on the
  * player count, and is not a flavour of the evening but a rule about it.
+ *
+ * The core game mode (Year vs Title & Artist, and the fork's Race variant under
+ * it) is left alone too. A play style flavours the year-round bonus layer; it is
+ * not a core-mode choice. The style lists 'artist' (Classic) and 'closest'
+ * (nothing yet), and `m.set` for those routes through `_setGameModeToggle`'s
+ * asymmetric precedence, which turns Title & Artist OFF when a year bonus goes
+ * ON. Without the snapshot/restore below, tapping any play style while in Race
+ * mode would silently drop the host back to guessing years — the bonuses stay
+ * suppressed under TA at payload-build time anyway, so restoring the core mode
+ * loses nothing.
  */
 export function applyPlayStyle(styleKey) {
     const style = PLAY_STYLES.find((s) => s.key === styleKey);
     if (!style) return false;
+    const coreTitleArtist = chosenTitleArtistMode;
+    const coreRace = chosenTitleArtistRaceMode;
     GAME_MODES.forEach((m) => {
         if (m.key === 'suddenDeath') return;
         m.set(style.modes.indexOf(m.key) !== -1);
     });
+    chosenTitleArtistMode = coreTitleArtist;
+    chosenTitleArtistRaceMode = coreRace;
     chosenPlayStyle = style.key;
     return true;
 }
