@@ -1016,7 +1016,10 @@
       "uri_deezer": "deezer://track/1028496972",
       "uri_apple_music": "applemusic://track/1444166556",
       "fun_fact_it": "«Ya no Queda Nada» di Tito Nieves, pubblicata per la prima volta nel 2004 nell'album «Imprescindibles de la Salsa».",
-      "uri_youtube_music": "https://music.youtube.com/watch?v=r-hUwNYdByg"
+      "uri_youtube_music": "https://music.youtube.com/watch?v=r-hUwNYdByg",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 2002,
@@ -3308,7 +3311,10 @@
       "uri_deezer": "deezer://track/10066285",
       "uri_apple_music": "applemusic://track/187429781",
       "fun_fact_it": "«Princesita» di Elvis Crespo, pubblicata per la prima volta nel 1998 nell'album «Dos Clásicos».",
-      "uri_youtube_music": "https://music.youtube.com/watch?v=pfEf7i9uMPU"
+      "uri_youtube_music": "https://music.youtube.com/watch?v=pfEf7i9uMPU",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/299704163"
+      }
     },
     {
       "year": 1998,
@@ -3343,7 +3349,10 @@
       "uri_deezer": "deezer://track/557093",
       "uri_apple_music": "applemusic://track/187429633",
       "fun_fact_it": "«Suavemente» di Elvis Crespo, pubblicata per la prima volta nel 1998 nell'album «Pintame».",
-      "uri_youtube_music": "https://music.youtube.com/watch?v=WPiEbYSF9kE"
+      "uri_youtube_music": "https://music.youtube.com/watch?v=WPiEbYSF9kE",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1457081352"
+      }
     },
     {
       "year": 1997,
@@ -7213,7 +7222,10 @@
       "fun_fact_nl": "\"Mascarada\" van Johnny Ray, voor het eerst uitgebracht in 1988 op het album \"Imprescindibles de la Salsa\".",
       "uri_deezer": "deezer://track/1028496912",
       "uri_apple_music": "applemusic://track/1443620307",
-      "fun_fact_it": "«Mascarada» di Johnny Ray, pubblicata per la prima volta nel 1988 nell'album «Imprescindibles de la Salsa»."
+      "fun_fact_it": "«Mascarada» di Johnny Ray, pubblicata per la prima volta nel 1988 nell'album «Imprescindibles de la Salsa».",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 1992,
@@ -7228,7 +7240,10 @@
       "fun_fact_nl": "\"Amor Traicionero\" van Guayacán Orquesta, voor het eerst uitgebracht in 1992 op het album \"30 Años de Gala\".",
       "uri_deezer": "deezer://track/2683393132",
       "uri_apple_music": "applemusic://track/1444164681",
-      "fun_fact_it": "«Amor Traicionero» di Guayacán Orquesta, pubblicata per la prima volta nel 1992 nell'album «30 Años de Gala»."
+      "fun_fact_it": "«Amor Traicionero» di Guayacán Orquesta, pubblicata per la prima volta nel 1992 nell'album «30 Años de Gala».",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1735848379"
+      }
     },
     {
       "year": 1993,

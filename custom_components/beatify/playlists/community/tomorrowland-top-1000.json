@@ -1848,7 +1848,8 @@
       "uri": "spotify:track:7B1Dl3tXqySkB8OPEwVvSu",
       "uri_apple_music": "applemusic://track/1713469227",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1713469227"
+        "us": "applemusic://track/1713469227",
+        "de": "applemusic://track/532580481"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=cGi4hNgyhik",
       "uri_tidal": null,
@@ -4990,7 +4991,8 @@
       ],
       "uri_apple_music": "applemusic://track/716112616",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/716112616"
+        "us": "applemusic://track/716112616",
+        "de": "applemusic://track/716516123"
       }
     },
     {
@@ -5937,7 +5939,8 @@
       "uri": "spotify:track:3FwsjsakjJkeLotPOGIr7s",
       "uri_apple_music": "applemusic://track/1052536593",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1052536593"
+        "us": "applemusic://track/1052536593",
+        "de": "applemusic://track/273340146"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=4p_WxAA-OcQ",
       "uri_tidal": null,
@@ -8452,7 +8455,8 @@
       "uri": "spotify:track:7qm96i0k4auLvcIsNQGkWX",
       "uri_apple_music": "applemusic://track/1743232241",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1743232241"
+        "us": "applemusic://track/1743232241",
+        "de": null
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=eChdxmjHoMw",
       "uri_tidal": null,
@@ -8532,7 +8536,10 @@
         "Parachute Youth",
         "Double 99"
       ],
-      "uri_apple_music": "applemusic://track/1382339701"
+      "uri_apple_music": "applemusic://track/1382339701",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1511163333"
+      }
     },
     {
       "artist": "Lost Frequencies, Flynn",
@@ -8667,7 +8674,8 @@
       "uri": "spotify:track:4kaqizkr7cp8YLsWmf5l9b",
       "uri_apple_music": "applemusic://track/1691761049",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1691761049"
+        "us": "applemusic://track/1691761049",
+        "de": "applemusic://track/879490699"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=hzo1_maqV_w",
       "uri_tidal": null,
@@ -9858,7 +9866,10 @@
         "Max Dean, Luke Dean, Locky",
         "Sia, Diplo, Labrinth, LSD, Lost Frequencies",
         "David Guetta, Akon"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/835121832"
+      }
     },
     {
       "artist": "Fred again.., Romy, HAAi",
@@ -12999,7 +13010,10 @@
         "Josh Baker, Omar+",
         "Martin Solveig, Tkay Maidza",
         "Art Of Trance, Ferry Corsten"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1440861981"
+      }
     },
     {
       "artist": "W&W, Lucas & Steve",
@@ -13339,7 +13353,10 @@
         "Travis Scott, CHASE B",
         "Dash Berlin",
         "Veracocha"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1783998760"
+      }
     },
     {
       "artist": "James Hype",
@@ -13432,7 +13449,10 @@
         "John Summit, Guz, Stevie Appleton",
         "Armin van Buuren",
         "Zonderling, Don Diablo"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1639015302"
+      }
     },
     {
       "artist": "Vintage Culture, Adam K, MKLA",
@@ -14967,7 +14987,8 @@
       "uri": "spotify:track:3Fb65mpLd7OtD6Er5eUjuT",
       "uri_apple_music": "applemusic://track/1350837076",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1350837076"
+        "us": "applemusic://track/1350837076",
+        "de": null
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=fyeojFLQLNY",
       "uri_tidal": null,
@@ -15101,7 +15122,10 @@
         "Gregory Porter, Claptone",
         "Hardwell, Blasterjaxx, Mitch Crown",
         "Galantis"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/159318164"
+      }
     },
     {
       "artist": "Vintage Culture, Fancy Inc, The Beach",
@@ -15982,7 +16006,8 @@
       ],
       "uri_apple_music": "applemusic://track/521411515",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/521411515"
+        "us": "applemusic://track/521411515",
+        "de": null
       }
     },
     {
@@ -16103,7 +16128,10 @@
         "&ME, Rampa, Adam Port, Alan Dixon, Keinemusik, Arabic Piano",
         "Gareth Emery, Christina Novelli",
         "Estelle, Lost Frequencies, Kanye West"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1444870496"
+      }
     },
     {
       "artist": "Tiësto, Kirsty Hawkshaw",
@@ -18021,7 +18049,8 @@
       "uri": "spotify:track:3khqkr791PuWhlUFCtWtTh",
       "uri_apple_music": "applemusic://track/627442768",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/627442768"
+        "us": "applemusic://track/627442768",
+        "de": null
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=c0e9wALeTvw",
       "uri_tidal": null,
@@ -19518,7 +19547,10 @@
         "Knife Party",
         "Duke Dumont",
         "Wilkinson, Becky Hill"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1444854315"
+      }
     },
     {
       "artist": "Fish Go Deep, Tracey K, Dennis Ferrer",
@@ -20219,7 +20251,10 @@
         "Joel Corry, James Hype",
         "John Summit, HAYLA",
         "AFROJACK"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/716055788"
+      }
     },
     {
       "artist": "Kosheen, Tinlicker",

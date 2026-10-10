@@ -277,7 +277,10 @@
       "awards_es": [
         "Grammy - Canción del Año",
         "Grammy - Mejor Interpretación Pop Solista"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1594982922"
+      }
     },
     {
       "year": 2013,

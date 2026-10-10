@@ -6171,7 +6171,8 @@
       "uri": "spotify:track:52zeJeJrFqKmJBc4FK6767",
       "uri_apple_music": "applemusic://track/1103179956",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1103179956"
+        "us": "applemusic://track/1103179956",
+        "de": "applemusic://track/1825402180"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=MWshlyFLPCA",
       "uri_tidal": null,

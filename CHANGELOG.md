@@ -27,6 +27,23 @@ All notable changes to Beatify are documented here. For detailed release notes, 
   Levitating's Spotify and YouTube Music links pointed at the DaBaby remix while
   Apple/Deezer played the original; all now play the original. John Miles'
   "Music" is marked unavailable in `us` (not in that catalogue).
+- **Verified `de`-storefront Apple Music links across the whole catalogue.**
+  2,749 songs had no `de` entry, so a German Apple Music game played the legacy
+  (US) ID and timed out wherever that ID is missing from the German catalogue —
+  three of those in a row paused the game with a misleading "re-authenticate
+  your provider" banner. Every legacy ID was resolved in `de` via the iTunes
+  lookup API (2,320 confirmed); the rest went through the `backfill_apple.py`
+  gate in the `de` storefront. `de` coverage is now 8,285 of 8,532 songs (was
+  5,783); 67 songs that had no Apple link at all gained one, and songs with no
+  verified `de` recording are marked unavailable there so the game skips them
+  instead of timing out. Only `de` keys and playlist versions change.
+
+### Fixed
+- **`uri_gate.suffix_conflict` let remixes through behind a `feat.` credit.**
+  Cutting the `feat.`-tail removed everything after the credit, including a
+  take marker such as `[Sebastian Perez Remix]`, so the Apple backfill accepted
+  remixes as originals. Only the credit itself is removed now; ordinary titles
+  containing "with" no longer fold away either.
 
 ## [4.7.1] - 2026-09-15
 

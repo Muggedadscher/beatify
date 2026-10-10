@@ -2568,7 +2568,10 @@
       "uri_deezer": "deezer://track/6907036",
       "fun_fact_nl": "De debuutsingle van Whigfield stond bovenaan de hitlijsten in 17 landen en veroorzaakte een dansrage. Het nummer werd oorspronkelijk uitgebracht in Italië, waar het een zomerhit werd voordat het zich wereldwijd verspreidde.",
       "awards_nl": [],
-      "uri_apple_music": "applemusic://track/79145702"
+      "uri_apple_music": "applemusic://track/79145702",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/120152901"
+      }
     },
     {
       "year": 1995,
