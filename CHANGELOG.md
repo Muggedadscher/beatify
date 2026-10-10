@@ -16,6 +16,17 @@ All notable changes to Beatify are documented here. For detailed release notes, 
   source entry was off (e.g. Johnny B. Goode 1958, Shake It Off 2014, Uptown Funk
   2014, Blinding Lights 2019), and 51 placeholder, off-context or inaccurate fun
   facts were rewritten in EN/DE/ES/FR/NL/IT.
+- **Apple Music per-storefront links for `greatest-hits-of-all-time`.** Every
+  stored Apple ID was resolved in us/de/gb/fr/es/nl/it via the iTunes lookup
+  API; 19 songs had a link that does not exist in at least one storefront
+  (8 of them in `de`, e.g. Hello, Shape of You, bad guy, Levitating, Shake It
+  Off; the Queen catalogue IDs in `us`). Missing regions were resolved through
+  the `backfill_apple.py` gate and written into `uri_apple_music_by_region`, so
+  all 336 songs now play on a `de` storefront. Las Ketchup gets its first Apple
+  ID, and its Deezer link now points at the Spanglish version Spotify plays.
+  Levitating's Spotify and YouTube Music links pointed at the DaBaby remix while
+  Apple/Deezer played the original; all now play the original. John Miles'
+  "Music" is marked unavailable in `us` (not in that catalogue).
 
 ## [4.7.1] - 2026-09-15
 

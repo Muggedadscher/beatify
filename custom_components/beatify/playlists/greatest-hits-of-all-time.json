@@ -56,7 +56,7 @@
       ],
       "isrc": "GBUM71029604",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1842449358",
+        "us": "applemusic://track/6781024437",
         "de": "applemusic://track/6781080302",
         "gb": "applemusic://track/6781027645",
         "fr": "applemusic://track/6781027645",
@@ -625,7 +625,7 @@
       ],
       "isrc": "GBUM71029605",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1440650719",
+        "us": "applemusic://track/6781076397",
         "de": "applemusic://track/6781080305",
         "gb": "applemusic://track/6781027662",
         "fr": "applemusic://track/6781080305",
@@ -1031,7 +1031,7 @@
       ],
       "isrc": "GBUM71029619",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1440646546",
+        "us": "applemusic://track/6781080744",
         "de": "applemusic://track/6781080744",
         "gb": "applemusic://track/6781081102",
         "fr": "applemusic://track/6781080744",
@@ -1368,7 +1368,7 @@
       ],
       "isrc": "GBUM71029618",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1834502336",
+        "us": "applemusic://track/6781080737",
         "de": "applemusic://track/6781081101",
         "gb": "applemusic://track/6781081101",
         "fr": "applemusic://track/6781081101",
@@ -2567,7 +2567,7 @@
       "awards_nl": [],
       "isrc": "GBUM71029613",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1440743586",
+        "us": "applemusic://track/6781024333",
         "de": "applemusic://track/6781080944",
         "gb": "applemusic://track/6781027364",
         "fr": "applemusic://track/6781027364",
@@ -2781,7 +2781,7 @@
       "awards_nl": [],
       "isrc": "GBUM71029610",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1494536053",
+        "us": "applemusic://track/6781079518",
         "de": "applemusic://track/6781079522",
         "gb": "applemusic://track/6781080941",
         "fr": "applemusic://track/6781080941",
@@ -3090,7 +3090,16 @@
       "uri_deezer": "deezer://track/16143727",
       "fun_fact_nl": "De muziek van John Miles bouwt op van een rustige ballade naar een symfonisch rockepos met volledig orkest. Miles schreef het als een eerbetoon aan de kracht van muziek zelf. Het nummer blijft een concertfavoriet en wordt beschouwd als een van de grootste progressieve rockcomposities van de jaren 1970.",
       "awards_nl": [],
-      "uri_youtube_music": "https://music.youtube.com/watch?v=lAsvjVx-Mg4"
+      "uri_youtube_music": "https://music.youtube.com/watch?v=lAsvjVx-Mg4",
+      "uri_apple_music_by_region": {
+        "us": null,
+        "de": "applemusic://track/1768738565",
+        "gb": "applemusic://track/1768738565",
+        "fr": "applemusic://track/1768738565",
+        "es": "applemusic://track/1768738565",
+        "nl": "applemusic://track/1768738565",
+        "it": "applemusic://track/1768738565"
+      }
     },
     {
       "year": 1981,
@@ -3752,7 +3761,7 @@
       "awards_nl": [],
       "isrc": "GBUM71106221",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1699722786",
+        "us": "applemusic://track/6781078887",
         "de": "applemusic://track/6781081188",
         "gb": "applemusic://track/6781081188",
         "fr": "applemusic://track/6781081191",
@@ -3845,11 +3854,11 @@
       "awards_nl": [],
       "isrc": "GBUM71404523",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1440651291",
+        "us": "applemusic://track/1255089803",
         "de": "applemusic://track/1255089803",
         "gb": "applemusic://track/1255089803",
         "fr": "applemusic://track/1255089803",
-        "es": "applemusic://track/695543531",
+        "es": "applemusic://track/1255089803",
         "nl": "applemusic://track/1255089803",
         "it": "applemusic://track/1255089803"
       }
@@ -4917,7 +4926,16 @@
       "uri_tidal": "tidal://track/441279643",
       "uri_deezer": "deezer://track/3407660531",
       "fun_fact_nl": "Until It Sleeps was Metallica's hoogst genoteerde single in de Billboard Hot 100 op dat moment. James Hetfield schreef de diep persoonlijke tekst over het gevecht van zijn moeder met kanker en haar Christian Science geloof dat haar ervan weerhield medische behandeling te zoeken. De videoclip, geregisseerd door Samuel Bayer, was geïnspireerd op de schilderijen van Jeroen Bosch.",
-      "awards_nl": []
+      "awards_nl": [],
+      "uri_apple_music_by_region": {
+        "us": "applemusic://track/1806720493",
+        "de": "applemusic://track/1810448375",
+        "gb": "applemusic://track/1811327193",
+        "fr": "applemusic://track/1810448375",
+        "es": "applemusic://track/1810448375",
+        "nl": "applemusic://track/1810448375",
+        "it": "applemusic://track/1810448375"
+      }
     },
     {
       "year": 2003,
@@ -8723,13 +8741,13 @@
       "awards_nl": [],
       "isrc": "USJT10500038",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1675151420",
-        "de": "applemusic://track/695543535",
+        "us": "applemusic://track/699615038",
+        "de": "applemusic://track/699615038",
         "gb": "applemusic://track/926949962",
-        "fr": "applemusic://track/695543535",
-        "es": "applemusic://track/695543535",
+        "fr": "applemusic://track/699615038",
+        "es": "applemusic://track/699615038",
         "nl": "applemusic://track/926949962",
-        "it": "applemusic://track/695543535"
+        "it": "applemusic://track/699615038"
       },
       "uri_deezer": "deezer://track/3108557"
     },
@@ -11876,9 +11894,19 @@
       "awards": [],
       "uri_youtube_music": "https://music.youtube.com/watch?v=arZZw8NyPq8",
       "uri_tidal": "tidal://track/86352781",
-      "uri_deezer": "deezer://track/476739462",
+      "uri_deezer": "deezer://track/476739472",
       "fun_fact_nl": "Drie Spaanse zussen creëerden een wereldwijde dansrage. De nepteksten zouden een verknipte versie zijn van 'Rapper's Delight'.",
-      "awards_nl": []
+      "awards_nl": [],
+      "uri_apple_music_by_region": {
+        "us": "applemusic://track/1387975293",
+        "de": "applemusic://track/1387975293",
+        "gb": "applemusic://track/1387975293",
+        "fr": "applemusic://track/1387975293",
+        "es": "applemusic://track/1387975293",
+        "nl": "applemusic://track/1387975293",
+        "it": "applemusic://track/1387975293"
+      },
+      "uri_apple_music": "applemusic://track/1387975293"
     },
     {
       "year": 2001,
@@ -12527,7 +12555,16 @@
       "fun_fact_es": "La canción se comparó de inmediato con 'Brave' de Sara Bareilles, publicada dos meses antes; ambas autoras han restado importancia al asunto en público.",
       "fun_fact_fr": "Le morceau a aussitôt été comparé à « Brave » de Sara Bareilles, sorti deux mois plus tôt ; les deux autrices ont publiquement balayé la polémique.",
       "fun_fact_nl": "Het nummer werd meteen vergeleken met 'Brave' van Sara Bareilles, twee maanden eerder uitgebracht; beide schrijfsters hebben de discussie publiekelijk weggewuifd.",
-      "fun_fact_it": "Il brano fu subito paragonato a 'Brave' di Sara Bareilles, uscito due mesi prima; entrambe le autrici hanno pubblicamente liquidato la polemica."
+      "fun_fact_it": "Il brano fu subito paragonato a 'Brave' di Sara Bareilles, uscito due mesi prima; entrambe le autrici hanno pubblicamente liquidato la polemica.",
+      "uri_apple_music_by_region": {
+        "us": "applemusic://track/1440818897",
+        "de": "applemusic://track/1440818897",
+        "gb": "applemusic://track/1440859704",
+        "fr": "applemusic://track/1440818897",
+        "es": "applemusic://track/1440818897",
+        "nl": "applemusic://track/1440818897",
+        "it": "applemusic://track/1440818897"
+      }
     },
     {
       "year": 2010,
@@ -12763,7 +12800,16 @@
       "fun_fact_es": "Adele la escribió con el productor Paul Epworth el día después de una dolorosa ruptura. Pasó siete semanas en el número uno en EE. UU. y ganó tres Grammy, entre ellos Grabación y Canción del Año.",
       "fun_fact_fr": "Adele l'a écrite avec le producteur Paul Epworth au lendemain d'une rupture douloureuse. Restée sept semaines numéro un aux États-Unis, elle a remporté trois Grammy, dont enregistrement et chanson de l'année.",
       "fun_fact_nl": "Adele schreef het met producer Paul Epworth op de dag na een pijnlijke breuk. Het stond zeven weken op nummer één in de VS en won drie Grammy's, waaronder Record en Song of the Year.",
-      "fun_fact_it": "Adele la scrisse con il produttore Paul Epworth il giorno dopo una dolorosa rottura. Restò sette settimane al numero uno negli USA e vinse tre Grammy, tra cui Registrazione e Canzone dell'anno."
+      "fun_fact_it": "Adele la scrisse con il produttore Paul Epworth il giorno dopo una dolorosa rottura. Restò sette settimane al numero uno negli USA e vinse tre Grammy, tra cui Registrazione e Canzone dell'anno.",
+      "uri_apple_music_by_region": {
+        "us": "applemusic://track/1544491233",
+        "de": "applemusic://track/403037877",
+        "gb": "applemusic://track/403037877",
+        "fr": "applemusic://track/403037877",
+        "es": "applemusic://track/403037877",
+        "nl": "applemusic://track/403037877",
+        "it": "applemusic://track/403037877"
+      }
     },
     {
       "year": 2015,
@@ -12825,7 +12871,16 @@
         "Grammy - Canción del Año",
         "Grammy - Mejor Interpretación Pop Solista"
       ],
-      "fun_fact_it": "Hello è stata la prima canzone a vendere oltre un milione di download in una sola settimana negli USA. Ha vinto anche tre Grammy, tra cui Registrazione e Canzone dell'anno."
+      "fun_fact_it": "Hello è stata la prima canzone a vendere oltre un milione di download in una sola settimana negli USA. Ha vinto anche tre Grammy, tra cui Registrazione e Canzone dell'anno.",
+      "uri_apple_music_by_region": {
+        "us": "applemusic://track/1544494392",
+        "de": "applemusic://track/1051333148",
+        "gb": "applemusic://track/1051333148",
+        "fr": "applemusic://track/1051332387",
+        "es": "applemusic://track/1051332387",
+        "nl": "applemusic://track/1051332387",
+        "it": "applemusic://track/1051332387"
+      }
     },
     {
       "year": 2013,
@@ -13005,7 +13060,15 @@
       "isrc": null,
       "uri": "spotify:track:0cqRj7pUJDkTCEsJkx8snD",
       "uri_apple_music": "applemusic://track/1440933651",
-      "uri_apple_music_by_region": {},
+      "uri_apple_music_by_region": {
+        "us": "applemusic://track/1440933651",
+        "de": "applemusic://track/1445882199",
+        "gb": "applemusic://track/1445888394",
+        "fr": "applemusic://track/1445882199",
+        "es": "applemusic://track/1445888394",
+        "nl": "applemusic://track/1445888394",
+        "it": "applemusic://track/1445882199"
+      },
       "uri_youtube_music": "https://music.youtube.com/watch?v=sWMk8dwljFU",
       "uri_tidal": "tidal://track/121444600",
       "uri_deezer": "deezer://track/89077555",
@@ -13069,7 +13132,16 @@
       "awards_es": [
         "Grammy - Mejor Interpretación Pop Solista",
         "Billboard Music Award - Mejor Canción del Hot 100"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "us": "applemusic://track/1193701392",
+        "de": "applemusic://track/1193700923",
+        "gb": "applemusic://track/1193683174",
+        "fr": "applemusic://track/1193701392",
+        "es": "applemusic://track/1193701392",
+        "nl": "applemusic://track/1193701392",
+        "it": "applemusic://track/1193701392"
+      }
     },
     {
       "year": 2017,
@@ -13261,7 +13333,7 @@
     },
     {
       "year": 2020,
-      "uri": "spotify:track:463CkQjx2Zk1yXoBuierM9",
+      "uri": "spotify:track:39LLxExYz6ewLAcYrzQQyP",
       "artist": "Dua Lipa",
       "alt_artists": [
         "Rina Sawayama",
@@ -13286,12 +13358,21 @@
       "fun_fact_es": "Aunque solo llegó al número dos, Levitating fue la canción número uno del Hot 100 de Billboard en el balance de 2021 y pasó 77 semanas en la lista.",
       "fun_fact_fr": "Bien qu'elle n'ait atteint que la deuxième place, Levitating a été le titre numéro un du classement annuel Hot 100 de Billboard en 2021 et est restée 77 semaines dans le classement.",
       "uri_apple_music": "applemusic://track/1510821364",
-      "uri_youtube_music": "https://music.youtube.com/watch?v=TUVcZfQe-Kw",
+      "uri_youtube_music": "https://music.youtube.com/watch?v=WHuBW3qKm9g",
       "uri_tidal": "tidal://track/132569886",
       "uri_deezer": "deezer://track/1124841682",
       "fun_fact_nl": "Hoewel het niet verder kwam dan nummer twee, was Levitating volgens Billboard het grootste Hot 100-nummer van 2021 en stond het 77 weken in de lijst.",
       "awards_nl": [],
-      "fun_fact_it": "Pur essendosi fermata al numero due, Levitating è stata la canzone numero uno della classifica annuale Hot 100 di Billboard del 2021 ed è rimasta 77 settimane in classifica."
+      "fun_fact_it": "Pur essendosi fermata al numero due, Levitating è stata la canzone numero uno della classifica annuale Hot 100 di Billboard del 2021 ed è rimasta 77 settimane in classifica.",
+      "uri_apple_music_by_region": {
+        "us": "applemusic://track/1538003843",
+        "de": "applemusic://track/1551800727",
+        "gb": "applemusic://track/1538003843",
+        "fr": "applemusic://track/1538003843",
+        "es": "applemusic://track/1538003843",
+        "nl": "applemusic://track/1551179407",
+        "it": "applemusic://track/1538003843"
+      }
     },
     {
       "year": 2019,
@@ -13353,7 +13434,16 @@
         "Grammy - Canción del Año",
         "Grammy - Mejor Interpretación Pop Solista"
       ],
-      "fun_fact_it": "Billie Eilish e il fratello Finneas la registrarono nella piccola camera di lui a Los Angeles. Interruppe il record di 19 settimane al numero uno di Lil Nas X e vinse i Grammy come Registrazione e Canzone dell'anno."
+      "fun_fact_it": "Billie Eilish e il fratello Finneas la registrarono nella piccola camera di lui a Los Angeles. Interruppe il record di 19 settimane al numero uno di Lil Nas X e vinse i Grammy come Registrazione e Canzone dell'anno.",
+      "uri_apple_music_by_region": {
+        "us": "applemusic://track/1450695739",
+        "de": "applemusic://track/1450695739",
+        "gb": "applemusic://track/1450695739",
+        "fr": "applemusic://track/1450695739",
+        "es": "applemusic://track/1450695739",
+        "nl": "applemusic://track/1450695739",
+        "it": "applemusic://track/1450695739"
+      }
     },
     {
       "year": 2018,
