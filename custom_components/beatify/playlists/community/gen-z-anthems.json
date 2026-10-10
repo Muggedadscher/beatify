@@ -1,6 +1,6 @@
 {
   "name": "Gen Z Anthems",
-  "version": "1.6",
+  "version": "1.7",
   "tags": [
     "2010s",
     "2020s",
@@ -445,7 +445,10 @@
         "Grammy - Grabación del Año",
         "Grammy - Canción del Año",
         "Grammy - Mejor Interpretación Pop Solista"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1051333148"
+      }
     },
     {
       "year": 2016,
@@ -543,7 +546,10 @@
       "awards_es": [
         "Grammy - Mejor Interpretación Pop Solista",
         "Billboard Music Award - Mejor Canción del Hot 100"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1193700923"
+      }
     },
     {
       "year": 2017,
@@ -669,7 +675,10 @@
       "awards_es": [
         "Grammy - Mejor Canción de Rap",
         "Billboard Music Award - Mejor Canción del Hot 100"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1406109863"
+      }
     },
     {
       "year": 2018,
@@ -773,7 +782,10 @@
         "Grammy - Grabación del Año",
         "Grammy - Canción del Año",
         "Grammy - Mejor Interpretación Pop Solista"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1450695739"
+      }
     },
     {
       "year": 2019,

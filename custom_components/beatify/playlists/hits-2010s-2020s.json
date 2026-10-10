@@ -1,6 +1,6 @@
 {
   "name": "2010s & 2020s Hits",
-  "version": "1.19",
+  "version": "1.20",
   "tags": [
     "pop",
     "charts",
@@ -621,7 +621,9 @@
       "isrc": null,
       "uri": "spotify:track:7ef4DlsgrMEH11cDZd32M6",
       "uri_apple_music": "applemusic://track/1364709436",
-      "uri_apple_music_by_region": {},
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1364709436"
+      },
       "uri_youtube_music": "https://music.youtube.com/watch?v=XWCPbRsMb0Q",
       "uri_tidal": "tidal://track/86980532",
       "uri_deezer": "deezer://track/482990352",
@@ -1977,7 +1979,10 @@
       "fun_fact_es": "El grupo grabó una canción protesta en su disco más comercial, y el vídeo se rodó en las montañas de la Columbia Británica donde crecieron.",
       "fun_fact_fr": "Le groupe a enregistré une chanson de protestation sur son album le plus commercial, et le clip a été tourné dans les montagnes de Colombie-Britannique où ils ont grandi.",
       "fun_fact_nl": "De band nam een protestlied op op hun meest commerciële album, en de video werd opgenomen in de bergen van Brits-Columbia waar ze opgroeiden.",
-      "fun_fact_it": "La band incise una canzone di protesta nell'album più commerciale, e il video fu girato tra le montagne della Columbia Britannica dove sono cresciuti."
+      "fun_fact_it": "La band incise una canzone di protesta nell'album più commerciale, e il video fu girato tra le montagne della Columbia Britannica dove sono cresciuti.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/469259206"
+      }
     },
     {
       "year": 2012,
@@ -2017,7 +2022,10 @@
       "fun_fact_es": "Michael Rosenberg tocaba en la calle en Australia cuando la grabó, y la canción llegó al número uno en diecinueve países antes de que dejara las calles.",
       "fun_fact_fr": "Michael Rosenberg jouait dans la rue en Australie quand il l'a enregistrée, et le morceau a atteint la première place dans dix-neuf pays avant qu'il n'arrête la rue.",
       "fun_fact_nl": "Michael Rosenberg speelde op straat in Australië toen hij het opnam, en het nummer werd in negentien landen nummer één voordat hij met straatmuziek stopte.",
-      "fun_fact_it": "Michael Rosenberg suonava per strada in Australia quando la incise, e il brano arrivò al primo posto in diciannove paesi prima che lasciasse la strada."
+      "fun_fact_it": "Michael Rosenberg suonava per strada in Australia quando la incise, e il brano arrivò al primo posto in diciannove paesi prima che lasciasse la strada.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/694621758"
+      }
     },
     {
       "year": 2013,
@@ -2037,7 +2045,10 @@
       "fun_fact_es": "La canción se comparó de inmediato con 'Brave' de Sara Bareilles, publicada dos meses antes; ambas autoras han restado importancia al asunto en público.",
       "fun_fact_fr": "Le morceau a aussitôt été comparé à « Brave » de Sara Bareilles, sorti deux mois plus tôt ; les deux autrices ont publiquement balayé la polémique.",
       "fun_fact_nl": "Het nummer werd meteen vergeleken met 'Brave' van Sara Bareilles, twee maanden eerder uitgebracht; beide schrijfsters hebben de discussie publiekelijk weggewuifd.",
-      "fun_fact_it": "Il brano fu subito paragonato a 'Brave' di Sara Bareilles, uscito due mesi prima; entrambe le autrici hanno pubblicamente liquidato la polemica."
+      "fun_fact_it": "Il brano fu subito paragonato a 'Brave' di Sara Bareilles, uscito due mesi prima; entrambe le autrici hanno pubblicamente liquidato la polemica.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1440818897"
+      }
     },
     {
       "year": 2014,
@@ -2057,7 +2068,10 @@
       "fun_fact_es": "Sheeran la escribió en un autobús de gira con Johnny McDaid de Snow Patrol, y el vídeo está hecho con grabaciones caseras de su propia infancia.",
       "fun_fact_fr": "Sheeran l'a écrite dans un bus de tournée avec Johnny McDaid de Snow Patrol, et le clip est monté à partir de ses propres films d'enfance.",
       "fun_fact_nl": "Sheeran schreef het in een tourbus met Johnny McDaid van Snow Patrol, en de video bestaat uit zijn eigen jeugdopnames.",
-      "fun_fact_it": "Sheeran la scrisse su un tour bus con Johnny McDaid degli Snow Patrol, e il video è montato con i filmati della sua infanzia."
+      "fun_fact_it": "Sheeran la scrisse su un tour bus con Johnny McDaid degli Snow Patrol, e il video è montato con i filmati della sua infanzia.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/858512630"
+      }
     },
     {
       "year": 2015,
@@ -2077,7 +2091,10 @@
       "fun_fact_es": "Paul Simon escribió al grupo tras oírla, y la lectura seria de una canción folk de 1964 vendió más que cualquier tema propio de la banda de metal.",
       "fun_fact_fr": "Paul Simon a écrit au groupe après l'avoir entendue, et cette lecture sérieuse d'une chanson folk de 1964 s'est mieux vendue que tous leurs morceaux originaux.",
       "fun_fact_nl": "Paul Simon schreef de band na het horen ervan, en de serieuze lezing van een folksong uit 1964 verkocht beter dan elk eigen nummer van de metalband.",
-      "fun_fact_it": "Paul Simon scrisse alla band dopo averla ascoltata, e quella lettura seria di un brano folk del 1964 vendette più di ogni pezzo originale del gruppo metal."
+      "fun_fact_it": "Paul Simon scrisse alla band dopo averla ascoltata, e quella lettura seria di un brano folk del 1964 vendette più di ogni pezzo originale del gruppo metal.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1006937459"
+      }
     },
     {
       "year": 2016,
@@ -2097,7 +2114,10 @@
       "fun_fact_es": "Rory Graham había pasado años en el drum and bass antes de esto; el disco fue platino en Alemania antes que en su propio país.",
       "fun_fact_fr": "Rory Graham avait passé des années dans le drum and bass avant cela ; le disque a été disque de platine en Allemagne plus vite que chez lui.",
       "fun_fact_nl": "Rory Graham had daarvoor jaren in de drum-and-bass gezeten; de plaat werd in Duitsland sneller platina dan in zijn eigen land.",
-      "fun_fact_it": "Rory Graham aveva passato anni nel drum and bass prima di questo; il disco fu platino in Germania prima che in patria."
+      "fun_fact_it": "Rory Graham aveva passato anni nel drum and bass prima di questo; il disco fu platino in Germania prima che in patria.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1303447606"
+      }
     },
     {
       "year": 2017,
@@ -2117,7 +2137,10 @@
       "fun_fact_es": "Styles dejó una boy band y abrió su carrera en solitario con una balada de piano de seis minutos, algo que las discográficas suelen desaconsejar.",
       "fun_fact_fr": "Styles a quitté un boys band et a ouvert sa carrière solo avec une ballade au piano de six minutes, ce que les maisons de disques déconseillent en général.",
       "fun_fact_nl": "Styles verliet een boyband en opende zijn solocarrière met een pianoballade van zes minuten, iets wat platenmaatschappijen doorgaans afraden.",
-      "fun_fact_it": "Styles lasciò una boy band e aprì la carriera solista con una ballata al pianoforte di sei minuti, cosa che le case discografiche di solito sconsigliano."
+      "fun_fact_it": "Styles lasciò una boy band e aprì la carriera solista con una ballata al pianoforte di sei minuti, cosa che le case discografiche di solito sconsigliano.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1226034393"
+      }
     },
     {
       "year": 2018,
@@ -2137,7 +2160,10 @@
       "fun_fact_es": "El sencillo llegó al número uno en veintidós países y se mantuvo más de un año en la lista alemana, algo que ningún debut había logrado en una década.",
       "fun_fact_fr": "Le single a atteint la première place dans vingt-deux pays et est resté plus d'un an dans le classement allemand, ce qu'aucun premier titre n'avait réussi depuis dix ans.",
       "fun_fact_nl": "De single werd in tweeëntwintig landen nummer één en stond ruim een jaar in de Duitse lijst, wat geen debuut in tien jaar was gelukt.",
-      "fun_fact_it": "Il singolo arrivò al primo posto in ventidue paesi e restò oltre un anno nella classifica tedesca, cosa che nessun esordio aveva ottenuto in un decennio."
+      "fun_fact_it": "Il singolo arrivò al primo posto in ventidue paesi e restò oltre un anno nella classifica tedesca, cosa che nessun esordio aveva ottenuto in un decennio.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1386719031"
+      }
     },
     {
       "year": 2018,
@@ -2158,7 +2184,10 @@
       "fun_fact_fr": "Ronson a opposé un violon country à un beat dance, et Miley Cyrus a enregistré le chant quelques jours après l'incendie de sa maison de Malibu.",
       "fun_fact_nl": "Ronson zette een countryviool tegen een dancebeat, en Miley Cyrus nam de zang op enkele dagen nadat haar huis in Malibu was afgebrand.",
       "fun_fact_it": "Ronson mise un violino country contro un ritmo dance, e Miley Cyrus incise la voce pochi giorni dopo l'incendio della sua casa a Malibu.",
-      "uri_youtube_music": "https://music.youtube.com/watch?v=A9hcJgtnm6Q"
+      "uri_youtube_music": "https://music.youtube.com/watch?v=A9hcJgtnm6Q",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1459276883"
+      }
     },
     {
       "year": 2019,
@@ -2178,7 +2207,10 @@
       "fun_fact_es": "La secuencia de acordes es el Canon de Pachelbel, nota por nota, lo que colocó una pieza de cámara de la década de 1680 en lo alto de las listas de 2019.",
       "fun_fact_fr": "La suite d'accords est le Canon de Pachelbel, note pour note, ce qui a placé une pièce de chambre des années 1680 en tête des classements de 2019.",
       "fun_fact_nl": "De akkoordenreeks is Pachelbels Canon, noot voor noot, waarmee een kamermuziekstuk uit de jaren 1680 boven aan de lijsten van 2019 stond.",
-      "fun_fact_it": "La sequenza di accordi è il Canone di Pachelbel, nota per nota, il che portò un pezzo da camera degli anni 1680 in cima alle classifiche del 2019."
+      "fun_fact_it": "La sequenza di accordi è il Canone di Pachelbel, nota per nota, il che portò un pezzo da camera degli anni 1680 in cima alle classifiche del 2019.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1479600902"
+      }
     },
     {
       "year": 2020,
@@ -2198,7 +2230,10 @@
       "fun_fact_es": "Kelly pasó seis años en un monasterio entre la banda familiar y este disco, que se convirtió en su primer número uno en solitario en Alemania.",
       "fun_fact_fr": "Kelly a passé six ans dans un monastère entre le groupe familial et ce disque, qui est devenu son premier numéro un solo en Allemagne.",
       "fun_fact_nl": "Kelly zat tussen de familieband en deze plaat zes jaar in een klooster, en het werd zijn eerste solonummer één in Duitsland.",
-      "fun_fact_it": "Kelly trascorse sei anni in un monastero tra la band di famiglia e questo disco, che divenne il suo primo numero uno da solista in Germania."
+      "fun_fact_it": "Kelly trascorse sei anni in un monastero tra la band di famiglia e questo disco, che divenne il suo primo numero uno da solista in Germania.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1508890055"
+      }
     },
     {
       "year": 2021,
@@ -2218,7 +2253,10 @@
       "fun_fact_es": "El grupo lo estrenó enviando un holograma a la Estación Espacial Internacional, desde donde Thomas Pesquet lo reprodujo hacia la Tierra.",
       "fun_fact_fr": "Le groupe l'a présenté en envoyant un hologramme à la Station spatiale internationale, d'où Thomas Pesquet l'a rejoué vers la Terre.",
       "fun_fact_nl": "De band presenteerde het door een hologram naar het internationale ruimtestation te sturen, waar Thomas Pesquet het terug naar de aarde speelde.",
-      "fun_fact_it": "Il gruppo lo presentò inviando un ologramma alla Stazione Spaziale Internazionale, da dove Thomas Pesquet lo rimandò verso la Terra."
+      "fun_fact_it": "Il gruppo lo presentò inviando un ologramma alla Stazione Spaziale Internazionale, da dove Thomas Pesquet lo rimandò verso la Terra.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1564099110"
+      }
     },
     {
       "year": 2022,
@@ -2238,7 +2276,10 @@
       "fun_fact_es": "Swift la llamó una de sus canciones favoritas propias, y abrió la semana en la que ocupó los diez primeros puestos de la lista estadounidense.",
       "fun_fact_fr": "Swift l'a désignée comme l'une de ses chansons préférées parmi les siennes, et elle a ouvert la semaine où elle occupait les dix premières places du classement américain.",
       "fun_fact_nl": "Swift noemde het een van haar favoriete eigen nummers, en het opende de week waarin ze alle tien de toppositie van de Amerikaanse lijst bezette.",
-      "fun_fact_it": "Swift l'ha definita una delle sue canzoni preferite tra le proprie, e aprì la settimana in cui occupò tutti e dieci i primi posti della classifica americana."
+      "fun_fact_it": "Swift l'ha definita una delle sue canzoni preferite tra le proprie, e aprì la settimana in cui occupò tutti e dieci i primi posti della classifica americana.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1645937758"
+      }
     },
     {
       "year": 2023,
@@ -2258,7 +2299,10 @@
       "fun_fact_es": "El primer sencillo del primer disco de canciones nuevas en dieciocho años, grabado tras la muerte de Charlie Watts, que aún aparece en otros dos temas.",
       "fun_fact_fr": "Le premier single du premier album de chansons inédites en dix-huit ans, enregistré après la mort de Charlie Watts, qui figure encore sur deux autres titres.",
       "fun_fact_nl": "De eerste single van het eerste album met nieuwe nummers in achttien jaar, opgenomen na de dood van Charlie Watts, die nog op twee andere tracks te horen is.",
-      "fun_fact_it": "Il primo singolo del primo album di brani nuovi in diciotto anni, inciso dopo la morte di Charlie Watts, che compare ancora in altri due pezzi."
+      "fun_fact_it": "Il primo singolo del primo album di brani nuovi in diciotto anni, inciso dopo la morte di Charlie Watts, che compare ancora in altri due pezzi.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1704374028"
+      }
     },
     {
       "year": 2010,
@@ -2278,7 +2322,10 @@
       "fun_fact_es": "Mars llevaba años escribiendo éxitos para otros y solo la grabó él mismo después de que dos sellos lo rechazaran como intérprete.",
       "fun_fact_fr": "Mars écrivait des tubes pour les autres depuis des années et ne l'a enregistrée lui-même qu'après le refus de deux labels de le prendre comme interprète.",
       "fun_fact_nl": "Mars schreef jarenlang hits voor anderen en nam dit pas zelf op nadat twee labels hem als vertolker hadden afgewezen.",
-      "fun_fact_it": "Mars scriveva successi per altri da anni e la incise da sé solo dopo che due etichette lo avevano rifiutato come interprete."
+      "fun_fact_it": "Mars scriveva successi per altri da anni e la incise da sé solo dopo che due etichette lo avevano rifiutato come interprete.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/396795873"
+      }
     },
     {
       "year": 2010,
@@ -2298,7 +2345,10 @@
       "fun_fact_es": "El vídeo fue durante años el más odiado de YouTube, lo que no impidió que la canción vendiera más de doce millones de copias.",
       "fun_fact_fr": "Le clip a longtemps été le plus détesté de YouTube, ce qui n'a pas empêché la chanson de se vendre à plus de douze millions d'exemplaires.",
       "fun_fact_nl": "De video was jarenlang de meest gehate op YouTube, wat het nummer niet belette meer dan twaalf miljoen keer te verkopen.",
-      "fun_fact_it": "Il video fu per anni il più odiato su YouTube, il che non impedì alla canzone di vendere oltre dodici milioni di copie."
+      "fun_fact_it": "Il video fu per anni il più odiato su YouTube, il che non impedì alla canzone di vendere oltre dodici milioni di copie.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1443008970"
+      }
     },
     {
       "year": 2010,
@@ -2318,7 +2368,10 @@
       "fun_fact_es": "Adele la escribió en diez minutos con una guitarra acústica y la ha llamado la canción más furiosa que ha hecho.",
       "fun_fact_fr": "Adele l'a écrite en dix minutes à la guitare acoustique et la qualifie de chanson la plus en colère qu'elle ait faite.",
       "fun_fact_nl": "Adele schreef het in tien minuten op een akoestische gitaar en noemt het het boosste nummer dat ze ooit maakte.",
-      "fun_fact_it": "Adele la scrisse in dieci minuti con una chitarra acustica e l'ha definita la canzone più arrabbiata che abbia mai fatto."
+      "fun_fact_it": "Adele la scrisse in dieci minuti con una chitarra acustica e l'ha definita la canzone più arrabbiata che abbia mai fatto.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/403037877"
+      }
     },
     {
       "year": 2010,
@@ -2338,7 +2391,10 @@
       "fun_fact_es": "Dos hombres de Mánchester se vestían como si fuera 1983 y tuvieron su mayor éxito en Alemania, donde los ochenta nunca terminaron del todo.",
       "fun_fact_fr": "Deux hommes de Manchester s'habillaient comme en 1983 et ont connu leur plus grand succès en Allemagne, où les années quatre-vingt n'ont jamais vraiment fini.",
       "fun_fact_nl": "Twee mannen uit Manchester kleedden zich alsof het 1983 was en hadden hun grootste succes in Duitsland, waar de jaren tachtig nooit helemaal eindigden.",
-      "fun_fact_it": "Due uomini di Manchester si vestivano come se fosse il 1983 ed ebbero il maggior successo in Germania, dove gli anni ottanta non sono mai finiti del tutto."
+      "fun_fact_it": "Due uomini di Manchester si vestivano come se fosse il 1983 ed ebbero il maggior successo in Germania, dove gli anni ottanta non sono mai finiti del tutto.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/387222662"
+      }
     },
     {
       "year": 2011,
@@ -2358,7 +2414,10 @@
       "fun_fact_es": "Roudette es hijo de un músico de San Vicente y de una británica, y esta canción fue número uno ocho semanas en Alemania y en ningún otro sitio.",
       "fun_fact_fr": "Roudette est le fils d'un musicien de Saint-Vincent et d'une Britannique, et ce titre a été numéro un huit semaines en Allemagne et nulle part ailleurs.",
       "fun_fact_nl": "Roudette is de zoon van een muzikant uit Saint Vincent en een Britse moeder, en dit nummer stond acht weken op één in Duitsland en nergens anders.",
-      "fun_fact_it": "Roudette è figlio di un musicista di Saint Vincent e di una britannica, e il brano fu numero uno per otto settimane in Germania e in nessun altro posto."
+      "fun_fact_it": "Roudette è figlio di un musicista di Saint Vincent e di una britannica, e il brano fu numero uno per otto settimane in Germania e in nessun altro posto.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1445888760"
+      }
     },
     {
       "year": 2011,
@@ -2378,7 +2437,10 @@
       "fun_fact_es": "La escribieron Dr. Luke y Max Martin, y Jessie J ya había compuesto éxitos para Miley Cyrus y Chris Brown antes de grabar nada propio.",
       "fun_fact_fr": "Dr. Luke et Max Martin l'ont écrite, et Jessie J avait déjà signé des tubes pour Miley Cyrus et Chris Brown avant d'enregistrer quoi que ce soit.",
       "fun_fact_nl": "Dr. Luke en Max Martin schreven het, en Jessie J had al hits voor Miley Cyrus en Chris Brown geschreven voordat ze zelf iets opnam.",
-      "fun_fact_it": "La scrissero Dr. Luke e Max Martin, e Jessie J aveva già firmato successi per Miley Cyrus e Chris Brown prima di incidere qualcosa di suo."
+      "fun_fact_it": "La scrissero Dr. Luke e Max Martin, e Jessie J aveva già firmato successi per Miley Cyrus e Chris Brown prima di incidere qualcosa di suo.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1446021939"
+      }
     },
     {
       "year": 2011,
@@ -2399,7 +2461,10 @@
       "fun_fact_fr": "Gaga l'a écrite la nuit de la mort de son grand-père, et le solo de saxophone est de Clarence Clemons du E Street Band, l'un de ses derniers enregistrements.",
       "fun_fact_nl": "Gaga schreef het in de nacht dat haar grootvader stierf, en de saxofoonsolo is van Clarence Clemons van de E Street Band, een van zijn laatste opnames.",
       "fun_fact_it": "Gaga la scrisse la notte in cui morì suo nonno, e l'assolo di sassofono è di Clarence Clemons della E Street Band, una delle sue ultime incisioni.",
-      "uri_youtube_music": "https://music.youtube.com/watch?v=QeWBS0JBNzQ"
+      "uri_youtube_music": "https://music.youtube.com/watch?v=QeWBS0JBNzQ",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1440824284"
+      }
     },
     {
       "year": 2011,
@@ -2419,7 +2484,10 @@
       "fun_fact_es": "Elizabeth Grant la publicó ella misma con un vídeo montado por ella a partir de material de archivo, y en meses consiguió un contrato discográfico.",
       "fun_fact_fr": "Elizabeth Grant l'a autopubliée avec un clip qu'elle a monté elle-même à partir d'images d'archives, et a décroché un contrat en quelques mois.",
       "fun_fact_nl": "Elizabeth Grant bracht het zelf uit met een video die ze zelf uit archiefbeelden monteerde, en had binnen maanden een platencontract.",
-      "fun_fact_it": "Elizabeth Grant la pubblicò da sé con un video montato da lei con materiale d'archivio, e in pochi mesi ottenne un contratto discografico."
+      "fun_fact_it": "Elizabeth Grant la pubblicò da sé con un video montato da lei con materiale d'archivio, e in pochi mesi ottenne un contratto discografico.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1445289843"
+      }
     },
     {
       "year": 2011,
@@ -2459,7 +2527,10 @@
       "fun_fact_es": "Keys toca ella misma el riff de piano, y la versión que casi todos conocen es la desnuda, publicada después de que la producción completa ya estuviera en listas.",
       "fun_fact_fr": "Keys joue elle-même le riff de piano, et la version que la plupart connaissent est la version dépouillée, sortie après la production complète.",
       "fun_fact_nl": "Keys speelt de pianoriff zelf, en de versie die de meesten kennen is de uitgeklede, uitgebracht nadat de volledige productie al in de lijsten stond.",
-      "fun_fact_it": "Keys suona lei stessa il riff di pianoforte, e la versione che quasi tutti conoscono è quella scarnificata, uscita dopo che la produzione completa era già in classifica."
+      "fun_fact_it": "Keys suona lei stessa il riff di pianoforte, e la versione che quasi tutti conoscono è quella scarnificata, uscita dopo che la produzione completa era già in classifica.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/562189342"
+      }
     },
     {
       "year": 2012,
@@ -2479,7 +2550,10 @@
       "fun_fact_es": "Pat Monahan la escribió sobre el trayecto por la costa californiana donde le pidió matrimonio a su mujer; la banda llevaba ya veinte años junta.",
       "fun_fact_fr": "Pat Monahan l'a écrite sur la route de la côte californienne où il a demandé sa femme en mariage ; le groupe existait déjà depuis vingt ans.",
       "fun_fact_nl": "Pat Monahan schreef het over de rit langs de Californische kust waar hij zijn vrouw ten huwelijk vroeg; de band bestond toen al twintig jaar.",
-      "fun_fact_it": "Pat Monahan la scrisse sul viaggio lungo la costa californiana dove chiese la mano alla moglie; la band esisteva già da vent'anni."
+      "fun_fact_it": "Pat Monahan la scrisse sul viaggio lungo la costa californiana dove chiese la mano alla moglie; la band esisteva già da vent'anni.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1438078577"
+      }
     },
     {
       "year": 2012,
@@ -2499,7 +2573,10 @@
       "fun_fact_es": "Williams la escribió con Gary Barlow, el hombre con el que se peleó públicamente durante quince años tras dejar Take That.",
       "fun_fact_fr": "Williams l'a écrite avec Gary Barlow, l'homme avec qui il s'était publiquement brouillé pendant quinze ans après son départ de Take That.",
       "fun_fact_nl": "Williams schreef het met Gary Barlow, de man met wie hij na zijn vertrek bij Take That vijftien jaar publiekelijk ruzie had.",
-      "fun_fact_it": "Williams la scrisse con Gary Barlow, l'uomo con cui aveva litigato pubblicamente per quindici anni dopo aver lasciato i Take That."
+      "fun_fact_it": "Williams la scrisse con Gary Barlow, l'uomo con cui aveva litigato pubblicamente per quindici anni dopo aver lasciato i Take That.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1450279161"
+      }
     },
     {
       "year": 2013,
@@ -2519,7 +2596,10 @@
       "fun_fact_es": "Ezra ha dicho que nunca ha estado en Budapest; escribió la canción en un viaje en interrail tras perder el tren hacia allí.",
       "fun_fact_fr": "Ezra a dit n'être jamais allé à Budapest ; il a écrit la chanson lors d'un voyage en interrail après avoir raté le train.",
       "fun_fact_nl": "Ezra heeft gezegd dat hij nooit in Boedapest is geweest; hij schreef het nummer op een interrailreis nadat hij de trein ernaartoe had gemist.",
-      "fun_fact_it": "Ezra ha detto di non essere mai stato a Budapest; scrisse la canzone durante un viaggio in interrail dopo aver perso il treno."
+      "fun_fact_it": "Ezra ha detto di non essere mai stato a Budapest; scrisse la canzone durante un viaggio in interrail dopo aver perso il treno.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/858633782"
+      }
     },
     {
       "year": 2013,
@@ -2539,7 +2619,10 @@
       "fun_fact_es": "Los cinco miembros firman la composición, algo inusual en el grupo y una razón por la que siguieron tocándola tras la separación.",
       "fun_fact_fr": "Les cinq membres sont crédités à l'écriture, ce qui était inhabituel pour le groupe et explique qu'ils l'aient jouée après la séparation.",
       "fun_fact_nl": "Alle vijf leden staan als schrijver vermeld, ongebruikelijk voor de groep en een reden waarom ze het na de breuk bleven spelen.",
-      "fun_fact_it": "Tutti e cinque i membri figurano tra gli autori, cosa insolita per il gruppo e uno dei motivi per cui continuarono a suonarla dopo lo scioglimento."
+      "fun_fact_it": "Tutti e cinque i membri figurano tra gli autori, cosa insolita per il gruppo e uno dei motivi per cui continuarono a suonarla dopo lo scioglimento.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/695312371"
+      }
     },
     {
       "year": 2014,
@@ -2559,7 +2642,10 @@
       "fun_fact_es": "Sia llevaba años escribiendo para Rihanna y Beyoncé y se negaba a mostrar la cara en escena; el vídeo envió en su lugar a una bailarina de once años por el mundo.",
       "fun_fact_fr": "Sia écrivait depuis des années pour Rihanna et Beyoncé et refusait de montrer son visage sur scène ; le clip a envoyé à sa place une danseuse de onze ans autour du monde.",
       "fun_fact_nl": "Sia schreef jarenlang voor Rihanna en Beyoncé en weigerde haar gezicht op het podium te tonen; de video stuurde in plaats daarvan een elfjarige danseres de wereld rond.",
-      "fun_fact_it": "Sia scriveva da anni per Rihanna e Beyoncé e rifiutava di mostrare il volto sul palco; il video mandò in giro per il mondo una ballerina di undici anni."
+      "fun_fact_it": "Sia scriveva da anni per Rihanna e Beyoncé e rifiutava di mostrare il volto sul palco; il video mandò in giro per il mondo una ballerina di undici anni.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/882945383"
+      }
     },
     {
       "year": 2014,
@@ -2579,7 +2665,10 @@
       "fun_fact_es": "Danny O'Donoghue pasó dos años como jurado en un concurso británico y escribió esto sobre quienes se presentan y pierden.",
       "fun_fact_fr": "Danny O'Donoghue a passé deux ans comme juré d'un télécrochet britannique et a écrit ceci sur ceux qui passent l'audition et perdent.",
       "fun_fact_nl": "Danny O'Donoghue zat twee jaar in de jury van een Britse talentenjacht en schreef dit over degenen die auditie doen en verliezen.",
-      "fun_fact_it": "Danny O'Donoghue passò due anni come giudice in un talent britannico e scrisse questo su chi si presenta e perde."
+      "fun_fact_it": "Danny O'Donoghue passò due anni come giudice in un talent britannico e scrisse questo su chi si presenta e perde.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1030798837"
+      }
     },
     {
       "year": 2014,
@@ -2599,7 +2688,10 @@
       "fun_fact_es": "El grupo toma su nombre de una canción de Michael Jackson, y el disco estuvo más tiempo en la lista alemana que en la estadounidense.",
       "fun_fact_fr": "Le groupe tire son nom d'une chanson de Michael Jackson, et le disque est resté plus longtemps dans le classement allemand qu'en Amérique.",
       "fun_fact_nl": "De band ontleent zijn naam aan een nummer van Michael Jackson, en de plaat stond langer in de Duitse lijst dan in Amerika.",
-      "fun_fact_it": "Il gruppo prende il nome da una canzone di Michael Jackson, e il disco restò più a lungo nella classifica tedesca che in America."
+      "fun_fact_it": "Il gruppo prende il nome da una canzone di Michael Jackson, e il disco restò più a lungo nella classifica tedesca che in America.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1473891823"
+      }
     },
     {
       "year": 2014,
@@ -2619,7 +2711,10 @@
       "fun_fact_es": "El grupo australiano son tres hermanos y dos amigos, y este fue el sencillo más vendido de aquel año en Australia.",
       "fun_fact_fr": "Le groupe australien réunit trois frères et sœurs et deux amis, et ce fut le single le plus vendu de l'année en Australie.",
       "fun_fact_nl": "De Australische band bestaat uit drie broers en zussen en twee vrienden, en dit was de best verkochte single van dat jaar in Australië.",
-      "fun_fact_it": "Il gruppo australiano è formato da tre fratelli e due amici, e questo fu il singolo più venduto dell'anno in Australia."
+      "fun_fact_it": "Il gruppo australiano è formato da tre fratelli e due amici, e questo fu il singolo più venduto dell'anno in Australia.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1445292554"
+      }
     },
     {
       "year": 2015,
@@ -2639,7 +2734,10 @@
       "fun_fact_es": "La canción se escribió en una sola tarde para una banda sonora y se convirtió en el tema más escuchado de una artista británica de la década.",
       "fun_fact_fr": "La chanson a été écrite en un après-midi pour une bande originale et est devenue le titre le plus écouté d'une artiste britannique de la décennie.",
       "fun_fact_nl": "Het nummer werd in één middag geschreven voor een filmsoundtrack en werd de meest gestreamde track van een Britse zangeres van het decennium.",
-      "fun_fact_it": "La canzone fu scritta in un pomeriggio per una colonna sonora e divenne il brano più ascoltato di un'artista britannica del decennio."
+      "fun_fact_it": "La canzone fu scritta in un pomeriggio per una colonna sonora e divenne il brano più ascoltato di un'artista britannica del decennio.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1440853360"
+      }
     },
     {
       "year": 2015,
@@ -2659,7 +2757,10 @@
       "fun_fact_es": "Puth estudiaba composición de jazz en un conservatorio y consiguió el contrato después de que Ellen DeGeneres viera un vídeo suyo de versiones.",
       "fun_fact_fr": "Puth étudiait la composition jazz au conservatoire et a obtenu son contrat après qu'Ellen DeGeneres eut remarqué une vidéo de reprise.",
       "fun_fact_nl": "Puth studeerde jazzcompositie aan een conservatorium en kreeg zijn platencontract nadat Ellen DeGeneres een covervideo had opgemerkt.",
-      "fun_fact_it": "Puth studiava composizione jazz in conservatorio e ottenne il contratto dopo che Ellen DeGeneres notò un suo video di cover."
+      "fun_fact_it": "Puth studiava composizione jazz in conservatorio e ottenne il contratto dopo che Ellen DeGeneres notò un suo video di cover.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1172997026"
+      }
     },
     {
       "year": 2015,
@@ -2699,7 +2800,10 @@
       "fun_fact_es": "Mendes tenía diecisiete años y había construido su público con vídeos de versiones de seis segundos antes de que ningún sello supiera de él.",
       "fun_fact_fr": "Mendes avait dix-sept ans et s'était fait un public avec des vidéos de reprises de six secondes avant qu'aucun label n'ait entendu parler de lui.",
       "fun_fact_nl": "Mendes was zeventien en had zijn publiek opgebouwd met covervideo's van zes seconden voordat enig label van hem had gehoord.",
-      "fun_fact_it": "Mendes aveva diciassette anni e si era costruito un pubblico con video di cover di sei secondi prima che un'etichetta lo conoscesse."
+      "fun_fact_it": "Mendes aveva diciassette anni e si era costruito un pubblico con video di cover di sei secondi prima che un'etichetta lo conoscesse.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1440892706"
+      }
     },
     {
       "year": 2016,
@@ -2719,7 +2823,10 @@
       "fun_fact_es": "Jasmine van den Bogaerde graba como Birdy desde los doce años, cuando ganó un concurso nacional de talentos.",
       "fun_fact_fr": "Jasmine van den Bogaerde enregistre sous le nom de Birdy depuis ses douze ans, après avoir gagné un concours national de talents.",
       "fun_fact_nl": "Jasmine van den Bogaerde neemt sinds haar twaalfde op als Birdy, toen ze een landelijke talentenwedstrijd won.",
-      "fun_fact_it": "Jasmine van den Bogaerde incide come Birdy da quando aveva dodici anni, dopo aver vinto un concorso nazionale per talenti."
+      "fun_fact_it": "Jasmine van den Bogaerde incide come Birdy da quando aveva dodici anni, dopo aver vinto un concorso nazionale per talenti.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1079076448"
+      }
     },
     {
       "year": 2016,
@@ -2739,7 +2846,10 @@
       "fun_fact_es": "Jaehn tenía veintiún años y ya había tenido un número uno mundial con un remix hecho en casa de sus padres en Hamburgo.",
       "fun_fact_fr": "Jaehn avait vingt et un ans et avait déjà eu un numéro un mondial avec un remix réalisé chez ses parents à Hambourg.",
       "fun_fact_nl": "Jaehn was eenentwintig en had al een wereldwijde nummer één met een remix die hij bij zijn ouders thuis in Hamburg maakte.",
-      "fun_fact_it": "Jaehn aveva ventun anni e aveva già avuto un numero uno mondiale con un remix fatto in casa dei genitori ad Amburgo."
+      "fun_fact_it": "Jaehn aveva ventun anni e aveva già avuto un numero uno mondiale con un remix fatto in casa dei genitori ad Amburgo.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1445044817"
+      }
     },
     {
       "year": 2016,
@@ -2759,7 +2869,10 @@
       "fun_fact_es": "La letra habla de una madre soltera que baila para alimentar a su hijo, algo que la mayoría tardó años en notar bajo el ritmo tropical.",
       "fun_fact_fr": "Le texte parle d'une mère célibataire qui danse pour nourrir son enfant, ce que la plupart n'ont remarqué que des années plus tard sous le beat tropical.",
       "fun_fact_nl": "De tekst gaat over een alleenstaande moeder die danst om haar kind te voeden, wat de meesten pas jaren later onder de tropische beat opmerkten.",
-      "fun_fact_it": "Il testo parla di una madre single che balla per sfamare il figlio, cosa che i più notarono solo anni dopo sotto il ritmo tropicale."
+      "fun_fact_it": "Il testo parla di una madre single che balla per sfamare il figlio, cosa che i più notarono solo anni dopo sotto il ritmo tropicale.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1164046335"
+      }
     },
     {
       "year": 2017,
@@ -2779,7 +2892,10 @@
       "fun_fact_es": "Michaels había escrito para Justin Bieber, Selena Gomez y Britney Spears antes de este, su primer sencillo con nombre propio.",
       "fun_fact_fr": "Michaels avait écrit pour Justin Bieber, Selena Gomez et Britney Spears avant ce premier single sous son propre nom.",
       "fun_fact_nl": "Michaels schreef voor Justin Bieber, Selena Gomez en Britney Spears voordat dit haar eerste single onder eigen naam werd.",
-      "fun_fact_it": "Michaels aveva scritto per Justin Bieber, Selena Gomez e Britney Spears prima di questo, il suo primo singolo a proprio nome."
+      "fun_fact_it": "Michaels aveva scritto per Justin Bieber, Selena Gomez e Britney Spears prima di questo, il suo primo singolo a proprio nome.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1440877759"
+      }
     },
     {
       "year": 2017,
@@ -2799,7 +2915,10 @@
       "fun_fact_es": "Ora nació en Pristina y salió de Kosovo siendo un bebé; la canción estuvo un año en la lista alemana, más que en la británica.",
       "fun_fact_fr": "Ora est née à Pristina et a quitté le Kosovo bébé ; le titre est resté un an dans le classement allemand, plus longtemps qu'au Royaume-Uni.",
       "fun_fact_nl": "Ora werd geboren in Pristina en verliet Kosovo als baby; het nummer stond een jaar in de Duitse lijst, langer dan in Groot-Brittannië.",
-      "fun_fact_it": "Ora è nata a Pristina e lasciò il Kosovo da neonata; il brano restò un anno nella classifica tedesca, più che in Gran Bretagna."
+      "fun_fact_it": "Ora è nata a Pristina e lasciò il Kosovo da neonata; il brano restò un anno nella classifica tedesca, più che in Gran Bretagna.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1294717501"
+      }
     },
     {
       "year": 2017,
@@ -2819,7 +2938,10 @@
       "fun_fact_es": "Dan Reynolds la escribió en una época en la que apenas podía salir de casa, y dos años después el grupo la tocó en una Super Bowl.",
       "fun_fact_fr": "Dan Reynolds l'a écrite à une époque où il pouvait à peine sortir de chez lui, et le groupe l'a jouée au Super Bowl deux ans plus tard.",
       "fun_fact_nl": "Dan Reynolds schreef het in een periode waarin hij het huis nauwelijks uit kon, en twee jaar later speelde de band het op een Super Bowl.",
-      "fun_fact_it": "Dan Reynolds la scrisse in un periodo in cui riusciva a stento a uscire di casa, e due anni dopo la band la suonò al Super Bowl."
+      "fun_fact_it": "Dan Reynolds la scrisse in un periodo in cui riusciva a stento a uscire di casa, e due anni dopo la band la suonò al Super Bowl.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1411628148"
+      }
     },
     {
       "year": 2019,
@@ -2839,7 +2961,10 @@
       "fun_fact_es": "El título nombra a un rapero que no tiene nada que ver con el disco; Sam Feldt ha dicho que trata de oír su música en un sitio inesperado.",
       "fun_fact_fr": "Le titre nomme un rappeur qui n'a rien à voir avec le disque ; Sam Feldt a dit qu'il s'agit d'entendre sa musique là où on ne s'y attend pas.",
       "fun_fact_nl": "De titel noemt een rapper die niets met de plaat te maken heeft; Sam Feldt zegt dat het gaat over je muziek horen op een onverwachte plek.",
-      "fun_fact_it": "Il titolo cita un rapper che non c'entra nulla con il disco; Sam Feldt ha detto che parla di sentire la propria musica in un posto inatteso."
+      "fun_fact_it": "Il titolo cita un rapper che non c'entra nulla con il disco; Sam Feldt ha detto che parla di sentire la propria musica in un posto inatteso.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1462755255"
+      }
     },
     {
       "year": 2019,
@@ -2859,7 +2984,10 @@
       "fun_fact_es": "Los hermanos llevaban seis años separados y volvieron con este sencillo, que entró directo al número uno, el primero de su carrera.",
       "fun_fact_fr": "Les frères étaient séparés depuis six ans et sont revenus avec ce single, entré directement à la première place — leur premier.",
       "fun_fact_nl": "De broers waren zes jaar uit elkaar en kwamen terug met deze single, die rechtstreeks naar nummer één ging, hun eerste ooit.",
-      "fun_fact_it": "I fratelli erano separati da sei anni e tornarono con questo singolo, entrato dritto al primo posto: il loro primo in assoluto."
+      "fun_fact_it": "I fratelli erano separati da sei anni e tornarono con questo singolo, entrato dritto al primo posto: il loro primo in assoluto.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1461478389"
+      }
     },
     {
       "year": 2020,
@@ -2879,7 +3007,10 @@
       "fun_fact_es": "Amanda Koci es hija de refugiados albaneses asentados en Wisconsin, y este fue su segundo éxito mundial en dos años.",
       "fun_fact_fr": "Amanda Koci est la fille de réfugiés albanais installés dans le Wisconsin, et ce fut son deuxième succès mondial en deux ans.",
       "fun_fact_nl": "Amanda Koci is de dochter van Albanese vluchtelingen die in Wisconsin belandden, en dit was haar tweede wereldhit in twee jaar.",
-      "fun_fact_it": "Amanda Koci è figlia di rifugiati albanesi stabilitisi nel Wisconsin, e questo fu il suo secondo successo mondiale in due anni."
+      "fun_fact_it": "Amanda Koci è figlia di rifugiati albanesi stabilitisi nel Wisconsin, e questo fu il suo secondo successo mondiale in due anni.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1538214605"
+      }
     },
     {
       "year": 2020,
@@ -2899,7 +3030,10 @@
       "fun_fact_es": "El disco del que procede fue ignorado en los Grammy, y el artista respondió negándose a presentar nada al año siguiente.",
       "fun_fact_fr": "L'album dont il est tiré a été ignoré aux Grammy, et l'artiste a répondu en refusant de rien soumettre l'année suivante.",
       "fun_fact_nl": "Het album waar het van komt werd bij de Grammy's genegeerd, en de artiest reageerde door het jaar daarop niets in te dienen.",
-      "fun_fact_it": "L'album da cui proviene fu ignorato ai Grammy, e l'artista rispose rifiutandosi di presentare qualcosa l'anno seguente."
+      "fun_fact_it": "L'album da cui proviene fu ignorato ai Grammy, e l'artista rispose rifiutandosi di presentare qualcosa l'anno seguente.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1499386369"
+      }
     },
     {
       "year": 2021,
@@ -2919,7 +3053,10 @@
       "fun_fact_es": "Sheeran hizo a propósito un disco de baile tras dos álbumes de baladas, y aparece en el vídeo con dientes de vampiro.",
       "fun_fact_fr": "Sheeran a délibérément écrit un morceau dance après deux albums de ballades, et apparaît dans le clip avec des dents de vampire.",
       "fun_fact_nl": "Sheeran schreef na twee balladealbums bewust een danceplaat, en verschijnt in de video met vampiertanden.",
-      "fun_fact_it": "Sheeran scrisse di proposito un pezzo dance dopo due album di ballate, e nel video compare con denti da vampiro."
+      "fun_fact_it": "Sheeran scrisse di proposito un pezzo dance dopo due album di ballate, e nel video compare con denti da vampiro.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1571330212"
+      }
     },
     {
       "year": 2021,
@@ -2939,7 +3076,10 @@
       "fun_fact_es": "Escrita como canción oficial de un torneo europeo de fútbol aplazado un año, con dos miembros de U2 en ella.",
       "fun_fact_fr": "Écrite comme chanson officielle d'un tournoi européen de football reporté d'un an, avec deux membres de U2 dessus.",
       "fun_fact_nl": "Geschreven als officieel lied van een met een jaar uitgesteld Europees voetbaltoernooi, met twee leden van U2 erop.",
-      "fun_fact_it": "Scritta come canzone ufficiale di un torneo europeo di calcio rinviato di un anno, con due membri degli U2."
+      "fun_fact_it": "Scritta come canzone ufficiale di un torneo europeo di calcio rinviato di un anno, con due membri degli U2.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1572475415"
+      }
     },
     {
       "year": 2021,
@@ -2959,7 +3099,10 @@
       "fun_fact_es": "Soler creció entre Barcelona y Tokio y canta en español para un mercado alemán que en su mayoría no lo habla.",
       "fun_fact_fr": "Soler a grandi entre Barcelone et Tokyo et chante en espagnol pour un marché allemand qui, pour l'essentiel, ne le parle pas.",
       "fun_fact_nl": "Soler groeide op tussen Barcelona en Tokio en zingt in het Spaans voor een Duitse markt die het grotendeels niet spreekt.",
-      "fun_fact_it": "Soler è cresciuto tra Barcellona e Tokyo e canta in spagnolo per un mercato tedesco che in gran parte non lo parla."
+      "fun_fact_it": "Soler è cresciuto tra Barcellona e Tokyo e canta in spagnolo per un mercato tedesco che in gran parte non lo parla.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1551787833"
+      }
     },
     {
       "year": 2022,
@@ -2979,7 +3122,10 @@
       "fun_fact_es": "Trainor lo grabó un año después de dar a luz y lo publicó en medio de una moda de vídeos cortos con la que no contaba, que lo llevó por el mundo.",
       "fun_fact_fr": "Trainor l'a enregistrée un an après son accouchement et l'a sortie en pleine mode de vidéos courtes qu'elle n'avait pas prévue, ce qui l'a portée dans le monde entier.",
       "fun_fact_nl": "Trainor nam het een jaar na haar bevalling op en bracht het uit in een kortevideotrend waar ze niet op had gerekend, die het de wereld rond droeg.",
-      "fun_fact_it": "Trainor la incise un anno dopo il parto e la pubblicò in piena moda dei video brevi, che non aveva previsto e che la portò in tutto il mondo."
+      "fun_fact_it": "Trainor la incise un anno dopo il parto e la pubblicò in piena moda dei video brevi, che non aveva previsto e che la portò in tutto il mondo.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1630437329"
+      }
     },
     {
       "year": 2022,
@@ -2999,7 +3145,10 @@
       "fun_fact_es": "El dúo francés construyó el tema sobre un sample de un disco de house francés de los noventa, que es donde empieza casi todo su catálogo.",
       "fun_fact_fr": "Le duo français a bâti le morceau sur un sample d'un disque de house français des années quatre-vingt-dix, d'où part l'essentiel de leur catalogue.",
       "fun_fact_nl": "Het Franse duo bouwde de track rond een sample uit een Franse houseplaat uit de jaren negentig, waar het grootste deel van hun catalogus begint.",
-      "fun_fact_it": "Il duo francese costruì il pezzo attorno a un campione di un disco house francese degli anni novanta, da cui parte gran parte del loro catalogo."
+      "fun_fact_it": "Il duo francese costruì il pezzo attorno a un campione di un disco house francese degli anni novanta, da cui parte gran parte del loro catalogo.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1536415125"
+      }
     },
     {
       "year": 2023,
@@ -3019,7 +3168,10 @@
       "fun_fact_es": "Pink escribió el disco del que procede tras perder a su padre y a una amiga cercana, y lo publicó a los cuarenta y tres.",
       "fun_fact_fr": "Pink a écrit l'album dont il est tiré après avoir perdu son père et une amie proche, et l'a sorti à quarante-trois ans.",
       "fun_fact_nl": "Pink schreef het album waar dit van komt na het verlies van haar vader en een goede vriendin, en bracht het uit op haar drieënveertigste.",
-      "fun_fact_it": "Pink scrisse l'album da cui proviene dopo aver perso il padre e un'amica stretta, e lo pubblicò a quarantatré anni."
+      "fun_fact_it": "Pink scrisse l'album da cui proviene dopo aver perso il padre e un'amica stretta, e lo pubblicò a quarantatré anni.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1718592549"
+      }
     }
   ]
 }
