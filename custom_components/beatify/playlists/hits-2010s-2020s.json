@@ -1209,7 +1209,9 @@
       "isrc": null,
       "uri": "spotify:track:0cqRj7pUJDkTCEsJkx8snD",
       "uri_apple_music": "applemusic://track/1440933651",
-      "uri_apple_music_by_region": {},
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1445882199"
+      },
       "uri_youtube_music": "https://music.youtube.com/watch?v=sWMk8dwljFU",
       "uri_tidal": "tidal://track/121444600",
       "uri_deezer": "deezer://track/89077555",
@@ -1822,7 +1824,9 @@
       "isrc": null,
       "uri": "spotify:track:2Foc5Q5nqNiosCNqttzHof",
       "uri_apple_music": null,
-      "uri_apple_music_by_region": {},
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1655398789"
+      },
       "uri_youtube_music": "https://music.youtube.com/watch?v=Rgrt_8mXrK8",
       "uri_tidal": "tidal://track/19823990",
       "uri_deezer": "deezer://track/66609426",
@@ -2002,7 +2006,10 @@
       "fun_fact_es": "Sia escribió la letra en catorce minutos, y Rihanna ha dicho que aceptó la canción en el acto porque era lo menos agresivo que le habían ofrecido en años.",
       "fun_fact_fr": "Sia a écrit le texte en quatorze minutes, et Rihanna a dit avoir pris la chanson sur-le-champ car c'était la proposition la moins agressive depuis des années.",
       "fun_fact_nl": "Sia schreef de tekst in veertien minuten, en Rihanna heeft gezegd dat ze het nummer meteen nam omdat het het minst agressieve was dat haar in jaren was aangeboden.",
-      "fun_fact_it": "Sia scrisse il testo in quattordici minuti, e Rihanna ha detto di aver preso la canzone all'istante perché era la cosa meno aggressiva che le fosse stata offerta da anni."
+      "fun_fact_it": "Sia scrisse il testo in quattordici minuti, e Rihanna ha detto di aver preso la canzone all'istante perché era la cosa meno aggressiva che le fosse stata offerta da anni.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1417177301"
+      }
     },
     {
       "year": 2012,
@@ -2507,7 +2514,10 @@
       "fun_fact_es": "La canción llevaba meses sin éxito hasta que un anuncio de coches durante una final de fútbol americano la llevó al número uno.",
       "fun_fact_fr": "Le titre est sorti sans succès pendant des mois jusqu'à ce qu'une publicité automobile pendant une finale de football américain le propulse premier.",
       "fun_fact_nl": "Het nummer stond maanden zonder succes uit tot een autoreclame tijdens een American-footballfinale het naar nummer één bracht.",
-      "fun_fact_it": "Il brano uscì senza successo per mesi finché una pubblicità di auto durante una finale di football americano lo portò al primo posto."
+      "fun_fact_it": "Il brano uscì senza successo per mesi finché una pubblicità di auto durante una finale di football americano lo portò al primo posto.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/463207147"
+      }
     },
     {
       "year": 2012,
@@ -2780,7 +2790,10 @@
       "fun_fact_es": "Olly Alexander la escribió sobre una relación en la que aún estaba, y el nombre del grupo viene de una expresión que su madre usaba sobre su edad.",
       "fun_fact_fr": "Olly Alexander l'a écrite sur une relation en cours, et le nom du groupe vient d'une expression que sa mère employait sur son âge.",
       "fun_fact_nl": "Olly Alexander schreef het over een relatie waarin hij nog zat, en de bandnaam komt van een uitdrukking van zijn moeder over zijn leeftijd.",
-      "fun_fact_it": "Olly Alexander la scrisse su una relazione ancora in corso, e il nome del gruppo viene da un'espressione che sua madre usava sulla sua età."
+      "fun_fact_it": "Olly Alexander la scrisse su una relazione ancora in corso, e il nome del gruppo viene da un'espressione che sua madre usava sulla sua età.",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1440830524"
+      }
     },
     {
       "year": 2016,

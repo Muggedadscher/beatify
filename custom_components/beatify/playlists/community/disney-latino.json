@@ -474,7 +474,10 @@
         "Marco Antonio Solís",
         "Sofia Carson"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Moana» della Disney (2016)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Moana» della Disney (2016).",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 2010,
@@ -617,7 +620,10 @@
         "Analy",
         "Chayanne"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Los Muppets» della Disney (2011)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Los Muppets» della Disney (2011).",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 1989,
@@ -658,7 +664,10 @@
         "Kalimba Marichal",
         "Tata Vega"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994)."
+      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1443154120"
+      }
     },
     {
       "year": 1991,

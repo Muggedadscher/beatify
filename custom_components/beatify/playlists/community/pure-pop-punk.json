@@ -692,7 +692,10 @@
       "uri_tidal": "tidal://track/21886250",
       "uri_deezer": "deezer://track/69830342",
       "fun_fact_nl": "Sugarcult heeft het Californische poppunkgeluid van begin 2000 perfect gevangen met dit nummer over het najagen van dromen in LA.",
-      "awards_nl": []
+      "awards_nl": [],
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 2007,

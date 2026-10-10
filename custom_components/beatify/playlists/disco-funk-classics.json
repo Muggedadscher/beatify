@@ -1201,7 +1201,10 @@
       "uri_tidal": "tidal://track/25702905",
       "uri_deezer": "deezer://track/11133258",
       "fun_fact_nl": "Geschreven door Jacques Morali en Victor Willis nadat Morali het YMCA-bord zag terwijl hij door New York liep. De beroemde armbewegingen werden uitgevonden door publiekslid Dick Clark tijdens een optreden bij American Bandstand. Het is een van de meest herkenbare nummers ooit opgenomen.",
-      "awards_nl": []
+      "awards_nl": [],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/504994461"
+      }
     },
     {
       "year": 1982,
@@ -2054,7 +2057,10 @@
       "uri_tidal": "tidal://track/50380395",
       "uri_deezer": "deezer://track/775712",
       "fun_fact_nl": "De eerste single uitgebracht door Prince and The Revolution van 'Around the World in a Day'. Prince nam het grootste deel van het album op in zijn thuisstudio in Chanhassen, Minnesota. Het dromerige pop-funkgeluid markeerde een afwijking van de hardere funk van 'Purple Rain'.",
-      "awards_nl": []
+      "awards_nl": [],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/213034813"
+      }
     },
     {
       "year": 1982,

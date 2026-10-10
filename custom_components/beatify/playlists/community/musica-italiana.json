@@ -1002,7 +1002,10 @@
       "isrc": "ITB007900666",
       "uri_apple_music": "applemusic://track/1080717875",
       "uri_deezer": "deezer://track/1009010",
-      "uri_youtube_music": "https://music.youtube.com/watch?v=1Hcf2TxhhX4"
+      "uri_youtube_music": "https://music.youtube.com/watch?v=1Hcf2TxhhX4",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/298410245"
+      }
     },
     {
       "year": 1979,
@@ -1912,7 +1915,10 @@
       "fun_fact_it": "Gianni Morandi - \"Uno su mille\" (1985), dal canone del pop italiano. Pubblicata da RCA Italiana.",
       "isrc": "ITB008500294",
       "uri_apple_music": "applemusic://track/796510429",
-      "uri_deezer": "deezer://track/74189254"
+      "uri_deezer": "deezer://track/74189254",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1783354605"
+      }
     },
     {
       "year": 1985,

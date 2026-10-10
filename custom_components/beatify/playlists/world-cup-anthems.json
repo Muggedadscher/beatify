@@ -167,7 +167,9 @@
       "uri_tidal": null,
       "uri_deezer": "deezer://track/2160233807",
       "isrc": "USCGJ2341061",
-      "uri_apple_music_by_region": {},
+      "uri_apple_music_by_region": {
+        "de": null
+      },
       "fun_fact_it": "Il titolo significa «Il mondo unito da un pallone»: è la canzone ufficiale del Mondiale messicano del 1986, quello della Mano de Dios di Maradona."
     },
     {
@@ -310,7 +312,9 @@
       "uri_tidal": "tidal://track/17819979",
       "uri_deezer": "deezer://track/15209177",
       "isrc": null,
-      "uri_apple_music_by_region": {},
+      "uri_apple_music_by_region": {
+        "de": null
+      },
       "fun_fact_it": "Inno ufficiale di Francia '98, tra il mbalax senegalese e la chanson francese: una dichiarazione multiculturale."
     },
     {
@@ -544,7 +548,9 @@
       "uri_tidal": "tidal://track/29173798",
       "uri_deezer": "deezer://track/77913076",
       "isrc": null,
-      "uri_apple_music_by_region": {},
+      "uri_apple_music_by_region": {
+        "de": null
+      },
       "fun_fact_it": "Inno ufficiale di Brasile 2014: la chitarra di Carlos Santana insieme ai ritmi EDM di Avicii e alla voce di Wyclef."
     },
     {

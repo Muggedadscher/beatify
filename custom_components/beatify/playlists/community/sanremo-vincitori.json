@@ -1020,7 +1020,9 @@
       "fun_fact_it": "Elisa - \"Luce (Tramonti a Nord Est)\" ha vinto il Festival di Sanremo nel 2001.",
       "isrc": "ITZ040100664",
       "uri_apple_music": "applemusic://track/705069435",
-      "uri_apple_music_by_region": {},
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1444579807"
+      },
       "uri_deezer": "deezer://track/1024698802",
       "uri_youtube_music": "https://music.youtube.com/watch?v=tPwqOWK6EFw",
       "uri_tidal": null

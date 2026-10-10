@@ -1848,8 +1848,7 @@
       "uri": "spotify:track:7B1Dl3tXqySkB8OPEwVvSu",
       "uri_apple_music": "applemusic://track/1713469227",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1713469227",
-        "de": "applemusic://track/532580589"
+        "us": "applemusic://track/1713469227"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=cGi4hNgyhik",
       "uri_tidal": null,
@@ -1936,7 +1935,8 @@
       ],
       "uri_apple_music": "applemusic://track/697195787",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/697195787"
+        "us": "applemusic://track/697195787",
+        "de": "applemusic://track/716657849"
       }
     },
     {
@@ -2480,7 +2480,8 @@
       ],
       "uri_apple_music": "applemusic://track/828060155",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/828060155"
+        "us": "applemusic://track/828060155",
+        "de": "applemusic://track/504339995"
       }
     },
     {
@@ -4187,7 +4188,8 @@
       "uri": "spotify:track:1yaISGEoawvX2l6cU7M13n",
       "uri_apple_music": "applemusic://track/1444887542",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1444887542"
+        "us": "applemusic://track/1444887542",
+        "de": "applemusic://track/1528051023"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=tSJSVmfaMCs",
       "uri_tidal": null,
@@ -4221,7 +4223,10 @@
         "ILLENIUM, Valerie Broussard, NURKO",
         "Ninetoes",
         "Congorock, Lexxus"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/921500044"
+      }
     },
     {
       "artist": "Martin Garrix, Bonn",
@@ -4605,7 +4610,8 @@
       "uri": "spotify:track:5XXdHWkkprtfG8DxBARihy",
       "uri_apple_music": "applemusic://track/1762724674",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1762724674"
+        "us": "applemusic://track/1762724674",
+        "de": "applemusic://track/1711708999"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=CPzF73sLdrw",
       "uri_tidal": null,
@@ -4687,7 +4693,8 @@
       ],
       "uri_apple_music": "applemusic://track/405926184",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/405926184"
+        "us": "applemusic://track/405926184",
+        "de": "applemusic://track/1717182909"
       }
     },
     {
@@ -4836,7 +4843,8 @@
       ],
       "uri_apple_music": "applemusic://track/1399102683",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1399102683"
+        "us": "applemusic://track/1399102683",
+        "de": "applemusic://track/1519035984"
       }
     },
     {
@@ -4907,7 +4915,10 @@
         "ARTBAT, Sailor & I",
         "Kölsch, Troels Abrahamsen, ARTBAT",
         "Zerb, Sofiya Nzau"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1635570436"
+      }
     },
     {
       "artist": "Martin Garrix, Alesso, Shaun Farrugia",
@@ -5026,7 +5037,10 @@
         "Hardwell"
       ],
       "uri_apple_music": "applemusic://track/1712580920",
-      "uri_deezer": "deezer://track/69184803"
+      "uri_deezer": "deezer://track/69184803",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/282064440"
+      }
     },
     {
       "artist": "Avicii",
@@ -5417,7 +5431,10 @@
         "Black Coffee, David Guetta, Delilah Montagu",
         "Justice, Soulwax"
       ],
-      "uri_apple_music": "applemusic://track/1445284072"
+      "uri_apple_music": "applemusic://track/1445284072",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1444876622"
+      }
     },
     {
       "artist": "Tiësto, R3HAB",
@@ -5510,7 +5527,8 @@
       ],
       "uri_apple_music": "applemusic://track/1786170776",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1786170776"
+        "us": "applemusic://track/1786170776",
+        "de": null
       }
     },
     {
@@ -5609,7 +5627,8 @@
       ],
       "uri_apple_music": "applemusic://track/411864197",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/411864197"
+        "us": "applemusic://track/411864197",
+        "de": "applemusic://track/1383671389"
       }
     },
     {
@@ -5655,7 +5674,10 @@
         "Nicky Romero, NERVO",
         "Filterheadz",
         "Blasterjaxx, Hardwell"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1818113726"
+      }
     },
     {
       "artist": "Tchami",
@@ -5815,7 +5837,8 @@
       "uri": "spotify:track:7JSRgtiKwuyhZBbJ52cFkb",
       "uri_apple_music": "applemusic://track/516569496",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/516569496"
+        "us": "applemusic://track/516569496",
+        "de": "applemusic://track/1686532246"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=0z7omu2UNVA",
       "uri_tidal": null,
@@ -6038,7 +6061,8 @@
       "uri": "spotify:track:6RnkFd8Fqqgk1Uni8RgqCQ",
       "uri_apple_music": "applemusic://track/1432624804",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1432624804"
+        "us": "applemusic://track/1432624804",
+        "de": "applemusic://track/1346735451"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=WfPu9Jrcpuk",
       "uri_tidal": null,
@@ -6285,7 +6309,8 @@
       "uri": "spotify:track:4Q3p9fr4aaSVsiNmUrT2Tu",
       "uri_apple_music": "applemusic://track/430649596",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/430649596"
+        "us": "applemusic://track/430649596",
+        "de": null
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=ypDtUUtuNzQ",
       "uri_tidal": null,
@@ -6645,7 +6670,8 @@
       "uri": "spotify:track:3B3A4mqiRhspnA3VCyfEbb",
       "uri_apple_music": "applemusic://track/1443146805",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1443146805"
+        "us": "applemusic://track/1443146805",
+        "de": "applemusic://track/1443209642"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=U8D9xCBcfzw",
       "uri_tidal": null,
@@ -6805,7 +6831,10 @@
         "MOGUAI, Cheat Codes",
         "Ernesto vs. Bastian, Susana"
       ],
-      "uri_apple_music": "applemusic://track/937537948"
+      "uri_apple_music": "applemusic://track/937537948",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/474901020"
+      }
     },
     {
       "artist": "CamelPhat, Yannis, Foals",
@@ -7239,7 +7268,8 @@
       "uri": "spotify:track:6lYdV7rTtv3dVpQ89htlRU",
       "uri_apple_music": "applemusic://track/1711642972",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1711642972"
+        "us": "applemusic://track/1711642972",
+        "de": "applemusic://track/1346086761"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=2URsD6vULew",
       "uri_tidal": null,
@@ -7288,7 +7318,8 @@
       "uri": "spotify:track:6D3TI6EZuPtdJZyejGuesp",
       "uri_apple_music": "applemusic://track/1714495177",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1714495177"
+        "us": "applemusic://track/1714495177",
+        "de": "applemusic://track/1821943472"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=y3OzHBEcymw",
       "uri_tidal": null,
@@ -7421,7 +7452,10 @@
         "Martin Garrix, Mike Yung, Nicky Romero",
         "Peggy Gou",
         "Dj Bountyhunter"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/897564278"
+      }
     },
     {
       "artist": "Switch",
@@ -7631,7 +7665,8 @@
       "uri": "spotify:track:5wzagq4OmVPBd53zd7ngLo",
       "uri_apple_music": "applemusic://track/446739874",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/446739874"
+        "us": "applemusic://track/446739874",
+        "de": "applemusic://track/479003538"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=txLVsv1ECes",
       "uri_tidal": null,
@@ -7775,7 +7810,8 @@
       "uri": "spotify:track:0wAFfYyVfhtBCnp66GxRJU",
       "uri_apple_music": "applemusic://track/533804034",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/533804034"
+        "us": "applemusic://track/533804034",
+        "de": "applemusic://track/535780407"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=TBHucXOBlrU",
       "uri_tidal": null,
@@ -8019,7 +8055,8 @@
       "uri": "spotify:track:1YsZB1pLIXR0YgiOxUG9cv",
       "uri_apple_music": "applemusic://track/1884591384",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1884591384"
+        "us": "applemusic://track/1884591384",
+        "de": "applemusic://track/488122954"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=Ptf3y_yN_LA",
       "uri_tidal": null,
@@ -8128,7 +8165,10 @@
         "London Grammar",
         "Rihanna, Calvin Harris",
         "Lost Frequencies, Zonderling, Kelvin Jones"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/913341107"
+      }
     },
     {
       "artist": "TJR, VINAI",
@@ -8138,7 +8178,8 @@
       "uri": "spotify:track:3kY68hux4UinxEb2hchsMU",
       "uri_apple_music": "applemusic://track/1444855628",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1444855628"
+        "us": "applemusic://track/1444855628",
+        "de": "applemusic://track/1355047611"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=KSs0ih3A3ZI",
       "uri_tidal": null,
@@ -8198,7 +8239,10 @@
         "Prospa, RAHH",
         "Kölsch, Gregor Schwellenbach"
       ],
-      "uri_apple_music": "applemusic://track/1440862140"
+      "uri_apple_music": "applemusic://track/1440862140",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1440856655"
+      }
     },
     {
       "artist": "Sebastian Ingrosso",
@@ -8308,7 +8352,8 @@
       "uri": "spotify:track:3EK8StyL9XUCp90sqgIuI1",
       "uri_apple_music": "applemusic://track/1443133343",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1443133343"
+        "us": "applemusic://track/1443133343",
+        "de": "applemusic://track/1862021404"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=Bi4ISWYsICA",
       "uri_tidal": null,
@@ -8370,7 +8415,8 @@
       ],
       "uri_apple_music": "applemusic://track/18238640",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/18238640"
+        "us": "applemusic://track/18238640",
+        "de": "applemusic://track/1347951281"
       }
     },
     {
@@ -8430,7 +8476,8 @@
       "uri": "spotify:track:6A8llSO9QFF4djCCmuCrNu",
       "uri_apple_music": "applemusic://track/1714694295",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1714694295"
+        "us": "applemusic://track/1714694295",
+        "de": "applemusic://track/325074675"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=c1y_wo_4fuQ",
       "uri_tidal": null,
@@ -8570,7 +8617,8 @@
       "uri": "spotify:track:0vWUhCPxpJOJR5urYbZypB",
       "uri_apple_music": "applemusic://track/1504484138",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1504484138"
+        "us": "applemusic://track/1504484138",
+        "de": "applemusic://track/1504654571"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=UbYQErtM9Zk",
       "uri_tidal": null,
@@ -8729,7 +8777,8 @@
       ],
       "uri_apple_music": "applemusic://track/1807331659",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1807331659"
+        "us": "applemusic://track/1807331659",
+        "de": "applemusic://track/1808423905"
       }
     },
     {
@@ -8740,7 +8789,8 @@
       "uri": "spotify:track:0lwyzp7GppQxv0Eu6wRkUo",
       "uri_apple_music": "applemusic://track/1638388862",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1638388862"
+        "us": "applemusic://track/1638388862",
+        "de": "applemusic://track/1637704602"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=0-_bCbCc6lY",
       "uri_tidal": null,
@@ -8764,7 +8814,8 @@
       "uri": "spotify:track:2Kl1E3NdbzT7vVi93TffoX",
       "uri_apple_music": "applemusic://track/1445322038",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1445322038"
+        "us": "applemusic://track/1445322038",
+        "de": null
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=xoUVtthd7gY",
       "uri_tidal": null,
@@ -8987,7 +9038,8 @@
       "uri": "spotify:track:5Iv4HuT9pKPi5WuE2ii3vs",
       "uri_apple_music": "applemusic://track/1552308473",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1552308473"
+        "us": "applemusic://track/1552308473",
+        "de": "applemusic://track/1550595410"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=8tcYQEk1EVQ",
       "uri_tidal": null,
@@ -9211,7 +9263,8 @@
       "uri": "spotify:track:3ScScD92jv68hPaz0GfK8s",
       "uri_apple_music": "applemusic://track/656951677",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/656951677"
+        "us": "applemusic://track/656951677",
+        "de": "applemusic://track/1474222919"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=zfLn5Vkq2B0",
       "uri_tidal": null,
@@ -9380,7 +9433,8 @@
       "uri": "spotify:track:5fTND2n5FN6uO5UljkQRh5",
       "uri_apple_music": "applemusic://track/513030940",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/513030940"
+        "us": "applemusic://track/513030940",
+        "de": "applemusic://track/1715297441"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=5n-_9ZjwRC4",
       "uri_tidal": null,
@@ -9417,7 +9471,8 @@
       ],
       "uri_apple_music": "applemusic://track/1511808887",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1511808887"
+        "us": "applemusic://track/1511808887",
+        "de": "applemusic://track/1513872008"
       }
     },
     {
@@ -9938,7 +9993,8 @@
       "uri": "spotify:track:7cbXhbH8Is98BrDA3Yglck",
       "uri_apple_music": "applemusic://track/362491548",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/362491548"
+        "us": "applemusic://track/362491548",
+        "de": "applemusic://track/1618209732"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=65HkE_8wSSs",
       "uri_tidal": null,
@@ -10411,7 +10467,8 @@
       "uri": "spotify:track:2Qw4nXX0eCRLRIX8BT19p2",
       "uri_apple_music": "applemusic://track/1292960937",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1292960937"
+        "us": "applemusic://track/1292960937",
+        "de": "applemusic://track/1289800446"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=gKzKG0W1HKs",
       "uri_tidal": null,
@@ -10559,7 +10616,8 @@
       "uri": "spotify:track:6VGNzYErt08Rai78mLkIzI",
       "uri_apple_music": "applemusic://track/1790534561",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1790534561"
+        "us": "applemusic://track/1790534561",
+        "de": "applemusic://track/6771024563"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=CGBJVlY_yAY",
       "uri_tidal": null,
@@ -10608,7 +10666,8 @@
       "uri": "spotify:track:5sIx4BlfYGuZeSLF40N9GH",
       "uri_apple_music": "applemusic://track/1712581186",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1712581186"
+        "us": "applemusic://track/1712581186",
+        "de": "applemusic://track/1356574318"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=FRjOSmc01-M",
       "uri_tidal": null,
@@ -10657,7 +10716,8 @@
       "uri": "spotify:track:2hBzP8r2QkRuyzV6dwgDq9",
       "uri_apple_music": "applemusic://track/1356606917",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1356606917"
+        "us": "applemusic://track/1356606917",
+        "de": "applemusic://track/1744598031"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=HoMzLLWNV1g",
       "uri_tidal": null,
@@ -10716,7 +10776,10 @@
         "Axwell, Sebastian Ingrosso, Steve Angello, Laidback Luke",
         "Martin Garrix, Khalid, DubVision"
       ],
-      "uri_apple_music": "applemusic://track/466851778"
+      "uri_apple_music": "applemusic://track/466851778",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "artist": "deadmau5",
@@ -10896,7 +10959,8 @@
       "uri": "spotify:track:6wLqNGHQIja6xqT0cfrzBB",
       "uri_apple_music": "applemusic://track/1682128802",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1682128802"
+        "us": "applemusic://track/1682128802",
+        "de": "applemusic://track/1676463547"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=aFdM0f8Pi5o",
       "uri_tidal": null,
@@ -11080,7 +11144,10 @@
         "Sonny Fodera, MK, Clementine Douglas",
         "Marian Hill, Franky Rizardo",
         "Paul Woolford, Kim English"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/172331875"
+      }
     },
     {
       "artist": "Enrico Sangiuliano",
@@ -11439,7 +11506,8 @@
       "uri": "spotify:track:438LS85kXWLIiR1HfKQMq0",
       "uri_apple_music": "applemusic://track/376643203",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/376643203"
+        "us": "applemusic://track/376643203",
+        "de": "applemusic://track/376641583"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=89etSg2gRYs",
       "uri_tidal": null,
@@ -11671,7 +11739,8 @@
       ],
       "uri_apple_music": "applemusic://track/665202869",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/665202869"
+        "us": "applemusic://track/665202869",
+        "de": "applemusic://track/327784850"
       }
     },
     {
@@ -11682,7 +11751,8 @@
       "uri": "spotify:track:06rySooiZs8Gvm7ArADyLt",
       "uri_apple_music": "applemusic://track/1712042835",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1712042835"
+        "us": "applemusic://track/1712042835",
+        "de": "applemusic://track/1347168197"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=fUeCQ2T2ALI",
       "uri_tidal": null,
@@ -11836,7 +11906,10 @@
         "Grooveyard, Nicky Romero",
         "Jan Blomqvist, Ben Böhmer",
         "Dimitri Vegas & Like Mike, Bassjackers, D'Angello & Francis"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1746911915"
+      }
     },
     {
       "artist": "David Guetta, Dirty South, Sebastian Ingrosso, Julie McKnight",
@@ -12066,7 +12139,8 @@
       "uri": "spotify:track:7DnI3ktF2vcmzKuCCKseQL",
       "uri_apple_music": "applemusic://track/1680178523",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1680178523"
+        "us": "applemusic://track/1680178523",
+        "de": "applemusic://track/1701771974"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=cAjtVN6QJ-M",
       "uri_tidal": null,
@@ -12100,7 +12174,10 @@
         "Martin Garrix, Bonn",
         "David Guetta, Nicky Romero, Sia",
         "Blasterjaxx, Hardwell"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1614807841"
+      }
     },
     {
       "artist": "M.A.N.D.Y., Booka Shade",
@@ -12123,7 +12200,8 @@
       ],
       "uri_apple_music": "applemusic://track/1711815811",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1711815811"
+        "us": "applemusic://track/1711815811",
+        "de": null
       }
     },
     {
@@ -12134,7 +12212,8 @@
       "uri": "spotify:track:6FZQH0HlMULVggaqjyQBqT",
       "uri_apple_music": "applemusic://track/1712042703",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1712042703"
+        "us": "applemusic://track/1712042703",
+        "de": "applemusic://track/320422488"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=V775PPuBc7Y",
       "uri_tidal": null,
@@ -12213,7 +12292,10 @@
         "Hardwell, Blasterjaxx, Mitch Crown",
         "Tube & Berger",
         "Sonique, The Conductor & The Cowboy"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/285417465"
+      }
     },
     {
       "artist": "Armin van Buuren, Tempo Giusto",
@@ -12233,7 +12315,10 @@
         "Bingo Players",
         "Armin van Buuren, Sunnery James & Ryan Marciano",
         "Djuma Soundsystem"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1478926126"
+      }
     },
     {
       "artist": "Paul Oakenfold, Carla Werner, Tiësto",
@@ -12268,7 +12353,8 @@
       "uri": "spotify:track:7q3aKYrhCbTnxdRZ6xmkC6",
       "uri_apple_music": "applemusic://track/1824492347",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1824492347"
+        "us": "applemusic://track/1824492347",
+        "de": "applemusic://track/720117343"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=MEQMkzjcLEA",
       "uri_tidal": null,
@@ -12292,7 +12378,8 @@
       "uri": "spotify:track:59QDyqLww2pxyg9ijOPO7f",
       "uri_apple_music": "applemusic://track/1671893661",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1671893661"
+        "us": "applemusic://track/1671893661",
+        "de": "applemusic://track/1670483354"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=OvW5y3lZ7rc",
       "uri_tidal": null,
@@ -12546,7 +12633,10 @@
         "Disciples",
         "David Guetta, MORTEN, Aloe Blacc",
         "Marshmello, Khalid, Tiësto"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1038007425"
+      }
     },
     {
       "artist": "MK, Chrystal",
@@ -12569,7 +12659,8 @@
       ],
       "uri_apple_music": "applemusic://track/1815350222",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1815350222"
+        "us": "applemusic://track/1815350222",
+        "de": "applemusic://track/1811551953"
       }
     },
     {
@@ -12715,7 +12806,10 @@
         "AFROJACK, Martin Garrix, David Guetta, Amél",
         "AFROJACK, WRABEL",
         "Moby, Steve Angello"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/995177232"
+      }
     },
     {
       "artist": "Dimitri Vegas & Like Mike",
@@ -12820,7 +12914,8 @@
       "uri": "spotify:track:53lsFKdepwIE4bxnkG6GJM",
       "uri_apple_music": "applemusic://track/1605836514",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1605836514"
+        "us": "applemusic://track/1605836514",
+        "de": "applemusic://track/1607400739"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=ApKn4tObiw8",
       "uri_tidal": null,
@@ -12914,7 +13009,8 @@
       "uri": "spotify:track:2uQ0QffmWbSrSXdYmPKcNO",
       "uri_apple_music": "applemusic://track/1492468715",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1492468715"
+        "us": "applemusic://track/1492468715",
+        "de": null
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=sFtdC_bnpOw",
       "uri_tidal": null,
@@ -12963,7 +13059,8 @@
       "uri": "spotify:track:7KDd9F7q1SyI10qqGPugV1",
       "uri_apple_music": "applemusic://track/1712706732",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1712706732"
+        "us": "applemusic://track/1712706732",
+        "de": "applemusic://track/1092655796"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=ie2RI2dvuqY",
       "uri_tidal": null,
@@ -13287,7 +13384,10 @@
         "Fred again.., Obongjayar",
         "Tiësto, Oaks",
         "Afro Medusa"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1720047344"
+      }
     },
     {
       "artist": "BLOND:ISH, Stevie Appleton",
@@ -13587,7 +13687,8 @@
       "uri": "spotify:track:6lVvvT5C3EkSLMfVTfuIy5",
       "uri_apple_music": "applemusic://track/1711795423",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1711795423"
+        "us": "applemusic://track/1711795423",
+        "de": null
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=A3zVutltCT8",
       "uri_tidal": null,
@@ -13964,7 +14065,8 @@
       ],
       "uri_apple_music": "applemusic://track/1636803265",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1636803265"
+        "us": "applemusic://track/1636803265",
+        "de": "applemusic://track/1585137062"
       }
     },
     {
@@ -14085,7 +14187,10 @@
         "Gotye, FISHER, Chris Lake, Sante Sansone, Kimbra",
         "Lucas & Steve, Tungevaag",
         "Marshmello, Khalid, Tiësto"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1155693656"
+      }
     },
     {
       "artist": "Dimitri Vegas & Like Mike, Brennan Heart, Tony Junior",
@@ -14255,7 +14360,10 @@
         "Borai & Denham Audio, Franky Rizardo",
         "Celeda, Danny Tenaglia",
         "HAVEN., Kaitlin Aragon"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1698794328"
+      }
     },
     {
       "artist": "Axwell, Dirty South, Rudy",
@@ -14340,7 +14448,8 @@
       "uri": "spotify:track:0EoGXXi91KSqAIY7SSgizW",
       "uri_apple_music": "applemusic://track/1575824358",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1575824358"
+        "us": "applemusic://track/1575824358",
+        "de": "applemusic://track/457228403"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=3J15zWQ8clg",
       "uri_tidal": null,
@@ -14489,7 +14598,8 @@
       "uri": "spotify:track:7g2WfNLkwj6QeYmXleHUvi",
       "uri_apple_music": "applemusic://track/1716121731",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1716121731"
+        "us": "applemusic://track/1716121731",
+        "de": "applemusic://track/1442319507"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=VxWqco0PlOU",
       "uri_tidal": null,
@@ -14713,7 +14823,8 @@
       "uri": "spotify:track:3V1NFwrtwYyomqXDMw2uVe",
       "uri_apple_music": "applemusic://track/1536464803",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1536464803"
+        "us": "applemusic://track/1536464803",
+        "de": "applemusic://track/1436694985"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=Cp9ZueNgVYE",
       "uri_tidal": null,
@@ -15160,7 +15271,10 @@
         "Matisse & Sadko",
         "Alesso, DubVision",
         "Fred again.., The Blessed Madonna"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1756954112"
+      }
     },
     {
       "artist": "Chris Lake, Alexis Roberts",
@@ -15448,7 +15562,8 @@
       ],
       "uri_apple_music": "applemusic://track/486221068",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/486221068"
+        "us": "applemusic://track/486221068",
+        "de": "applemusic://track/308022439"
       }
     },
     {
@@ -16353,7 +16468,10 @@
         "AFROJACK, Martin Garrix, David Guetta, Amél",
         "Calvin Harris, Clementine Douglas, Cassian",
         "Calvin Harris, Clementine Douglas"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1439373082"
+      }
     },
     {
       "artist": "Axwell, Sebastian Ingrosso, Steve Angello, Laidback Luke",
@@ -16401,7 +16519,8 @@
       ],
       "uri_apple_music": "applemusic://track/1768116733",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1768116733"
+        "us": "applemusic://track/1768116733",
+        "de": "applemusic://track/1762898525"
       }
     },
     {
@@ -16497,7 +16616,10 @@
         "The Chainsmokers, Daya, W&W",
         "Butch, Kölsch",
         "Kings Of Tomorrow"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1790512113"
+      }
     },
     {
       "artist": "Dimitri Vegas, Vin, Zion",
@@ -16872,7 +16994,8 @@
       "uri": "spotify:track:4gtPso0YndZufMZohUyHUs",
       "uri_apple_music": "applemusic://track/1711795897",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1711795897"
+        "us": "applemusic://track/1711795897",
+        "de": "applemusic://track/1644858578"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=zdeP1PTg9cI",
       "uri_tidal": null,
@@ -16896,7 +17019,8 @@
       "uri": "spotify:track:4OssNR8i2CZHzIBJDxRh2e",
       "uri_apple_music": "applemusic://track/1762715188",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1762715188"
+        "us": "applemusic://track/1762715188",
+        "de": "applemusic://track/1711713083"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=N9RrlA69WvU",
       "uri_tidal": null,
@@ -16930,7 +17054,10 @@
         "Sub Focus",
         "Martin Garrix, Justin Mylo, Dewain Whitmore",
         "Alesso, Roy English"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1771826875"
+      }
     },
     {
       "artist": "Jan Blomqvist, Ben Böhmer",
@@ -17125,7 +17252,10 @@
         "San Holo",
         "Öwnboss, Sevek",
         "Indira Paganotto"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1694792437"
+      }
     },
     {
       "artist": "HUGEL, Alleh, Yorghaki",
@@ -17220,7 +17350,10 @@
         "Mike Williams, Mesto",
         "Lilly Wood and The Prick, Robin Schulz",
         "Hardwell, KSHMR"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/716038182"
+      }
     },
     {
       "artist": "Zerb, The Chainsmokers, Ink",
@@ -17470,7 +17603,8 @@
       "uri": "spotify:track:63HwAAXuSV2tzIUPoHOwZa",
       "uri_apple_music": "applemusic://track/1754198966",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1754198966"
+        "us": "applemusic://track/1754198966",
+        "de": "applemusic://track/1701445281"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=MlwBZ2MSNtE",
       "uri_tidal": null,
@@ -17839,7 +17973,8 @@
       "uri": "spotify:track:74BSVo5XxxlOOWKstr8doF",
       "uri_apple_music": "applemusic://track/1591326861",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1591326861"
+        "us": "applemusic://track/1591326861",
+        "de": "applemusic://track/6766938313"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=-4iJ8aCH_oc",
       "uri_tidal": null,
@@ -17873,7 +18008,10 @@
         "Marc Benjamin, Marcus Santoro, David Pietras",
         "Cajmere, Dajae, Marco Lys, Green Velvet",
         "Adrian Lux"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1687587219"
+      }
     },
     {
       "artist": "David Tort, Gosha",
@@ -18037,7 +18175,10 @@
         "Martin Garrix, Tiësto",
         "Joel Corry, James Hype",
         "Dubfire"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1784007171"
+      }
     },
     {
       "artist": "FISHER",
@@ -18235,7 +18376,8 @@
       ],
       "uri_apple_music": "applemusic://track/1337168150",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1337168150"
+        "us": "applemusic://track/1337168150",
+        "de": "applemusic://track/1350833731"
       }
     },
     {
@@ -18499,7 +18641,8 @@
       ],
       "uri_apple_music": "applemusic://track/1762957331",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1762957331"
+        "us": "applemusic://track/1762957331",
+        "de": "applemusic://track/1758417464"
       }
     },
     {
@@ -18510,7 +18653,8 @@
       "uri": "spotify:track:5xdDQFCjgizAurT6Xi5lYT",
       "uri_apple_music": "applemusic://track/1529496583",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1529496583"
+        "us": "applemusic://track/1529496583",
+        "de": "applemusic://track/1783965267"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=_3eJi3yPgY4",
       "uri_tidal": null,
@@ -18784,7 +18928,8 @@
       "uri": "spotify:track:1kpTK8SWlA1lGkorVaxp3S",
       "uri_apple_music": "applemusic://track/1607400982",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1607400982"
+        "us": "applemusic://track/1607400982",
+        "de": "applemusic://track/1636750418"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=KLu7QyEpdBM",
       "uri_tidal": null,
@@ -18858,7 +19003,8 @@
       "uri": "spotify:track:4QqaGFXuaMzocCc4M6Ccj0",
       "uri_apple_music": "applemusic://track/603925210",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/603925210"
+        "us": "applemusic://track/603925210",
+        "de": "applemusic://track/603828226"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=UaPUFDMtEuA",
       "uri_tidal": null,
@@ -19047,7 +19193,8 @@
       "uri": "spotify:track:0zL9dieoCcjBWV01y73Cj1",
       "uri_apple_music": "applemusic://track/918184083",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/918184083"
+        "us": "applemusic://track/918184083",
+        "de": "applemusic://track/857442238"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=CVvJp3d8xGQ",
       "uri_tidal": null,
@@ -19274,7 +19421,8 @@
       ],
       "uri_apple_music": "applemusic://track/1598254002",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1598254002"
+        "us": "applemusic://track/1598254002",
+        "de": "applemusic://track/1593688905"
       }
     },
     {
@@ -19600,7 +19748,8 @@
       "uri": "spotify:track:6aFXimZOxnkqIEshd7d4JE",
       "uri_apple_music": "applemusic://track/1762727380",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/1762727380"
+        "us": "applemusic://track/1762727380",
+        "de": "applemusic://track/1631213295"
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=MF0O2MZUYwk",
       "uri_tidal": null,
@@ -19659,7 +19808,10 @@
         "Martin Garrix, Jay Hardway",
         "Chris Lake, Marco Lys",
         "Martin Garrix, Third Party, Oaks, Declan J Donovan"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1424362622"
+      }
     },
     {
       "artist": "Gregor Salto, Florian T",
@@ -19882,7 +20034,8 @@
       ],
       "uri_apple_music": "applemusic://track/627700940",
       "uri_apple_music_by_region": {
-        "us": "applemusic://track/627700940"
+        "us": "applemusic://track/627700940",
+        "de": "applemusic://track/1058960712"
       }
     },
     {
@@ -20043,7 +20196,10 @@
         "Agents Of Time",
         "Tom Hangs, Shermanology",
         "Adam Beyer, Bart Skils"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1768146015"
+      }
     },
     {
       "artist": "deadmau5, Chris James",

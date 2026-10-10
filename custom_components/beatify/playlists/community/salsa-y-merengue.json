@@ -1241,7 +1241,10 @@
       "uri_deezer": "deezer://track/769774502",
       "uri_apple_music": "applemusic://track/1443758872",
       "fun_fact_it": "«Deseándote» di Frankie Ruiz, pubblicata per la prima volta nel 1989 nell'album «Show».",
-      "uri_youtube_music": "https://music.youtube.com/watch?v=DkfIXSg4Jv8"
+      "uri_youtube_music": "https://music.youtube.com/watch?v=DkfIXSg4Jv8",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1482212680"
+      }
     },
     {
       "year": 1992,
@@ -3172,7 +3175,10 @@
       "uri_deezer": "deezer://track/6558033",
       "uri_apple_music": "applemusic://track/1440722442",
       "fun_fact_it": "«Cuando Me Enamoro» di Enrique Iglesias, Juan Luis Guerra 4.40, pubblicata per la prima volta nel 2010 nell'album «Euphoria (Intl 14 track version)».",
-      "uri_youtube_music": "https://music.youtube.com/watch?v=4DO8GsIYfhQ"
+      "uri_youtube_music": "https://music.youtube.com/watch?v=4DO8GsIYfhQ",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1443751813"
+      }
     },
     {
       "year": 1990,
@@ -3337,10 +3343,7 @@
       "uri_deezer": "deezer://track/557093",
       "uri_apple_music": "applemusic://track/187429633",
       "fun_fact_it": "«Suavemente» di Elvis Crespo, pubblicata per la prima volta nel 1998 nell'album «Pintame».",
-      "uri_youtube_music": "https://music.youtube.com/watch?v=WPiEbYSF9kE",
-      "uri_apple_music_by_region": {
-        "de": "applemusic://track/1437483576"
-      }
+      "uri_youtube_music": "https://music.youtube.com/watch?v=WPiEbYSF9kE"
     },
     {
       "year": 1997,
@@ -4548,7 +4551,10 @@
       "uri_deezer": "deezer://track/7878498",
       "uri_apple_music": "applemusic://track/1517909107",
       "fun_fact_it": "«Bueno Pa' Goza» di Sandy & Papo, pubblicata per la prima volta nel 1995 nell'album «Sandy & Papo MC».",
-      "uri_youtube_music": "https://music.youtube.com/watch?v=MVDtZkAuMbw"
+      "uri_youtube_music": "https://music.youtube.com/watch?v=MVDtZkAuMbw",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/20384920"
+      }
     },
     {
       "year": 1995,
@@ -5777,7 +5783,10 @@
       "fun_fact_nl": "\"Mi Mayor Venganza\" van LA INDIA, voor het eerst uitgebracht in 1997 op het album \"Pura Salsa\".",
       "uri_deezer": "deezer://track/15508102",
       "uri_apple_music": "applemusic://track/1443909822",
-      "fun_fact_it": "«Mi Mayor Venganza» di LA INDIA, pubblicata per la prima volta nel 1997 nell'album «Pura Salsa»."
+      "fun_fact_it": "«Mi Mayor Venganza» di LA INDIA, pubblicata per la prima volta nel 1997 nell'album «Pura Salsa».",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1443852506"
+      }
     },
     {
       "year": 2013,
@@ -6294,7 +6303,10 @@
       "fun_fact_nl": "\"Bacalao con Pan\" van Irakere, voor het eerst uitgebracht in 1974 op het album \"Irakere 30 Años (Remasterizado)\".",
       "uri_deezer": "deezer://track/407700092",
       "uri_apple_music": "applemusic://track/1712042130",
-      "fun_fact_it": "«Bacalao con Pan» di Irakere, pubblicata per la prima volta nel 1974 nell'album «Irakere 30 Años (Remasterizado)»."
+      "fun_fact_it": "«Bacalao con Pan» di Irakere, pubblicata per la prima volta nel 1974 nell'album «Irakere 30 Años (Remasterizado)».",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/457732230"
+      }
     },
     {
       "year": 2003,

@@ -930,7 +930,8 @@
       "isrc": "PLB020300002",
       "uri_apple_music": null,
       "uri_apple_music_by_region": {
-        "pl": null
+        "pl": null,
+        "de": null
       },
       "uri_youtube_music": "https://music.youtube.com/watch?v=b16vSZMJ13k",
       "uri_tidal": "tidal://track/1452807",

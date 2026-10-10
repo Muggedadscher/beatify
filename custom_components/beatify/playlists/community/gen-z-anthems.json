@@ -1013,7 +1013,10 @@
       "uri_tidal": "tidal://track/132569886",
       "uri_deezer": "deezer://track/1124841682",
       "fun_fact_nl": "Levitating stond in 2021 meer weken in de Billboard Hot 100 dan bijna elk ander nummer, met een piek op #2 — de DaBaby-remix gaf het een tweede leven.",
-      "awards_nl": []
+      "awards_nl": [],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1551800727"
+      }
     },
     {
       "year": 2019,
@@ -1390,7 +1393,10 @@
       ],
       "awards_es": [
         "Grammy - Mejor Interpretación Pop Solista"
-      ]
+      ],
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/6788150545"
+      }
     },
     {
       "year": 2023,
