@@ -4,6 +4,19 @@ All notable changes to Beatify are documented here. For detailed release notes, 
 
 ## [Unreleased]
 
+### Added
+- **100 songs everyone knows added to `greatest-hits-of-all-time`** (236 → 336,
+  v2.25). The playlist leaned heavily on 60s–90s rock; the additions widen it to
+  universal sing-along hits from Bill Haley and Elvis through ABBA-era pop,
+  Madonna, Michael Jackson, 90s eurodance and the big 2000s–2020s chart hits
+  (Adele, Pharrell, Ed Sheeran, The Weeknd, Billie Eilish, Miley Cyrus …). Every
+  entry is reused from an existing Beatify playlist, so it keeps that entry's
+  verified Spotify / Apple Music / Tidal / Deezer / YouTube Music URIs; all 100
+  Spotify URIs were re-checked live via oEmbed. Release years corrected where the
+  source entry was off (e.g. Johnny B. Goode 1958, Shake It Off 2014, Uptown Funk
+  2014, Blinding Lights 2019), and 51 placeholder, off-context or inaccurate fun
+  facts were rewritten in EN/DE/ES/FR/NL/IT.
+
 ## [4.7.1] - 2026-09-15
 
 Hotfix for a Race-mode regression introduced by the 4.7.0 upstream sync.
