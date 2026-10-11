@@ -495,7 +495,7 @@ Beatify comes with 8,432 songs across 66 curated playlists:
 - 🇫🇮 **Finnish Schlager Classics** — 293 Finnish iskelmä classics
 - 🌪️ **Funk Carioca** — 20 Brazilian baile funk hits spanning 2000–2018
 - 🧃 **Gen Z Anthems** — 30 tracks from TikTok to Good Luck, Babe! spanning 2009–2024
-- 🎯 **Greatest Hits of All Time** — 236 chart-toppers across four decades
+- 🎯 **Greatest Hits of All Time** — 336 songs everyone knows, from 1954 to 2023
 - 🤘 **Greatest Metal Songs of All Time** — 61 legendary tracks across all major metal subgenres
 - 🔊 **Harder Styles** — 190 hardstyle, hardcore and raw tracks
 - 🎬 **ICONIC movie songs** — 72 songs from the movies, with a dedicated movie-quiz mode

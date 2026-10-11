@@ -1,6 +1,6 @@
 {
   "name": "Disney Latino",
-  "version": "0.4",
+  "version": "0.5",
   "tags": [
     "disney",
     "movies",
@@ -28,7 +28,10 @@
         "Mateo Ramírez Velasco",
         "Tata Vega"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Coco» della Disney (2017)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Coco» della Disney (2017).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1442277535"
+      }
     },
     {
       "year": 1994,
@@ -47,7 +50,10 @@
         "Ana Torroja",
         "Natalia Lafourcade"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994)."
+      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1444865512"
+      }
     },
     {
       "year": 2019,
@@ -66,7 +72,10 @@
         "Marco Antonio Solís",
         "Sofia Carson"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Frozen II» della Disney (2019)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Frozen II» della Disney (2019).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1486410961"
+      }
     },
     {
       "year": 2010,
@@ -83,7 +92,10 @@
         "Elenco de Soy Luna",
         "Héctor Ortiz"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Toy Story 3» della Disney (2010)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Toy Story 3» della Disney (2010).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1440810229"
+      }
     },
     {
       "year": 2026,
@@ -102,7 +114,10 @@
         "David Bisbal",
         "Mijares"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Soy Luna: Volver a rodar» della Disney (2026)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Soy Luna: Volver a rodar» della Disney (2026).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1879593895"
+      }
     },
     {
       "year": 1991,
@@ -121,7 +136,10 @@
         "Esteman",
         "Héctor Ortiz"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (1991)."
+      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (1991).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1444046541"
+      }
     },
     {
       "year": 2021,
@@ -140,7 +158,10 @@
         "Natalia Lafourcade",
         "Norma Herrera"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Encanto» della Disney (2021)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Encanto» della Disney (2021).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1596162956"
+      }
     },
     {
       "year": 2019,
@@ -157,7 +178,10 @@
         "Frozen",
         "ZAYN"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (2019)."
+      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (2019).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1472102136"
+      }
     },
     {
       "year": 2021,
@@ -176,7 +200,10 @@
         "Beto Castillo",
         "Christina Aguilera"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Encanto» della Disney (2021)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Encanto» della Disney (2021).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1594677766"
+      }
     },
     {
       "year": 2017,
@@ -195,7 +222,10 @@
         "Mendez",
         "Sebastian Yatra"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Coco» della Disney (2017)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Coco» della Disney (2017).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1442277541"
+      }
     },
     {
       "year": 2020,
@@ -214,7 +244,10 @@
         "Chayanne",
         "Claudia Pizá"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Mulan» della Disney (2020)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Mulan» della Disney (2020).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1501448929"
+      }
     },
     {
       "year": 2021,
@@ -233,7 +266,10 @@
         "Mateo Ramírez Velasco",
         "TINI"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Encanto» della Disney (2021)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Encanto» della Disney (2021).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1610177231"
+      }
     },
     {
       "year": 2017,
@@ -250,7 +286,10 @@
         "Carlos Vives",
         "Luis Fonsi"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (2017)."
+      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (2017).",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 2020,
@@ -269,7 +308,10 @@
         "Ana Torroja",
         "Gipsy Kings"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Mulan» della Disney (2020)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Mulan» della Disney (2020).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1624897102"
+      }
     },
     {
       "year": 1995,
@@ -288,7 +330,10 @@
         "Luis Fonsi",
         "Renato Lopez"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Pocahontas» della Disney (1995)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Pocahontas» della Disney (1995).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1443153735"
+      }
     },
     {
       "year": 1991,
@@ -305,7 +350,10 @@
         "Ana Torroja",
         "ZAYN"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (1991)."
+      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (1991).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1444045750"
+      }
     },
     {
       "year": 1994,
@@ -322,7 +370,10 @@
         "Christina Aguilera",
         "Sofia Carson"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994)."
+      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1443872765"
+      }
     },
     {
       "year": 1991,
@@ -339,7 +390,10 @@
         "Gipsy Kings",
         "Mateo Ramírez Velasco"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (1991)."
+      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (1991).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1444046551"
+      }
     },
     {
       "year": 2013,
@@ -358,7 +412,10 @@
         "Martina Stoessel",
         "Meli G"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Frozen» della Disney (2013)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Frozen» della Disney (2013).",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 1991,
@@ -375,7 +432,10 @@
         "Ana Torroja",
         "Luis Fonsi"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (1991)."
+      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (1991).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1444046536"
+      }
     },
     {
       "year": 1994,
@@ -394,7 +454,10 @@
         "Chayanne",
         "Eros Ramazzotti"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994)."
+      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1443872769"
+      }
     },
     {
       "year": 2016,
@@ -411,7 +474,10 @@
         "Marco Antonio Solís",
         "Sofia Carson"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Moana» della Disney (2016)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Moana» della Disney (2016).",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 2010,
@@ -430,7 +496,10 @@
         "Chayanne",
         "Eros Ramazzotti"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Enredados» della Disney (2010)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Enredados» della Disney (2010).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1443804801"
+      }
     },
     {
       "year": 1991,
@@ -447,7 +516,10 @@
         "Irasema Terrazas",
         "TINI"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (1991)."
+      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (1991).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1444046537"
+      }
     },
     {
       "year": 2017,
@@ -464,7 +536,10 @@
         "Gonzo",
         "Tata Vega"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Coco» della Disney (2017)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Coco» della Disney (2017).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1442277244"
+      }
     },
     {
       "year": 2019,
@@ -483,7 +558,10 @@
         "Irasema Terrazas",
         "Marco Antonio Solís"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (2019)."
+      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (2019).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1472103298"
+      }
     },
     {
       "year": 2019,
@@ -500,7 +578,10 @@
         "Danna Paola",
         "Sebastian Yatra"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Aladdin» della Disney (2019)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Aladdin» della Disney (2019).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1469110375"
+      }
     },
     {
       "year": 2021,
@@ -519,7 +600,10 @@
         "Armando Gama",
         "Chayanne"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Encanto» della Disney (2021)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Encanto» della Disney (2021).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1594677763"
+      }
     },
     {
       "year": 2011,
@@ -536,7 +620,10 @@
         "Analy",
         "Chayanne"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Los Muppets» della Disney (2011)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Los Muppets» della Disney (2011).",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 1989,
@@ -555,7 +642,10 @@
         "Luis Ángel Gómez Jaramillo",
         "Sugey Torres"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «La Sirenita» della Disney (1989)."
+      "fun_fact_it": "Dalla versione in spagnolo di «La Sirenita» della Disney (1989).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1483150660"
+      }
     },
     {
       "year": 1994,
@@ -574,7 +664,10 @@
         "Kalimba Marichal",
         "Tata Vega"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994)."
+      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1443154120"
+      }
     },
     {
       "year": 1991,
@@ -593,7 +686,10 @@
         "Gonzo",
         "Mendez"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (1991)."
+      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (1991).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1444045749"
+      }
     },
     {
       "year": 2010,
@@ -612,7 +708,10 @@
         "Sugey Torres",
         "Tata Vega"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Enredados» della Disney (2010)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Enredados» della Disney (2010).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1444066907"
+      }
     },
     {
       "year": 2016,
@@ -630,7 +729,10 @@
         "Olga Lucía Vives"
       ],
       "fun_fact_it": "Dalla versione in spagnolo di «Tini: El gran cambio de Violetta» della Disney (2016).",
-      "uri_deezer": "deezer://track/123791408"
+      "uri_deezer": "deezer://track/123791408",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1440648419"
+      }
     },
     {
       "year": 2019,
@@ -647,7 +749,10 @@
         "Elenco de Soy Luna",
         "Sara Paula Gómez Arias"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (2019)."
+      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (2019).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1472102441"
+      }
     },
     {
       "year": 2013,
@@ -666,7 +771,10 @@
         "Analy",
         "Meli G"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Frozen» della Disney (2013)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Frozen» della Disney (2013).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1441181984"
+      }
     },
     {
       "year": 2013,
@@ -685,7 +793,10 @@
         "Esteman",
         "Kalimba Marichal"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Frozen» della Disney (2013)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Frozen» della Disney (2013).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1441181583"
+      }
     },
     {
       "year": 2016,
@@ -704,7 +815,10 @@
         "Romina Marroquín Payró",
         "Sebastian Yatra"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Moana» della Disney (2016)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Moana» della Disney (2016).",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 1970,
@@ -723,7 +837,10 @@
         "Marco Antonio Solís",
         "ZAYN"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Los Aristogatos» della Disney (1970)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Los Aristogatos» della Disney (1970).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1445057982"
+      }
     },
     {
       "year": 2017,
@@ -740,7 +857,10 @@
         "David Bisbal",
         "ZAYN"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (2017)."
+      "fun_fact_it": "Dalla versione in spagnolo di «La Bella y la Bestia» della Disney (2017).",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 2013,
@@ -759,7 +879,10 @@
         "Carlos Vives",
         "Eduardo Tejedo"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Frozen» della Disney (2013)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Frozen» della Disney (2013).",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 1994,
@@ -776,7 +899,10 @@
         "Christina Aguilera",
         "TINI"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994)."
+      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1443873014"
+      }
     },
     {
       "year": 2017,
@@ -795,7 +921,10 @@
         "Armando Gama",
         "Esteman"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Coco» della Disney (2017)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Coco» della Disney (2017).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1442277246"
+      }
     },
     {
       "year": 2017,
@@ -814,7 +943,10 @@
         "Carlos Rivera",
         "Meli G"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Coco» della Disney (2017)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Coco» della Disney (2017).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1442277238"
+      }
     },
     {
       "year": 1997,
@@ -833,7 +965,10 @@
         "Carlos Rivera",
         "Tata Vega"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Hércules» della Disney (1997)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Hércules» della Disney (1997).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1443153760"
+      }
     },
     {
       "year": 1999,
@@ -852,7 +987,10 @@
         "Gipsy Kings",
         "Rubén Albarrán"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Toy Story 2» della Disney (1999)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Toy Story 2» della Disney (1999).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1443153741"
+      }
     },
     {
       "year": 2017,
@@ -871,7 +1009,10 @@
         "Eros Ramazzotti",
         "Romina Marroquín Payró"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Coco» della Disney (2017)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Coco» della Disney (2017).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1442277528"
+      }
     },
     {
       "year": 2013,
@@ -890,7 +1031,10 @@
         "Eduardo Tejedo",
         "Mendez"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Frozen» della Disney (2013)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Frozen» della Disney (2013).",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 1994,
@@ -910,7 +1054,10 @@
         "Eduardo Tejedo"
       ],
       "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994).",
-      "uri_youtube_music": "https://music.youtube.com/watch?v=5qYjzNv-WoA"
+      "uri_youtube_music": "https://music.youtube.com/watch?v=5qYjzNv-WoA",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1443872760"
+      }
     },
     {
       "year": 2016,
@@ -927,7 +1074,10 @@
         "Bronco",
         "Luis Ángel Gómez Jaramillo"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Moana» della Disney (2016)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Moana» della Disney (2016).",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 2019,
@@ -946,7 +1096,10 @@
         "Analy",
         "Sara Paula Gómez Arias"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Toy Story 4» della Disney (2019)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Toy Story 4» della Disney (2019).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1468162506"
+      }
     },
     {
       "year": 1999,
@@ -965,7 +1118,10 @@
         "Jessi Corti",
         "Renato Lopez"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Tarzán» della Disney (1999)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Tarzán» della Disney (1999).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1586892464"
+      }
     },
     {
       "year": 2013,
@@ -984,7 +1140,10 @@
         "Luis Ángel Gómez Jaramillo",
         "Renato Lopez"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «Frozen» della Disney (2013)."
+      "fun_fact_it": "Dalla versione in spagnolo di «Frozen» della Disney (2013).",
+      "uri_apple_music_by_region": {
+        "de": null
+      }
     },
     {
       "year": 1994,
@@ -1003,7 +1162,10 @@
         "Armando Gama",
         "TINI"
       ],
-      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994)."
+      "fun_fact_it": "Dalla versione in spagnolo di «El Rey León» della Disney (1994).",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1443873017"
+      }
     }
   ]
 }

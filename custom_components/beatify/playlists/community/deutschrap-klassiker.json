@@ -1,6 +1,6 @@
 {
   "name": "Deutschrap Klassiker",
-  "version": "1.2",
+  "version": "1.3",
   "tags": [
     "deutschrap",
     "hip-hop",
@@ -33,7 +33,10 @@
       "fun_fact_fr": "Schwester S. etait le premier nom de scene de Sabrina Setlur, entree ensuite dans les charts sous son prenom : la meme artiste sous deux noms.",
       "fun_fact_nl": "Schwester S. was de vroege artiestennaam van Sabrina Setlur, die later onder haar eigen voornaam in de hitlijsten kwam — dezelfde artieste met twee namen.",
       "uri_deezer": "deezer://track/124641868",
-      "uri_apple_music": "applemusic://track/1119306834"
+      "uri_apple_music": "applemusic://track/1119306834",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1119306834"
+      }
     },
     {
       "year": 1997,
@@ -52,7 +55,10 @@
       "fun_fact_fr": "Le titre est un palindrome et le refrain joue dessus : le prenom est epele parce qu'il se lit pareil dans les deux sens.",
       "fun_fact_nl": "De titel is een palindroom en het refrein speelt daarmee: de naam wordt gespeld omdat hij in beide richtingen hetzelfde leest.",
       "uri_apple_music": "applemusic://track/298144521",
-      "uri_deezer": "deezer://track/15644778"
+      "uri_deezer": "deezer://track/15644778",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/298144521"
+      }
     },
     {
       "year": 1998,
@@ -71,7 +77,10 @@
       "fun_fact_fr": "Le morceau vient de Bambule, l'album hambourgeois qui a fait du rap en allemand un format de charts et plus seulement une affaire de scene.",
       "fun_fact_nl": "Het komt van Bambule, het Hamburgse album dat Duitstalige rap van scene-zaak tot hitlijstformaat maakte.",
       "uri_apple_music": "applemusic://track/1440731825",
-      "uri_deezer": "deezer://track/2176668"
+      "uri_deezer": "deezer://track/2176668",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1440731825"
+      }
     },
     {
       "year": 2001,
@@ -115,7 +124,10 @@
       "fun_fact_fr": "Construit sur le theme de la serie Prison Break, avec Adel Tawil au refrain, des annees avant qu'Ich + Ich ne soit connu de tous.",
       "fun_fact_nl": "Gebouwd op het thema van de serie Prison Break, met Adel Tawil op het refrein, jaren voordat Ich + Ich een begrip werd.",
       "uri_deezer": "deezer://track/1163878",
-      "uri_apple_music": "applemusic://track/1444292071"
+      "uri_apple_music": "applemusic://track/1444292071",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1444292071"
+      }
     },
     {
       "year": 2008,
@@ -134,7 +146,10 @@
       "fun_fact_fr": "Une version rap de Forever Young d'Alphaville, chantee par Karel Gott : un melange de rap allemand et de Schlager que personne n'avait tente avant.",
       "fun_fact_nl": "Een rapversie van Forever Young van Alphaville, gezongen door Karel Gott — een combinatie van Duitse rap en Schlager die niemand eerder probeerde.",
       "uri_apple_music": "applemusic://track/1555448874",
-      "uri_deezer": "deezer://track/1256158602"
+      "uri_deezer": "deezer://track/1256158602",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1555448874"
+      }
     },
     {
       "year": 2009,
@@ -157,7 +172,10 @@
       "fun_fact_fr": "Le groupe berlinois chante en allemand, anglais, espagnol et patois jamaicain : Monsta est le titre qui a porte ce melange dans les charts d'ete.",
       "fun_fact_nl": "De Berlijnse groep zingt in het Duits, Engels, Spaans en Jamaicaans Patois — Monsta bracht die mix naar de zomerhitlijsten.",
       "uri_apple_music": "applemusic://track/1593834204",
-      "uri_deezer": "deezer://track/1543798462"
+      "uri_deezer": "deezer://track/1543798462",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1593834204"
+      }
     },
     {
       "year": 2010,
@@ -176,7 +194,10 @@
       "fun_fact_fr": "Extrait de Zum Glueck in die Zukunft, l'album avec lequel le rappeur de Rostock a definitivement laisse derriere lui sa periode anglophone.",
       "fun_fact_nl": "Van het album Zum Glueck in die Zukunft, waarmee de rapper uit Rostock zijn eerdere Engelstalige fase definitief achter zich liet.",
       "uri_apple_music": "applemusic://track/1625550159",
-      "uri_deezer": "deezer://track/1761910157"
+      "uri_deezer": "deezer://track/1761910157",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1625550159"
+      }
     },
     {
       "year": 2012,
@@ -230,7 +251,10 @@
       "fun_fact_fr": "Toute la chanson est un aveu : elle enumere des choses que le chanteur juge mauvaises et apprecie quand meme, et le titre le dit en deux mots.",
       "fun_fact_nl": "Het hele nummer is een bekentenis: het somt dingen op die de zanger fout vindt en toch geniet, en de titel zegt dat in twee woorden.",
       "uri_apple_music": "applemusic://track/1562123058",
-      "uri_deezer": "deezer://track/82120542"
+      "uri_deezer": "deezer://track/82120542",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1562123058"
+      }
     },
     {
       "year": 2012,
@@ -253,7 +277,10 @@
       "fun_fact_fr": "Max Herre avait deja ecrit A-N-N-A avec Freundeskreis quinze ans plus tot : la meme voix, a deux epoques d'ecart du rap allemand.",
       "fun_fact_nl": "Max Herre schreef A-N-N-A met Freundeskreis al vijftien jaar eerder — dezelfde stem, twee tijdperken Duitse rap uit elkaar.",
       "uri_apple_music": "applemusic://track/1440865655",
-      "uri_deezer": "deezer://track/46425761"
+      "uri_deezer": "deezer://track/46425761",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1440865655"
+      }
     },
     {
       "year": 2012,
@@ -304,7 +331,10 @@
       "fun_fact_fr": "Extrait de 30-11-80, l'album que Sido a nomme d'apres sa propre date de naissance.",
       "fun_fact_nl": "Van het album 30-11-80, dat Sido naar zijn eigen geboortedatum noemde.",
       "uri_apple_music": "applemusic://track/1443107793",
-      "uri_deezer": "deezer://track/72370901"
+      "uri_deezer": "deezer://track/72370901",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1445874395"
+      }
     },
     {
       "year": 2016,
@@ -366,7 +396,10 @@
       "fun_fact_fr": "Le titre date une collection de mode : RIN rappe sur la ligne Dior de 2001, pas sur l'annee de sortie du morceau.",
       "fun_fact_nl": "De titel dateert een modecollectie: RIN rapt over de Dior-lijn van 2001, niet over het jaar waarin het nummer uitkwam.",
       "uri_apple_music": "applemusic://track/1473865026",
-      "uri_deezer": "deezer://track/717156672"
+      "uri_deezer": "deezer://track/717156672",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1473865026"
+      }
     },
     {
       "year": 2018,
@@ -403,7 +436,10 @@
       "fun_fact_fr": "Sido revient sur ses debuts et laisse la seconde moitie a Apache 207, qui avait deux ans l'annee du titre.",
       "fun_fact_nl": "Sido kijkt terug op zijn eigen begin en geeft de tweede helft aan Apache 207, die in het jaar van de titel twee was.",
       "uri_apple_music": "applemusic://track/1462078882",
-      "uri_deezer": "deezer://track/760466952"
+      "uri_deezer": "deezer://track/760466952",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1462078882"
+      }
     },
     {
       "year": 2019,
@@ -422,7 +458,10 @@
       "fun_fact_fr": "Il est paru l'annee ou Capital Bra a etabli un record des charts allemands avec une serie de singles numero un.",
       "fun_fact_nl": "Het verscheen in het jaar waarin Capital Bra een Duits hitlijstrecord vestigde met een reeks nummer-1-singles.",
       "uri_apple_music": "applemusic://track/1460798637",
-      "uri_deezer": "deezer://track/672190002"
+      "uri_deezer": "deezer://track/672190002",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1460798637"
+      }
     },
     {
       "year": 2020,
@@ -441,7 +480,10 @@
       "fun_fact_fr": "Deux des femmes les plus connues du rap allemand sur un meme morceau, produit par Miksu et Macloud, qui ont marque le son de cette annee.",
       "fun_fact_nl": "Twee van de bekendste vrouwen in de Duitse rap op een nummer, geproduceerd door Miksu en Macloud, die de sound van dat jaar mee bepaalden.",
       "uri_apple_music": "applemusic://track/1494301748",
-      "uri_deezer": "deezer://track/851311772"
+      "uri_deezer": "deezer://track/851311772",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1494301748"
+      }
     },
     {
       "year": 2020,
@@ -464,7 +506,10 @@
       "fun_fact_fr": "Rap de rue berlinois nomme d'apres un chewing-gum, dans une vague qui puisait ses images dans les marques du quotidien plutot que dans le luxe.",
       "fun_fact_nl": "Berlijnse straatrap vernoemd naar een kauwgom — deel van een golf die beelden ontleende aan alledaagse merken in plaats van luxemerken.",
       "uri_apple_music": "applemusic://track/1512773990",
-      "uri_deezer": "deezer://track/957653672"
+      "uri_deezer": "deezer://track/957653672",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1512773990"
+      }
     },
     {
       "year": 2021,
@@ -501,7 +546,10 @@
       "fun_fact_fr": "Le deuxieme titre de Pashanim de cette liste, un an apres Airwaves : le meme ton d'ete berlinois, un an plus tard.",
       "fun_fact_nl": "Het tweede Pashanim-nummer op deze lijst, een jaar na Airwaves — dezelfde Berlijnse zomertoon, een jaar later.",
       "uri_apple_music": "applemusic://track/1572443408",
-      "uri_deezer": "deezer://track/1408516272"
+      "uri_deezer": "deezer://track/1408516272",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1572443408"
+      }
     },
     {
       "year": 2022,
@@ -520,7 +568,10 @@
       "fun_fact_fr": "Luciano est ne au Chili et a grandi a Berlin : son rap melodique porte les deux, et voici l'un de ses exemples les plus doux.",
       "fun_fact_nl": "Luciano werd geboren in Chili en groeide op in Berlijn — zijn melodische rap draagt beide, en dit is een van zijn zachtste voorbeelden.",
       "uri_apple_music": "applemusic://track/1647178504",
-      "uri_deezer": "deezer://track/1730583477"
+      "uri_deezer": "deezer://track/1730583477",
+      "uri_apple_music_by_region": {
+        "de": "applemusic://track/1647178504"
+      }
     },
     {
       "year": 2022,
