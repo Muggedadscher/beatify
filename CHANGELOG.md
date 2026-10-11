@@ -4,6 +4,11 @@ All notable changes to Beatify are documented here. For detailed release notes, 
 
 ## [Unreleased]
 
+## [4.7.2] - 2026-10-11
+
+Content and data release: 100 songs everyone knows for Greatest Hits, and
+verified German-storefront Apple Music links across the whole catalogue.
+
 ### Added
 - **100 songs everyone knows added to `greatest-hits-of-all-time`** (236 → 336,
   v2.25). The playlist leaned heavily on 60s–90s rock; the additions widen it to
