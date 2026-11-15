@@ -29,6 +29,9 @@ jobs:
         uses: hacs/action@main
         with:
           category: integration
+          # Repository topics are GitHub repo metadata, not code. Forks don't
+          # inherit them from upstream, so this check fails on the fork.
+          ignore: topics
 
   validate-hassfest:
     name: Hassfest Validation
